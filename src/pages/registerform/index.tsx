@@ -9,7 +9,7 @@ import PageSelect from "@/components/PageSelect";
 // import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { RegisterForm } from '@prisma/client';
-import RegisterFormAddRegisterFormModal from "@/container/FormRegister/AddRegister";
+import RegisterFormAddRegisterFormModal from "@/container/RegisterForm/AddRegister";
 
 interface Params {
   page: number;
@@ -156,7 +156,7 @@ const registerForm: React.FC = () => {
                     <td> 
                       <RegisterFormAddRegisterFormModal data={registerForm} />
                       {/* <EditregisterFormModal data={registerForm} apiEdit={() => editregisterForm(editList)} /> */}
-                      <Link href={`/RegisterForm/edit/${registerForm.id}`} className="mx-1 btn info icon icon-primary">
+                      <Link href={`/registerform/edit/${registerForm.id}`} className="mx-1 btn info icon icon-primary">
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
