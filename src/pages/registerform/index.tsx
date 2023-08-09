@@ -10,6 +10,9 @@ import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { RegisterForm } from '@prisma/client';
 import RegisterFormAddRegisterFormModal from "@/container/RegisterForm/AddRegister";
+import PDFTEST from "./pdf";
+import PdfTest from "./pdf";
+import BasicDocument from "./pdf/BasicDocument";
 
 interface Params {
   page: number;
@@ -149,12 +152,11 @@ const registerForm: React.FC = () => {
                     <td><Image src={`data:image/png;base64, ${registerForm.regImg}`} alt="registerForm imge" thumbnail /></td>
 
                     {/* <img src={registerForm.img} alt="registerForm" /> */}
-                    
-
-
-
+                   
                     <td> 
+                        <BasicDocument/>
                       <RegisterFormAddRegisterFormModal data={registerForm} />
+                     
                       {/* <EditregisterFormModal data={registerForm} apiEdit={() => editregisterForm(editList)} /> */}
                       <Link href={`/registerform/edit/${registerForm.id}`} className="mx-1 btn info icon icon-primary">
                         <FaPen />
