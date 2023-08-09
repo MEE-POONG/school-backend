@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
-// import BankSelect from "@/components/Input/Bankselect";
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
 import { RegisterForm } from "@prisma/client";
+
 
 const RegisterFormAdd: React.FC = () => {
   const router = useRouter();
@@ -17,9 +17,19 @@ const RegisterFormAdd: React.FC = () => {
     executeRegisterFormPut,
   ] = useAxios({}, { manual: true });
   const [regId, setregId] = useState<string>("");
-  const [subtitle, setsubtitle] = useState<string>("");
-  const [detail, setdetail] = useState<string>("");
-  const [img, setimg] = useState<string>("");
+  const [regIdpersonal, setregIdpersonal] = useState<string>("");
+  const [regBirth, setregBirth] = useState<string>("");
+  const [regPrefix, setregPrefix] = useState<string>("");
+  const [regSex, setregSex] = useState<string>("");
+  const [regNation, setregNation] = useState<string>("");
+  const [regName, setregName] = useState<string>("");
+  const [regLastname, setregLastname] = useState<string>("");
+  const [regEname, setregEname] = useState<string>("");
+  const [regElastname, setregElastname] = useState<string>("");
+  const [regPhone, setregPhone] = useState<string>("");
+  const [regEmail, setregEmail] = useState<string>("");
+  const [ regImg  , setregImg] = useState<string>("");
+
  /* const [img, setimg] = useState<string>("");*/
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
@@ -41,7 +51,7 @@ const RegisterFormAdd: React.FC = () => {
     { data: RegisterFormID, loading: RegisterFormIDLoading, error: RegisterFormIDError },
     executeRegisterFormID,
   ] = useAxios<{ data: RegisterForm; success: boolean }, any>({
-    url: `/api/RegisterForm/${id}`,
+    url: `/api/registerForm/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
 
@@ -50,9 +60,19 @@ const RegisterFormAdd: React.FC = () => {
       executeRegisterFormID().then(({ data }) => {
         if (data?.data) {
           setregId(data?.data?.regId || "");
-          setsubtitle(data?.data?.subtitle || "")
-          setdetail(data?.data?.detail || "")
-          setimg(data?.data?.img || "")
+          setregIdpersonal(data?.data?.regIdpersonal || "")
+          setregBirth(data?.data?.regBirth || "")
+          setregPrefix(data?.data?.regPrefix || "")
+          setregSex(data?.data?.regSex || "")
+          setregNation(data?.data?.regNation || "")
+          setregName(data?.data?.regName || "")
+          setregLastname(data?.data?.regLastname || "")
+          setregEname(data?.data?.regEname || "")
+          setregElastname(data?.data?.regElastname || "")
+          setregPhone(data?.data?.regPhone || "")
+          setregEmail(data?.data?.regEmail || "")
+          setregImg(data?.data?.regImg || "")
+
          /* setBank(data?.data?.bank || "")
           setBankAccount(data?.data?.bankAccount || "")
           setPhone(data?.data?.phone || "")
@@ -66,10 +86,20 @@ const RegisterFormAdd: React.FC = () => {
   const reloadPage = () => {
     executeRegisterFormID().then(({ data }) => {
       if (data?.data) {
-        setregId(data?.data?.title || "");
-        setsubtitle(data?.data?.subtitle || "")
-        setdetail(data?.data?.detail || "")
-        setimg(data?.data?.img || "")
+        setregId(data?.data?.regId || "");
+          setregIdpersonal(data?.data?.regIdpersonal || "")
+          setregBirth(data?.data?.regBirth || "")
+          setregPrefix(data?.data?.regPrefix || "")
+          setregSex(data?.data?.regSex || "")
+          setregNation(data?.data?.regNation || "")
+          setregName(data?.data?.regName || "")
+          setregLastname(data?.data?.regLastname || "")
+          setregEname(data?.data?.regEname || "")
+          setregElastname(data?.data?.regElastname || "")
+          setregPhone(data?.data?.regPhone || "")
+          setregEmail(data?.data?.regEmail || "")
+          setregImg(data?.data?.regImg || "")
+
        /*setUsername(data?.data?.username || "");
         setPassword(data?.data?.password || "")
         setFirstname(data?.data?.firstname || "")
@@ -89,7 +119,7 @@ const RegisterFormAdd: React.FC = () => {
       reader.onloadend = () => {
         const base64String = reader.result as string;
         const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-        setimg(splittedString);
+        setregImg(splittedString);
       };
       reader.readAsDataURL(file);
     }
@@ -99,10 +129,19 @@ const RegisterFormAdd: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
     let missingFields = [];
-    if (!title) missingFields.push("title");
-    if (!subtitle) missingFields.push("subtitle");
-    if (!detail) missingFields.push("detail");
-    if (!img) missingFields.push("img");
+    if (!regId) missingFields.push("regId");
+    if (!regIdpersonal) missingFields.push("regIdpersonal");
+    if (!regBirth) missingFields.push("regBirth");
+    if (!regPrefix) missingFields.push("regPrefix");
+    if (!regSex) missingFields.push("regSex");
+    if (!regNation) missingFields.push("regNation");
+    if (!regName) missingFields.push("regName");
+    if (!regLastname) missingFields.push("regLastname");
+    if (!regEname) missingFields.push("regEname");
+    if (!regPhone) missingFields.push("regPhone");
+    if (!regEmail) missingFields.push("regEmail");
+    if (!regBirth) missingFields.push("regBirth");
+    if (!regImg) missingFields.push("regImg");
     /*if (!phone) missingFields.push("phone");
     if (!bank) missingFields.push("bank");
     if (!bankAccount) missingFields.push("bankAccount");
@@ -117,16 +156,25 @@ const RegisterFormAdd: React.FC = () => {
         setAlertForm("primary");
 
         const data = {
-          title,
-          subtitle,
-          detail,
-          img,
+          regId,
+          regIdpersonal,
+          regBirth,
+          regPrefix,
+          regSex,
+          regNation,
+          regName,
+          regLastname,
+          regEname,
+          regElastname,
+          regPhone,
+          regEmail,
+          regImg,
         };
 
 
         // Execute the update
         const response = await executeRegisterFormPut({
-          url: "/api/RegisterForm/" + id,
+          url: "/api/registerForm/" + id,
           method: "PUT",
           data
         });
@@ -167,53 +215,162 @@ const RegisterFormAdd: React.FC = () => {
           <Card.Body>
             <Row>
               <Col md={4}>
-                <FloatingLabel controlId="title" label="title / ชื่อโปรโมชั่น" className="mb-3">
+                <FloatingLabel controlId="regId" label="Id / รหัส" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && title !== ""}
-                    isInvalid={inputForm && title === ""}
+                    isValid={inputForm && regId !== ""}
+                    isInvalid={inputForm && regId === ""}
                     type="text"
-                    value={title}
+                    value={regId}
                     onChange={e => setregId(e.target.value)}
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="subtitle" label="subtitle / คำอธิบายย่อย" className="mb-3">
+                <FloatingLabel controlId="regIdpersonal" label="personal / รหัสบัตรประชาชน" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && subtitle !== ""}
-                    isInvalid={inputForm && subtitle === ""}
-                    type="subtitle"
-                    value={subtitle}
-                    onChange={e => setsubtitle(e.target.value)}
-                    placeholder="subtitle"
+                    isValid={inputForm && regIdpersonal !== ""}
+                    isInvalid={inputForm && regIdpersonal === ""}
+                    type="regIdpersonal"
+                    value={regIdpersonal}
+                    onChange={e => setregIdpersonal(e.target.value)}
+                    placeholder="regIdpersonal"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="detail" label="detail / รายละเอียด" className="mb-3">
+                <FloatingLabel controlId="regBirth" label="Birth / วันเกิด" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && detail !== ""}
-                    isInvalid={inputForm && detail === ""}
+                    isValid={inputForm && regBirth !== ""}
+                    isInvalid={inputForm && regBirth === ""}
                     type="text"
-                    value={detail}
-                    onChange={e => setdetail(e.target.value)}
-                    placeholder="detail"
+                    value={regBirth}
+                    onChange={e => setregBirth(e.target.value)}
+                    placeholder="regBirth"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regPrefix" label="Prefix / คำนำหน้า" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regPrefix !== ""}
+                    isInvalid={inputForm && regPrefix === ""}
+                    type="text"
+                    value={regPrefix}
+                    onChange={e => setregPrefix(e.target.value)}
+                    placeholder="regPrefix"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regSex" label="Sex / เพศ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regSex !== ""}
+                    isInvalid={inputForm && regSex === ""}
+                    type="text"
+                    value={regSex}
+                    onChange={e => setregSex(e.target.value)}
+                    placeholder="regSex"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regNation" label="Nation / สัญชาติ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regNation !== ""}
+                    isInvalid={inputForm && regNation === ""}
+                    type="text"
+                    value={regNation}
+                    onChange={e => setregNation(e.target.value)}
+                    placeholder="regNation"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regName" label="Name / ชื่อ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regName !== ""}
+                    isInvalid={inputForm && regName === ""}
+                    type="text"
+                    value={regName}
+                    onChange={e => setregName(e.target.value)}
+                    placeholder="regName"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regLastname" label="Lastname / นามสกุล" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regLastname !== ""}
+                    isInvalid={inputForm && regLastname === ""}
+                    type="text"
+                    value={regLastname}
+                    onChange={e => setregLastname(e.target.value)}
+                    placeholder="regLastname"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regEname" label="ชื่อภาษาอังกฤษ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regEname !== ""}
+                    isInvalid={inputForm && regEname === ""}
+                    type="text"
+                    value={regEname}
+                    onChange={e => setregEname(e.target.value)}
+                    placeholder="regEname"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regElastname" label=" นามสกุลภาษาอังกฤษ" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regElastname !== ""}
+                    isInvalid={inputForm && regElastname === ""}
+                    type="text"
+                    value={regElastname}
+                    onChange={e => setregElastname(e.target.value)}
+                    placeholder="regElastname"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regPhone" label="Phone / เบอร์โทรศัพท์" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regPhone !== ""}
+                    isInvalid={inputForm && regPhone === ""}
+                    type="text"
+                    value={regPhone}
+                    onChange={e => setregPhone(e.target.value)}
+                    placeholder="regPhone"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="regEmail" label="Email / อีเมล" className="mb-3">
+                  <Form.Control
+                    isValid={inputForm && regEmail !== ""}
+                    isInvalid={inputForm && regEmail === ""}
+                    type="text"
+                    value={regEmail}
+                    onChange={e => setregEmail(e.target.value)}
+                    placeholder="regEmail"
                   />
                 </FloatingLabel>
               </Col>
 
                <Col md={4}>
-                <FloatingLabel controlId="img" label="img / รูปภาพ" className="mb-3">
+                <FloatingLabel controlId="regImg" label="Img / รูปภาพผู้สมัคร" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && img !== ""}
-                    isInvalid={inputForm && img === ""}
+                    isValid={inputForm && regImg !== ""}
+                    isInvalid={inputForm && regImg === ""}
                     type="file"
-                    defaultValue={img}
+                    defaultValue={regImg}
                     onChange={handleFileUpload}
-                    placeholder="img"/> 
+                    placeholder="regImg"/> 
                 </FloatingLabel>
               </Col>
+            
             
           
             </Row>
