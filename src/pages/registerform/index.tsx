@@ -88,9 +88,9 @@ const registerForm: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              registerForm
+              รายชื่อนักศึกษาที่สนใจเข้าเรียน
             </h4>
-            <InputGroup className="w-auto" bsPrefix="input-icon">
+            {/* <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
                 <FaSearch />
               </InputGroup.Text>
@@ -100,28 +100,30 @@ const registerForm: React.FC = () => {
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
-            </InputGroup>
+            </InputGroup> */}
             {/* <AddListName /> */}
-            <Link href="/registerForm/game" className="ms-2 btn icon icofn-primary">
-              เกมจับผิดภาพ
-            </Link>
-            <Link href="/registerForm/addregisterForm" className="ms-2 btn icon icofn-primary">
+            
+            {/* <Link href="/registerForm/addregisterForm" className="ms-2 btn icon icofn-primary">
               เพิ่มโปรโมชั่น
-            </Link>
+            </Link> */}
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
                   <th className="no">No</th>
-                  <th className="title">ชื่อโปรโมชั่น</th>
-                  <th className="subtitle">คำอธิบายย่อย</th>
-                  <th>รายละเอียด</th>
-                  <th>รูปภาพ</th>
-                  <th>จัดการ</th>
-                  <th>จัดการ</th>
-                  <th>จัดการ</th>
-                  <th>จัดการ</th>
+                  <th className="title">รหัสบัตรประชาชน</th>
+                  <th className="subtitle">วัน/เดือน/ปี เกิด</th>
+                  <th>คำนำหน้า</th>
+                  <th>เพศ</th>
+                  <th>สัญชาติ</th>
+                  <th>ชื่อ</th>
+                  <th>นามสกุล</th>
+                  <th>ชื่อ ภาษาอังกฤษ</th>
+                  <th>นามสกุล ภาษาอังกฤษ</th>
+                  <th>เบอร์โทร</th>
+                  <th>E-mail</th>
+                  <th>โปรไฟล์</th>
                   <th>จัดการ</th>
                
                 </tr>
