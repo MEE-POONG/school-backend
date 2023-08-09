@@ -6,12 +6,8 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 // import BankSelect from "@/components/Input/Bankselect";
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
-import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
-// import { bankMap } from '@/test';
 import { RegisterForm } from "@prisma/client";
-
-
 
 const RegisterFormAdd: React.FC = () => {
   const router = useRouter();
