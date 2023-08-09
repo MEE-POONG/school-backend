@@ -98,7 +98,7 @@ model IndexActivity {
   activitySubTitle  String? // หัวข้อย่่อ 
   activitySubDetail String? // รายละเอียด
   activityImg       String? // รูปกิจกรรม
-  activityDate      DateTime? // วันที่
+  activityDate      String? // วันที่
 
   activityDescription String? // รายละเอียดขอมูลกิจกรรม
 }
