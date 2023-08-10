@@ -10,13 +10,16 @@
 
 // export default PDFExample;
 
-import BasicDocument from "./BasicDocument";
-function PdfTest() {
-  return (
-    <div className="App">
-      <BasicDocument />
-    </div>
-  );
-}
-export default PdfTest;
+
+
+
+// import BasicDocument from "./BasicDocument";
+// function PdfTest() {
+//   return (
+//     <div className="App">
+//       <BasicDocument />
+//     </div>
+//   );
+// }
+// export default PdfTest;
 

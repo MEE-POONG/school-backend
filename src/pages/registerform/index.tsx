@@ -8,11 +8,9 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 // import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { RegisterForm } from '@prisma/client';
 import RegisterFormAddRegisterFormModal from "@/container/RegisterForm/AddRegister";
-import PDFTEST from "./pdf";
-import PdfTest from "./pdf";
-import BasicDocument from "./pdf/BasicDocument";
+import { RegisterForm, } from '@prisma/client';
+
 
 interface Params {
   page: number;
@@ -139,14 +137,14 @@ const registerForm: React.FC = () => {
                     <td>{index + 1}</td>
                     <td>{registerForm.regId}</td>
                     <td>{registerForm.regIdpersonal}</td>
-                    <td>{registerForm.regBirth}</td>
+                    {/* <td>{registerForm.regBirth}</td> */}
                     <td>{registerForm.regPrefix}</td>
                     <td>{registerForm.regSex}</td>
-                    <td>{registerForm.regNation}</td>
+                    {/* <td>{registerForm.regNation}</td> */}
                     <td>{registerForm.regName}</td>
                     <td>{registerForm.regLastname}</td>
-                    <td>{registerForm.regEname}</td>
-                    <td>{registerForm.regElastname}</td>
+                    {/* <td>{registerForm.regEname}</td>
+                    <td>{registerForm.regElastname}</td> */}
                     <td>{registerForm.regPhone}</td>
                     <td>{registerForm.regEmail}</td>
                     <td><Image src={`data:image/png;base64, ${registerForm.regImg}`} alt="registerForm imge" thumbnail /></td>
@@ -154,7 +152,7 @@ const registerForm: React.FC = () => {
                     {/* <img src={registerForm.img} alt="registerForm" /> */}
                    
                     <td> 
-                        <BasicDocument/>
+                        {/* <BasicDocument/> */}
                       <RegisterFormAddRegisterFormModal data={registerForm} />
                      
                       {/* <EditregisterFormModal data={registerForm} apiEdit={() => editregisterForm(editList)} /> */}
