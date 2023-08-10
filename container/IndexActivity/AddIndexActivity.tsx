@@ -1,13 +1,13 @@
-import { Review } from '@prisma/client';
+import { IndexActivity } from '@prisma/client';
 import React, { useState } from 'react';
 import { Badge, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegEye, FaSearch, FaUserNinja } from 'react-icons/fa';
-interface ReviewAddReviewModalProps {
-    data: Review ; // replace this with the actual type of your data
+interface IndexActivityAddIndexActivityModalProps {
+    data: IndexActivity ; // replace this with the actual type of your data
 }
-const ReviewAddReviewModal: React.FC<ReviewAddReviewModalProps> = ({ data }) => {
+const IndexActivityAddIndexActivityModal: React.FC<IndexActivityAddIndexActivityModalProps> = ({ data }) => {
     const [show, setShow] = useState<boolean>(false);
 
     const handleClose = () => setShow(false);
@@ -17,7 +17,7 @@ const ReviewAddReviewModal: React.FC<ReviewAddReviewModalProps> = ({ data }) => 
         <>
             <Button className="mx-1 btn gold" bsPrefix="icon" onClick={handleShow}>
                 <FaUserNinja />
-                <span className="h-tooltiptext">เพิ่มรีวิว</span>
+                <span className="h-tooltiptext">เพิ่มกิจกรรม</span>
             </Button>
             <Modal show={show} onHide={handleClose} size='lg'>
                 <Modal.Header closeButton>
@@ -59,4 +59,4 @@ const ReviewAddReviewModal: React.FC<ReviewAddReviewModalProps> = ({ data }) => 
     );
 }
 
-export default ReviewAddReviewModal;
+export default IndexActivityAddIndexActivityModal;
