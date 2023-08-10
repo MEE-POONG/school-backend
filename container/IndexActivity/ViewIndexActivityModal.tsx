@@ -28,22 +28,22 @@ const IndexActivityViewIndexActivityModal: React.FC<IndexActivityViewIndexActivi
                 <Modal.Body>
                     <Row>
                         <Col lg="4">
-                        ชื่อรีวิว : {data?.title}
+                        ชื่อรีวิว : {data?.activityName}
                         </Col>
                         <Col lg="4">
-                        บริการที่ใช้ : {data?.title2}
+                        บริการที่ใช้ : {data?.activityTitle}
                         </Col>
                         <Col lg="4">
-                        หมวดหมู่  : {data?.category}
+                        หมวดหมู่  : {data?.activitySubTitle}
                         </Col>
                         <Col lg="4">
-                        ผู้รีวิว : {data?.subTitle}
+                        ผู้รีวิว : {data?.activitySubDetail}
                         </Col>
                         <Col lg="4">
-                        รายละเอียดรีวิว : {data?.IndexActivityDetail}
+                        รายละเอียดรีวิว : {data?.activityDate}
                         </Col>
                         <Col lg="4">
-                            ผู้รีวิว : {data?.IndexActivityerName}
+                            ผู้รีวิว : {data?.activityDescription}
                         </Col>
                     </Row>
                     <div className='mt-3'>

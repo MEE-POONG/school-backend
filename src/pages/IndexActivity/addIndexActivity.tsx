@@ -127,7 +127,7 @@ const IndexActivityAdd: React.FC = () => {
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              IndexActivity - เพิ่มรีวิว
+              IndexActivity - เพิ่มกิจกรรม
             </h4>
           </Card.Header>
           <Card.Body>

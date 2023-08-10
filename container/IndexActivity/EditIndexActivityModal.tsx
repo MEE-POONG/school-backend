@@ -15,7 +15,7 @@ const EditIndexActivityModal: React.FC<EditIndexActivityModalProps> = ({ data, a
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let heading = `ลบข้อมูล : ${data?.title} ${data.title2} ${data.category} ${data.subTitle}${data.IndexActivityDetail}${data.IndexActivityerName}`;
+    let heading = `ลบข้อมูล : ${data?.activityName} ${data.activityTitle} ${data.activitySubTitle} ${data.activitySubDetail}${data.activityDate}${data.activityDescription}`;
     let detail = `ต้องการลบข้อมูลใช่หรือไม่`;
     let variant = "";
 
