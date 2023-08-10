@@ -1,21 +1,21 @@
-import {  Review } from '@prisma/client';
+import {  IndexActivity } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaPen, FaTrashAlt } from 'react-icons/fa';
-interface EditReviewModalProps {
-    data: Review;
+interface EditIndexActivityModalProps {
+    data: IndexActivity;
     apiEdit: () => Promise<any>; // add this line
 }
-const EditReviewModal: React.FC<EditReviewModalProps> = ({ data, apiEdit }) => {
+const EditIndexActivityModal: React.FC<EditIndexActivityModalProps> = ({ data, apiEdit }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkEdit, setCheckEdit] = useState<string>("not");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let heading = `ลบข้อมูล : ${data?.title} ${data.title2} ${data.category} ${data.subTitle}${data.reviewDetail}${data.reviewerName}`;
+    let heading = `ลบข้อมูล : ${data?.title} ${data.title2} ${data.category} ${data.subTitle}${data.IndexActivityDetail}${data.IndexActivityerName}`;
     let detail = `ต้องการลบข้อมูลใช่หรือไม่`;
     let variant = "";
 
@@ -79,4 +79,4 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({ data, apiEdit }) => {
     );
 }
 
-export default EditReviewModal;
+export default EditIndexActivityModal;

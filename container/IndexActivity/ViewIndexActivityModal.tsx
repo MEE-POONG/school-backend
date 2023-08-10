@@ -1,15 +1,14 @@
-import { Review } from '@prisma/client';
+import { IndexActivity } from '@prisma/client';
 import React, { useState } from 'react';
 import { Badge, Col, Image, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegEye } from 'react-icons/fa';
-import { bankMap } from "@/test";
 
-interface ReviewViewReviewModalProps {
-    data: Review;
+interface IndexActivityViewIndexActivityModalProps {
+    data: IndexActivity;
 }
-const ReviewViewReviewModal: React.FC<ReviewViewReviewModalProps> = ({ data }) => {
+const IndexActivityViewIndexActivityModal: React.FC<IndexActivityViewIndexActivityModalProps> = ({ data }) => {
     const [show, setShow] = useState<boolean>(false);
 
     const handleClose = () => setShow(false);
@@ -41,10 +40,10 @@ const ReviewViewReviewModal: React.FC<ReviewViewReviewModalProps> = ({ data }) =
                         ผู้รีวิว : {data?.subTitle}
                         </Col>
                         <Col lg="4">
-                        รายละเอียดรีวิว : {data?.reviewDetail}
+                        รายละเอียดรีวิว : {data?.IndexActivityDetail}
                         </Col>
                         <Col lg="4">
-                            ผู้รีวิว : {data?.reviewerName}
+                            ผู้รีวิว : {data?.IndexActivityerName}
                         </Col>
                     </Row>
                     <div className='mt-3'>
@@ -94,4 +93,4 @@ const ReviewViewReviewModal: React.FC<ReviewViewReviewModalProps> = ({ data }) =
     );
 }
 
-export default ReviewViewReviewModal;
+export default IndexActivityViewIndexActivityModal;
