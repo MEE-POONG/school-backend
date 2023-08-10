@@ -86,7 +86,7 @@ const RegisterFormAdd: React.FC = () => {
   const reloadPage = () => {
     executeRegisterFormID().then(({ data }) => {
       if (data?.data) {
-        setregId(data?.data?.regId || "");
+          setregId(data?.data?.regId || "");
           setregIdpersonal(data?.data?.regIdpersonal || "")
           setregBirth(data?.data?.regBirth || "")
           setregPrefix(data?.data?.regPrefix || "")
@@ -382,7 +382,7 @@ const RegisterFormAdd: React.FC = () => {
             <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button>
-            <Link href="/RegisterForm" className="btn btn-danger mx-2">
+            <Link href="/registerform" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
