@@ -44,7 +44,7 @@ const indexActivity: React.FC = () => {
   ] = useAxios({}, { manual: true });
 
   const [filteredindexActivitysData, setFilteredindexActivitysData] = useState<
-  IndexActivity[]
+    IndexActivity[]
   >([]);
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const indexActivity: React.FC = () => {
                   {/* <th>ชื่อ ภาษาอังกฤษ</th>
                   <th>นามสกุล ภาษาอังกฤษ</th> */}
                   <th>คำอธิบายกิจกรรม</th>
-                  
+
                   <th>รูปภาพ</th>
                   <th>จัดการ</th>
                 </tr>
@@ -164,7 +164,7 @@ const indexActivity: React.FC = () => {
                     <td>
                       {/* <BasicDocument/> */}
                       {/* <indexActivityAddindexActivityModal data={indexActivity} /> */}
-                     
+
 
                       {/* <EditindexActivityModal data={indexActivity} apiEdit={() => editindexActivity(editList)} /> */}
                       <Link
