@@ -95,7 +95,7 @@ const indexActivity: React.FC = () => {
       <div className="partner-page h-100">
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
-            <h4 className="mb-0 py-1">รายชื่อนักศึกษาที่สนใจเข้าเรียน</h4>
+            <h4 className="mb-0 py-1">รายชื่อกิจกรรม</h4>
 
             {/* ค้นหาข้อมูล */}
             {/* <InputGroup className="w-auto" bsPrefix="input-icon">

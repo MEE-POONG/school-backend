@@ -7,7 +7,6 @@ import useAxios from "axios-hooks";
 import Link from "next/link";
 
 const IndexActivityAdd: React.FC = () => {
-  
   const [{ error: errorMessage, loading: IndexActivityLoading }, executeIndexActivity] = useAxios({ url: '/api/indexActivity', method: 'POST' }, { manual: true });
   const [activityName, setactivityName] = useState<string>("");
   const [activityTitle, setactivityTitle] = useState<string>("");
@@ -105,7 +104,6 @@ const IndexActivityAdd: React.FC = () => {
       }
     }
   };
-  
   
   return (
     <LayOut>
