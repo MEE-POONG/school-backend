@@ -8,7 +8,7 @@ import Link from "next/link";
 import { IndexActivity } from '@prisma/client';
 
 const IndexActivityAdd: React.FC = () => {
-  const [{ error: errorMessage, loading: IndexActivityLoading }, executeIndexActivity] = useAxios({ url: '/api/IndexActivity', method: 'POST' }, { manual: true });
+  const [{ error: errorMessage, loading: IndexActivityLoading }, executeIndexActivity] = useAxios({ url: '/api/indexActivity', method: 'POST' }, { manual: true });
   const [activityName, setactivityName] = useState<string>("");
   const [activityTitle, setactivityTitle] = useState<string>("");
   const [activitySubTitle, setactivitySubTitle] = useState<string>("");
@@ -16,12 +16,6 @@ const IndexActivityAdd: React.FC = () => {
   const [activityImg, setactivityImg] = useState<string>("");
   const [activityDate, setactivityDate] = useState<string>("");
   const [activityDescription, setactivityDescription] = useState<string>("");
- /*const [lastname, setLastname] = useState<string>("");
-  const [bank, setBank] = useState<string>("เลือกธนาคาร");
-  const [bankAccount, setBankAccount] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [line, setLine] = useState<string>("");
-  const [email, setEmail] = useState<string>("");*/
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");

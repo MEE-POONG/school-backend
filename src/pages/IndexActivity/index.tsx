@@ -111,25 +111,25 @@ const indexActivity: React.FC = () => {
             </InputGroup> */}
             {/* <AddListName /> */}
 
-            {/* <Link href="/indexActivity/addindexActivity" className="ms-2 btn icon icofn-primary">
+            <Link href="/IndexActivity/addIndexActivity" className="ms-2 btn icon icofn-primary">
               เพิ่มโปรโมชั่น
-            </Link> */}
+            </Link>
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
                   <th className="no">No</th>
-                  <th className="title">รหัสบัตรประชาชน</th>
+                  <th className="title">ชื่อกิจกรรม</th>
                   {/* <th className="subtitle">วัน/เดือน/ปี เกิด</th> */}
-                  <th>คำนำหน้า</th>
-                  <th>เพศ</th>
+                  <th>หัวข้อกิจกรรม</th>
+                  <th>หัวข้อย่อยกิจกรรม</th>
                   {/* <th>สัญชาติ</th> */}
-                  <th>ชื่อ</th>
-                  <th>นามสกุล</th>
+                  <th>รายละเอียดกิจกรรม</th>
+                  <th>วันที่</th>
                   {/* <th>ชื่อ ภาษาอังกฤษ</th>
                   <th>นามสกุล ภาษาอังกฤษ</th> */}
-                  <th>เบอร์โทร</th>
+                  <th>คำอธิบายกิจกรรม</th>
                   <th>E-mail</th>
                   <th>โปรไฟล์</th>
                   <th>จัดการ</th>
