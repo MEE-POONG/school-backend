@@ -20,7 +20,7 @@ import { RegisterForm } from "@prisma/client";
 
 
 
-const RegisterFormAdd: React.FC = () => {
+const Registertest: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [
@@ -45,7 +45,7 @@ const RegisterFormAdd: React.FC = () => {
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
 
-
+  
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
@@ -235,166 +235,10 @@ const RegisterFormAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regIdpersonal"
-                  label="personal / รหัสบัตรประชาชน"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regIdpersonal !== ""}
-                    isInvalid={inputForm && regIdpersonal === ""}
-                    type="regIdpersonal"
-                    value={regIdpersonal}
-                    onChange={(e) => setregIdpersonal(e.target.value)}
-                    placeholder="regIdpersonal"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regBirth"
-                  label="Birth / วันเกิด"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regBirth !== ""}
-                    isInvalid={inputForm && regBirth === ""}
-                    type="text"
-                    value={regBirth}
-                    onChange={(e) => setregBirth(e.target.value)}
-                    placeholder="regBirth"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regPrefix"
-                  label="Prefix / คำนำหน้า"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regPrefix !== ""}
-                    isInvalid={inputForm && regPrefix === ""}
-                    type="text"
-                    value={regPrefix}
-                    onChange={(e) => setregPrefix(e.target.value)}
-                    placeholder="regPrefix"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regSex"
-                  label="Sex / เพศ"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regSex !== ""}
-                    isInvalid={inputForm && regSex === ""}
-                    type="text"
-                    value={regSex}
-                    onChange={(e) => setregSex(e.target.value)}
-                    placeholder="regSex"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regNation"
-                  label="Nation / สัญชาติ"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regNation !== ""}
-                    isInvalid={inputForm && regNation === ""}
-                    type="text"
-                    value={regNation}
-                    onChange={(e) => setregNation(e.target.value)}
-                    placeholder="regNation"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regName"
-                  label="Name / ชื่อ"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regName !== ""}
-                    isInvalid={inputForm && regName === ""}
-                    type="text"
-                    value={regName}
-                    onChange={(e) => setregName(e.target.value)}
-                    placeholder="regName"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regLastname"
-                  label="Lastname / นามสกุล"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regLastname !== ""}
-                    isInvalid={inputForm && regLastname === ""}
-                    type="text"
-                    value={regLastname}
-                    onChange={(e) => setregLastname(e.target.value)}
-                    placeholder="regLastname"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regEname"
-                  label="ชื่อภาษาอังกฤษ"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regEname !== ""}
-                    isInvalid={inputForm && regEname === ""}
-                    type="text"
-                    value={regEname}
-                    onChange={(e) => setregEname(e.target.value)}
-                    placeholder="regEname"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regElastname"
-                  label=" นามสกุลภาษาอังกฤษ"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regElastname !== ""}
-                    isInvalid={inputForm && regElastname === ""}
-                    type="text"
-                    value={regElastname}
-                    onChange={(e) => setregElastname(e.target.value)}
-                    placeholder="regElastname"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regPhone"
-                  label="Phone / เบอร์โทรศัพท์"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regPhone !== ""}
-                    isInvalid={inputForm && regPhone === ""}
-                    type="text"
-                    value={regPhone}
-                    onChange={(e) => setregPhone(e.target.value)}
-                    placeholder="regPhone"
-                  />
-                </FloatingLabel>
-              </Col>
+          
+
+
+
               <Col md={4}>
                 <FloatingLabel
                   controlId="regEmail"
@@ -402,40 +246,10 @@ const RegisterFormAdd: React.FC = () => {
                   className="mb-3"
                 >
                   <Form.Control
-                    isValid={inputForm && regEmail !== ""}
-                    isInvalid={inputForm && regEmail === ""}
-                    type="text"
-                    value={regEmail}
-                    onChange={(e) => setregEmail(e.target.value)}
-                    placeholder="regEmail"
+                  
                   />
                 </FloatingLabel>
               </Col>
-
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regImg"
-                  label="Img / รูปภาพผู้สมัคร"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regImg !== ""}
-                    isInvalid={inputForm && regImg === ""}
-                    type="file"
-                    defaultValue={regImg}
-                    onChange={handleFileUpload}
-                    placeholder="regImg"
-                  />
-                </FloatingLabel>
-              </Col>
-
-
-
-
-
-              
-
-              
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">
@@ -454,7 +268,7 @@ const RegisterFormAdd: React.FC = () => {
     </LayOut>
   );
 };
-export default RegisterFormAdd;
+export default Registertest;
 
 function setAlertForm(arg0: string) {
   throw new Error("Function not implemented.");

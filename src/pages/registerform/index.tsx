@@ -10,7 +10,7 @@ import {
   InputGroup,
   Table,
 } from "react-bootstrap";
-import { FaPen, FaSearch } from "react-icons/fa";
+import { FaPen, FaSearch, FaUserNinja } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
@@ -18,6 +18,7 @@ import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { RegisterForm } from "@prisma/client";
 import DetailsRegisterAddDetailsRegisterModal from "@/container/RegisterForm/DetailsRegister";
+import ProfileDetailModal from "./profile/[id]";
 
 interface Params {
   page: number;
@@ -159,16 +160,21 @@ const registerForm: React.FC = () => {
                         thumbnail
                       />
                     </td>
-
-                    {/* <img src={registerForm.img} alt="registerForm" /> */}
-
                     <td>
-                      {/* <BasicDocument/> */}
-                      {/* <RegisterFormAddRegisterFormModal data={registerForm} /> */}
-                      <DetailsRegisterAddDetailsRegisterModal
+                    
+                      {/* <DetailsRegisterAddDetailsRegisterModal
                         data={registerForm}
-                      />
+                      /> */}
+                        <ProfileDetailModal  data={registerForm}/>
 
+                      {/* <Link
+                        href={`/registerform/profile/${registerForm.id}`}
+                        className="mx-1 btn info icon icon-primary"
+                      >
+                         <FaUserNinja />
+                        <span className="h-tooltiptext">test</span>
+                      </Link> */}
+                      
                       <Link
                         href={`/registerform/edit/${registerForm.id}`}
                         className="mx-1 btn info icon icon-primary"
