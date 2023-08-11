@@ -5,10 +5,9 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { IndexActivity } from '@prisma/client';
 
 const IndexActivityAdd: React.FC = () => {
-  const [{ error: errorMessage, loading: IndexActivityLoading }, executeIndexActivity] = useAxios({ url: '/api/IndexActivity', method: 'POST' }, { manual: true });
+  const [{ error: errorMessage, loading: IndexActivityLoading }, executeIndexActivity] = useAxios({ url: '/api/indexActivity', method: 'POST' }, { manual: true });
   const [activityName, setactivityName] = useState<string>("");
   const [activityTitle, setactivityTitle] = useState<string>("");
   const [activitySubTitle, setactivitySubTitle] = useState<string>("");
@@ -16,12 +15,6 @@ const IndexActivityAdd: React.FC = () => {
   const [activityImg, setactivityImg] = useState<string>("");
   const [activityDate, setactivityDate] = useState<string>("");
   const [activityDescription, setactivityDescription] = useState<string>("");
- /*const [lastname, setLastname] = useState<string>("");
-  const [bank, setBank] = useState<string>("เลือกธนาคาร");
-  const [bankAccount, setBankAccount] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [line, setLine] = useState<string>("");
-  const [email, setEmail] = useState<string>("");*/
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
@@ -127,13 +120,13 @@ const IndexActivityAdd: React.FC = () => {
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              IndexActivity - เพิ่มรีวิว
+              IndexActivity - เพิ่มกิจกรรม
             </h4>
           </Card.Header>
           <Card.Body>
             <Row>
               <Col md={4}>
-                <FloatingLabel controlId="activityName" label="activityName / ชื่อรีวิว" className="mb-3">
+                <FloatingLabel controlId="activityName" label="activityName / ชื่อกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityName !== ""}
                     isInvalid={inputForm && activityName === ""}
@@ -145,7 +138,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityTitle" label="activityTitle / บริการที่ใช้" className="mb-3">
+                <FloatingLabel controlId="activityTitle" label="activityTitle / หัวข้อกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityTitle !== ""}
                     isInvalid={inputForm && activityTitle === ""}
@@ -157,7 +150,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubTitle" label="activitySubTitle / หมวดหมู่" className="mb-3">
+                <FloatingLabel controlId="activitySubTitle" label="activitySubTitle / หัวข้อย่อย" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubTitle !== ""}
                     isInvalid={inputForm && activitySubTitle === ""}
@@ -169,7 +162,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubDetail" label="activitySubDetail / หมวดหมู่" className="mb-3">
+                <FloatingLabel controlId="activitySubDetail" label="activitySubDetail / รายละเอียดกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubDetail !== ""}
                     isInvalid={inputForm && activitySubDetail === ""}
@@ -181,7 +174,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityDate" label="activityDate / รายละเอียดรีวิว " className="mb-3">
+                <FloatingLabel controlId="activityDate" label="activityDate / วันที่ " className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDate !== ""}
                     isInvalid={inputForm && activityDate === ""}
@@ -193,7 +186,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
              < Col md={4}>
-                <FloatingLabel controlId="activityDescription" label="activityDescription / ผู้รีวิว" className="mb-3">
+                <FloatingLabel controlId="activityDescription" label="activityDescription / คำอธิบายกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDescription !== ""}
                     isInvalid={inputForm && activityDescription === ""}

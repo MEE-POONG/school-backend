@@ -21,7 +21,7 @@ const IndexActivityAddIndexActivityModal: React.FC<IndexActivityAddIndexActivity
             </Button>
             <Modal show={show} onHide={handleClose} size='lg'>
                 <Modal.Header closeButton>
-                    <Modal.Title>รีวิว </Modal.Title>
+                    <Modal.Title>กิจกรรม</Modal.Title>
                     <InputGroup className="w-auto mx-auto" bsPrefix="input-icon">
                         <InputGroup.Text id="basic-addon1">
                             <FaSearch />
