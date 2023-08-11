@@ -112,7 +112,7 @@ const indexActivity: React.FC = () => {
             {/* <AddListName /> */}
 
             <Link href="/IndexActivity/addIndexActivity" className="ms-2 btn icon icofn-primary">
-              เพิ่มโปรโมชั่น
+              เพิ่มกิจกรรม
             </Link>
           </Card.Header>
           <Card.Body className="p-0">
@@ -130,8 +130,8 @@ const indexActivity: React.FC = () => {
                   {/* <th>ชื่อ ภาษาอังกฤษ</th>
                   <th>นามสกุล ภาษาอังกฤษ</th> */}
                   <th>คำอธิบายกิจกรรม</th>
-                  <th>E-mail</th>
-                  <th>โปรไฟล์</th>
+                  
+                  <th>รูปภาพ</th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
@@ -164,9 +164,7 @@ const indexActivity: React.FC = () => {
                     <td>
                       {/* <BasicDocument/> */}
                       {/* <indexActivityAddindexActivityModal data={indexActivity} /> */}
-                      <IndexActivityAddIndexActivityModal
-                        data={indexActivity}
-                      />
+                     
 
                       {/* <EditindexActivityModal data={indexActivity} apiEdit={() => editindexActivity(editList)} /> */}
                       <Link
