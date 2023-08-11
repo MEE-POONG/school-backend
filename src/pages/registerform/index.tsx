@@ -169,7 +169,6 @@ const registerForm: React.FC = () => {
                         data={registerForm}
                       />
 
-                      {/* <EditregisterFormModal data={registerForm} apiEdit={() => editregisterForm(editList)} /> */}
                       <Link
                         href={`/registerform/edit/${registerForm.id}`}
                         className="mx-1 btn info icon icon-primary"

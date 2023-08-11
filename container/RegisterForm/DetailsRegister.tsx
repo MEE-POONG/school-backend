@@ -25,7 +25,6 @@ const DetailsRegisterAddDetailsRegisterModal: React.FC<
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [regName, setregName] = useState<string>("");
 
   
   const router = useRouter();
