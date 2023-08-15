@@ -103,6 +103,17 @@ model IndexActivity {
   activityDescription String? // รายละเอียดขอมูลกิจกรรม
 }
 
+model IndexNews {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  newName      String? // ชื่อกิจกรรม
+  newTitle     String? // // หัวข้อหลัก
+  newSubTitle  String? // หัวข้อย่่อ 
+  newSubDetail String? // รายละเอียด
+  newImg       String? // รูปกิจกรรม
+  newDate      String? // วันที่
+
+}
+
 //รู้จักพนมวัน  
 model AboutPanom {
   //เกี่ยวกับโรงเรียน
