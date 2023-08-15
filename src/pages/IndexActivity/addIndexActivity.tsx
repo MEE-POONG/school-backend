@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
@@ -18,6 +18,7 @@ const IndexActivityAdd: React.FC = () => {
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
+
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
@@ -104,6 +105,8 @@ const IndexActivityAdd: React.FC = () => {
       }
     }
   };
+
+  
   
   return (
     <LayOut>
