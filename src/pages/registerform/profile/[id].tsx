@@ -133,7 +133,6 @@
 // }
 
 
-
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FaUserNinja } from "react-icons/fa";
@@ -162,7 +161,6 @@ export default function ProfileDetailModal(props: { regName: string; regLastname
         <Modal.Body>
 
         <h2 className="p-2 text-start">รายละเอียดข้อมูล</h2>
-        </Modal.Body>
 
 
 
@@ -170,13 +168,6 @@ export default function ProfileDetailModal(props: { regName: string; regLastname
 
 
   </Modal>
-
-
-
-
-
-
-
 
     </>
   )
