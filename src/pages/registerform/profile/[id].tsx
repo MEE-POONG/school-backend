@@ -136,13 +136,14 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FaUserNinja } from "react-icons/fa";
+import { RegisterForm } from "@prisma/client";
 
 
 export default function ProfileDetailModal(props: { regName: string; regLastname: string; }){
   const [showCheck, setShowCheck] = useState(false);
   const handleShow = () => setShowCheck(true);
   const handleClose = () => setShowCheck(false);
-
+  const [dataregister, setTest] = useState<RegisterForm[]>([]);
   return(
     <>
     <Button
@@ -152,6 +153,8 @@ export default function ProfileDetailModal(props: { regName: string; regLastname
   >
       <FaUserNinja />
   </Button>
+
+
   <Modal show={showCheck} onHide={handleClose} centered size="xl">
   <Modal.Header closeButton>
           <Modal.Title>
@@ -162,11 +165,19 @@ export default function ProfileDetailModal(props: { regName: string; regLastname
 
         <h2 className="p-2 text-start">รายละเอียดข้อมูล</h2>
 
+        <div>
+            {dataregister?.map((value) => (
+        <div key={value.id}>
+          <p>ชื่อ:{value.regName+ " " +value.regLastname}</p>
+          <p>{value.id}</p>
+        </div>
+        
+        
 
+      ))}
+        </div>
 
-
-
-
+        </Modal.Body>
   </Modal>
 
     </>
