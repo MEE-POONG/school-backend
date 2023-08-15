@@ -185,7 +185,7 @@ const IndexActivityAdd: React.FC = () => {
           <Card.Body>
             <Row>
             <Col md={4}>
-                <FloatingLabel controlId="activityName" label="activityName / ชื่อกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activityName" label="activityName / ชื่อข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityName !== ""}
                     isInvalid={inputForm && activityName === ""}
@@ -197,7 +197,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityTitle" label="activityTitle / หัวข้อกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activityTitle" label="activityTitle / หัวข้อข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityTitle !== ""}
                     isInvalid={inputForm && activityTitle === ""}
@@ -209,7 +209,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubTitle" label="activitySubTitle / หัวข้อย่อยกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activitySubTitle" label="activitySubTitle / หัวข้อย่อยข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubTitle !== ""}
                     isInvalid={inputForm && activitySubTitle === ""}
@@ -221,7 +221,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubDetail" label="activitySubDetail / รายละเอียดกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activitySubDetail" label="activitySubDetail / รายละเอียดข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubDetail !== ""}
                     isInvalid={inputForm && activitySubDetail === ""}
@@ -233,7 +233,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityDate" label="activityDate / วันที่ กิจกรรม " className="mb-3">
+                <FloatingLabel controlId="activityDate" label="activityDate / วันที่ ข่าว " className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDate !== ""}
                     isInvalid={inputForm && activityDate === ""}
@@ -245,7 +245,7 @@ const IndexActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
              < Col md={4}>
-                <FloatingLabel controlId="activityDescription" label="activityDescription / คําอธิบายกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activityDescription" label="activityDescription / คําอธิบายข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDescription !== ""}
                     isInvalid={inputForm && activityDescription === ""}

@@ -180,7 +180,7 @@ const IndexNewsAdd: React.FC = () => {
           <Card.Body>
             <Row>
             <Col md={4}>
-                <FloatingLabel controlId="NewsName" label="NewsName / ชื่อกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="NewsName" label="NewsName / ชื่อข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newName !== ""}
                     isInvalid={inputForm && newName === ""}
@@ -192,7 +192,7 @@ const IndexNewsAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsTitle" label="NewsTitle / หัวข้อกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="NewsTitle" label="NewsTitle / หัวข้อข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newTitle !== ""}
                     isInvalid={inputForm && newTitle === ""}
@@ -204,7 +204,7 @@ const IndexNewsAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsSubTitle" label="NewsSubTitle / หัวข้อย่อยกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="NewsSubTitle" label="NewsSubTitle / หัวข้อย่อยข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newSubTitle !== ""}
                     isInvalid={inputForm && newSubTitle === ""}
@@ -216,7 +216,7 @@ const IndexNewsAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsSubDetail" label="NewsSubDetail / รายละเอียดกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="NewsSubDetail" label="NewsSubDetail / รายละเอียดข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newSubDetail !== ""}
                     isInvalid={inputForm && newSubDetail === ""}
@@ -228,7 +228,7 @@ const IndexNewsAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsDate" label="NewsDate / วันที่ กิจกรรม " className="mb-3">
+                <FloatingLabel controlId="NewsDate" label="NewsDate / วันที่ ข่าว " className="mb-3">
                   <Form.Control
                     isValid={inputForm && newDate !== ""}
                     isInvalid={inputForm && newDate === ""}
