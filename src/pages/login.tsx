@@ -17,7 +17,8 @@ export default function Login() {
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
-                  <h2 className="fw-bold mb-2 text-uppercase ">Brand</h2>
+                  <h2 className="fw-bold mb-2 text-uppercase text-center ">วิทยาลัยเทคโนโลยีพนมวันท์</h2>
+                  <img src="https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/2663e300-1089-4f86-d2bb-77a993ed4700/250" className="" alt="" />
                   <p className=" mb-5">Please enter your login and password!</p>
                   <div className="mb-3">
                     <Form>
@@ -39,11 +40,6 @@ export default function Login() {
                         className="mb-3"
                         controlId="formBasicCheckbox"
                       >
-                        <p className="small">
-                          <a className="text-primary" href="#!">
-                            Forgot password?
-                          </a>
-                        </p>
                       </Form.Group>
                       <div className="d-grid">
                         <Button variant="primary" type="submit">
@@ -51,14 +47,6 @@ export default function Login() {
                         </Button>
                       </div>
                     </Form>
-                    <div className="mt-3">
-                      <p className="mb-0  text-center">
-                        Don't have an account?{" "}
-                        <a href="{''}" className="text-primary fw-bold">
-                          Sign Up
-                        </a>
-                      </p>
-                    </div>
                   </div>
                 </div>
               </Card.Body>

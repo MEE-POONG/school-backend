@@ -63,7 +63,6 @@ const UploadPage = () => {
       )}
 
             <input type="file" accept=".png,.jpg,.jpeg" onChange={handleImageChange}  ref={fileInputRef}  name="image" />
-            <button onClick={handleUpload}>Upload</button>
             <Button onClick={handleUpload} as="input" type="submit" value="ยืนยันการอัพโหลด"  />
             {imageUrl && <img src={imageUrl} alt="Uploaded" />}
         </div>

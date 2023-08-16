@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from 'react';
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
@@ -10,13 +10,17 @@ import Link from "next/link";
 import { IndexSlder } from "@prisma/client";
 
 const IndexSlderAdd: React.FC = () => {
-  const [{ error: errorMessage, loading: IndexSlderLoading }, executeIndexSlder] = useAxios({ url: '/api/IndexSlder', method: 'POST' }, { manual: true });
-  const [title, settitle] = useState<string>("");
+  // const [{ error: errorMessage, loading: IndexSlderLoading  }, executeIndexSlder ] = useAxios({ url: '/api/indexSlder', method: 'POST' }, { manual: true });
   const [img1, setimg1] = useState<string>("");
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
- 
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
@@ -29,65 +33,57 @@ const IndexSlderAdd: React.FC = () => {
   };
 
   const clear = () => {
-    settitle("");
-    
+    setimg1("");
+
     setAlertForm("not");
     setInputForm(false);
     setCheckBody("");
   }
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-        setimg1(splittedString);
-      };
-      reader.readAsDataURL(file);
+  const handleUpload = async () => {
+    if (fileInputRef.current) {
+      const file = fileInputRef.current.files?.[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          const response = await fetch('https://upload-image.me-prompt-technology.com/', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const responseData = await response.json();
+          console.log(responseData);
+
+          // สร้าง URL ของรูปภาพจาก responseData
+          if (responseData.result?.variants[0]) {
+            setImageUrl(responseData.result.variants[11]);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
     }
   };
+  const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files && event.target.files[0];
 
-  const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    let missingFields = [];
-    if (!title) missingFields.push("title");
-    // if (!img1) missingFields.push("img1");
-    if (missingFields.length > 0) {
-      setAlertForm("warning");
-      setInputForm(true);
-      setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
-    } else {
-      try {
-        setAlertForm("primary"); // set to loading
+    if (selectedFile) {
+      const fileExtension = selectedFile.name.slice(selectedFile.name.lastIndexOf('.')).toLowerCase();
 
-        // Prepare the data to send
-        const data = {
-         title,
-         img1,
-         
-        };
-
-        const response = await executeIndexSlder({ data });
-        if (response && response.status === 201) {
-          setAlertForm("success");
-          setTimeout(() => {
-            clear();
-          }, 5000);
-        } else {
-          setAlertForm("danger");
-          throw new Error('Failed to send data');
-        }
-      } catch (error) {
-        setAlertForm("danger");
+      if (allowedExtensions.includes(fileExtension)) {
+        setSelectedImage(selectedFile);
+        setErrorMessage('');
+      } else {
+        setSelectedImage(null);
+        setErrorMessage('กรุณาเลือกรูปภาพที่มีนามสกุล JPG , jPEG หรือ PNG เท่านั้น');
       }
     }
   };
 
 
-  
   return (
     <LayOut>
       <Head>
@@ -109,40 +105,40 @@ const IndexSlderAdd: React.FC = () => {
           <Card.Body>
             <Row>
               <Col md={4}>
-                <FloatingLabel controlId="title" label="title / ชื่อโปรโมชั่น" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && title !== ""}
-                    isInvalid={inputForm && title === ""}
-                    type="text"
-                    value={title}
-                    onChange={e => settitle(e.target.value)}
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </Col>
-              {/* <Col md={4}>
-                <FloatingLabel controlId="img1" label="img1 / รูปภาพ" className="mb-3">
+                {/* <FloatingLabel controlId="img1" label="img1 / รูปภาพ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && img1 !== ""}
                     isInvalid={inputForm && img1 === ""}
                     type="file"
                     defaultValue={img1}
                     onChange={handleFileUpload}
-                    placeholder="img1"/> 
-                </FloatingLabel>
-              </Col> */}
+                    placeholder="img1" />
+                </FloatingLabel> */}
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                {selectedImage && (
+                  <div>
+                    <p>รูปภาพที่เลือก: {selectedImage.name}</p>
+                    <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ maxWidth: '100%', height: 'auto' }} />
+                    {uploadSuccess && <p style={{ color: 'green' }}>อัพโหลดสำเร็จ!</p>}
+                  </div>
+                )}
 
 
-               
+                <input type="file" accept=".png,.jpg,.jpeg" onChange={handleImageChange} ref={fileInputRef} name="image" />
+
+
+
+              </Col>
+
+
+
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">
-            <Button variant="success mx-2" onClick={handleSubmit}>
+            {/* <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
-            </Button>
-            <Button variant="primary mx-2" onClick={reloadPage}>
-              ล้าง
-            </Button>
+            </Button> */}
+            <Button onClick={handleUpload} as="input" type="submit" value="ยืนยันการอัพโหลด" />
             <Link href="/IndexSlder" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
