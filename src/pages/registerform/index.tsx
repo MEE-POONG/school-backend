@@ -155,7 +155,7 @@ const registerForm: React.FC = () => {
                     <td>{registerForm.regEmail}</td>
                     <td>
                       <Image
-                        src={`data:image/png;base64, ${registerForm.regImg}`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${registerForm.regImg}/public`}
                         alt="registerForm imge"
                         thumbnail
                       />
