@@ -195,6 +195,8 @@ const indexActivity: React.FC = () => {
         </Card>
       </div>
     </LayOut>
+
+    
   );
 };
 export default indexActivity;
