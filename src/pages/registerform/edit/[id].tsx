@@ -219,22 +219,7 @@ const RegisterFormAdd: React.FC = () => {
 
           <Card.Body>
             <Row>
-              <Col md={4}>
-                <FloatingLabel
-                  controlId="regId"
-                  label="Id / รหัส"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regId !== ""}
-                    isInvalid={inputForm && regId === ""}
-                    type="text"
-                    value={regId}
-                    onChange={(e) => setregId(e.target.value)}
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </Col>
+             
               <Col md={4}>
                 <FloatingLabel
                   controlId="regIdpersonal"
