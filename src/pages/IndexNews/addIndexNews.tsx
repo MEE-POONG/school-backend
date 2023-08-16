@@ -5,6 +5,8 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
+import axios from "axios";  
+
 
 const IndexNewsAdd: React.FC = () => {
   const [{ error: errorMessage, loading: IndexNewsLoading }, executeIndexNews] = useAxios({ url: '/api/IndexNews', method: 'POST' }, { manual: true });
@@ -12,7 +14,7 @@ const IndexNewsAdd: React.FC = () => {
   const [newTitle, setnewTitle] = useState<string>("");
   const [newSubTitle, setnewSubTitle] = useState<string>("");
   const [newSubDetail, setnewSubDetail] = useState<string>("");
-  const [newImg, setnewImg] = useState<string>("");
+  const [newImg, setnewImg] = useState<File | null>(null);
   const [newDate, setnewDate] = useState<string>("");
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
@@ -34,7 +36,7 @@ const IndexNewsAdd: React.FC = () => {
     setnewTitle("");
     setnewSubTitle("");
     setnewSubDetail("");
-    setnewImg("");
+    setnewImg(null);
     setnewDate("");
     
     setAlertForm("not");
@@ -45,13 +47,7 @@ const IndexNewsAdd: React.FC = () => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-        setnewImg(splittedString);
-      };
-      reader.readAsDataURL(file);
+      setnewImg(file); // Store the File object
     }
   };
 
@@ -59,41 +55,61 @@ const IndexNewsAdd: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
     let missingFields = [];
-    if (!newName) missingFields.push("NewsName");
-    if (!newTitle) missingFields.push("NewsTitle");
-    if (!newSubTitle) missingFields.push("NewsSubTitle");
-    if (!newSubDetail) missingFields.push("NewsSubDetail");
-    if (!newImg) missingFields.push("NewsImg");
-    if (!newDate) missingFields.push("NewsDate");
+    // Check for missing fields here...
+    if (!newName) missingFields.push("newsName");
+    if (!newTitle) missingFields.push("newsTitle");
+    if (!newSubTitle) missingFields.push("newsSubTitle");
+    if (!newSubDetail) missingFields.push("newsSubDetail");
+    if (!newImg) missingFields.push("newsImg");
+    if (!newDate) missingFields.push("newsDate");
 
-    /*if (!img) missingFields.push("img");*/
+  
     if (missingFields.length > 0) {
+      // Handle missing fields...
       setAlertForm("warning");
       setInputForm(true);
       setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
     } else {
       try {
         setAlertForm("primary"); // set to loading
-
-        // Prepare the data to send
-        const data = {
-         newName,
-         newTitle,
-         newSubTitle,
-         newSubDetail,
-         newImg,
-         newDate,         
-        };
-
-        const response = await executeIndexNews({ data });
-        if (response && response.status === 201) {
-          setAlertForm("success");
-          setTimeout(() => {
-            clear();
-          }, 5000);
-        } else {
-          setAlertForm("danger");
-          throw new Error('Failed to send data');
+  
+        // Upload the image
+        if (newImg) {
+          const formData = new FormData();
+          formData.append("file", newImg); // Assuming 'newImg' is a File object
+          const uploadResponse = await axios.post(
+            "https://upload-image.me-prompt-technology.com/",
+            formData
+          );
+  
+          if (uploadResponse.status === 200) {
+            const responseData = uploadResponse.data;
+            const imageId = responseData.result.id;
+            
+            // Prepare the data to send
+            const data = {
+              newName,
+              newTitle,
+              newSubTitle,
+              newSubDetail,
+              newImg: imageId, // Use the uploaded image ID
+              newDate,
+            };
+  
+            const response = await executeIndexNews({ data });
+            if (response && response.status === 201) {
+              setAlertForm("success");
+              setTimeout(() => {
+                clear();
+              }, 5000);
+            } else {
+              setAlertForm("danger");
+              throw new Error('Failed to send data');
+            }
+          } else {
+            setAlertForm("danger");
+            throw new Error('Image upload failed');
+          }
         }
       } catch (error) {
         setAlertForm("danger");
@@ -186,10 +202,10 @@ const IndexNewsAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel controlId="NewsImg" label="NewsImg / รูปภาพ" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && newImg !== ""}
-                    isInvalid={inputForm && newImg === ""}
+                    isValid={inputForm && newImg !== null}
+                    isInvalid={inputForm && newImg === null}
                     type="file"
-                    defaultValue={newImg}
+                    // defaultValue={newImg}
                     onChange={handleFileUpload}
                     placeholder="NewsImg"/> 
                 </FloatingLabel>
