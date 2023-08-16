@@ -5,10 +5,6 @@ const UploadPage = () => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-
-
-
-
     const handleUpload = async () => {
         if (fileInputRef.current) {
             const file = fileInputRef.current.files?.[0];
@@ -32,18 +28,14 @@ const UploadPage = () => {
                 } catch (error) {
                     console.error(error);
                 }
+
             }
         }
+
     };
-
-
-
 
     return (
         <div>
-            {/* <input ref={fileInputRef} type="file" name="image" />
-            <button onClick={handleUpload}>Upload</button>
-            {imageUrl && <img src={imageUrl} alt="Uploaded" />} */}
 
             <Form.Group controlId="formFileDisabled" className="mb-3">
                 <Form.Control ref={fileInputRef} type="file" name="image" />
