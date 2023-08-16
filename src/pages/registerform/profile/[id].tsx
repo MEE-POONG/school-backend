@@ -139,7 +139,7 @@ import { FaUserNinja } from "react-icons/fa";
 import { RegisterForm } from "@prisma/client";
 
 
-export default function ProfileDetailModal(props: { regName: string; regLastname: string; }){
+export default function ProfileDetailModal(props: {data:any}){
   const [showCheck, setShowCheck] = useState(false);
   const handleShow = () => setShowCheck(true);
   const handleClose = () => setShowCheck(false);
@@ -158,7 +158,7 @@ export default function ProfileDetailModal(props: { regName: string; regLastname
   <Modal show={showCheck} onHide={handleClose} centered size="xl">
   <Modal.Header closeButton>
           <Modal.Title>
-            รายละเอียด คุณ : {props?.regName + " " + props?.regLastname}
+            รายละเอียด คุณ : {props?.data.regName + " " + props?.data.regLastname}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
