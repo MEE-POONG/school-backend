@@ -1,1 +1,1 @@
-.login-page{max-width:330px;height:100vh;margin:auto;display:flex;align-items:center;justify-content:center}.login-page .card{width:100%}
+@import"~slick-carousel/slick/slick.css";@import"~slick-carousel/slick/slick-theme.css";@tailwind base;@tailwind components;@tailwind utilities;*{font-family:"Prompt"}

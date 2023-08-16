@@ -103,7 +103,7 @@ const IndexSlderAdd: React.FC = () => {
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              IndexSlder - เพิ่มโปรโมชั่น
+              IndexSlder - เพิ่มรูป
             </h4>
           </Card.Header>
           <Card.Body>
@@ -120,7 +120,7 @@ const IndexSlderAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col md={4}>
+              {/* <Col md={4}>
                 <FloatingLabel controlId="img1" label="img1 / รูปภาพ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && img1 !== ""}
@@ -130,7 +130,7 @@ const IndexSlderAdd: React.FC = () => {
                     onChange={handleFileUpload}
                     placeholder="img1"/> 
                 </FloatingLabel>
-              </Col>
+              </Col> */}
 
 
                

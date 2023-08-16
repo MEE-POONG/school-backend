@@ -1,16 +1,14 @@
-.login-page {
-    max-width: 330px;
-    height: 100vh;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .card {
-        width: 100%;
-        
-    }
-    // .card{
-    //     display: block;
-    //     margin-top: 0em;
-    // }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "~slick-carousel/slick/slick.css"; 
+@import "~slick-carousel/slick/slick-theme.css";
+
+*{
+    font-family: 'Prompt';
 }
+
+
+
+
