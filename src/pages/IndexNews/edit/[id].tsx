@@ -7,24 +7,23 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { IndexActivity } from "@prisma/client";
+import { IndexNews } from "@prisma/client";
 
 
 
-const IndexActivityAdd: React.FC = () => {
+const IndexNewsAdd: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [
-    { loading: updateIndexActivityLoading, error: updateIndexActivityError },
-    executeIndexActivityPut,
+    { loading: updateIndexNewsLoading, error: updateIndexNewsError },
+    executeIndexNewsPut,
   ] = useAxios({}, { manual: true });
-  const [activityName, setactivityName] = useState<string>("");
-  const [activityTitle, setactivityTitle] = useState<string>("");
-  const [activitySubTitle, setactivitySubTitle] = useState<string>("");
-  const [activitySubDetail, setactivitySubDetail] = useState<string>("");
-  const [activityImg, setactivityImg] = useState<string>("");
-  const [activityDate, setactivityDate] = useState<string>("");
-  const [activityDescription, setactivityDescription] = useState<string>("");
+  const [newName, setnewName] = useState<string>("");
+  const [newTitle, setnewTitle] = useState<string>("");
+  const [newSubTitle, setnewSubTitle] = useState<string>("");
+  const [newSubDetail, setnewSubDetail] = useState<string>("");
+  const [newImg, setnewImg] = useState<string>("");
+  const [newDate, setnewDate] = useState<string>("");
  /* const [img, setimg] = useState<string>("");*/
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
@@ -43,24 +42,23 @@ const IndexActivityAdd: React.FC = () => {
   };
 
   const [
-    { data: IndexActivityID, loading: IndexActivityIDLoading, error: IndexActivityIDError },
-    executeIndexActivityID,
-  ] = useAxios<{ data: IndexActivity; success: boolean }, any>({
-    url: `/api/indexActivity/${id}`,
+    { data: IndexNewsID, loading: IndexNewsIDLoading, error: IndexNewsIDError },
+    executeIndexNewsID,
+  ] = useAxios<{ data: IndexNews; success: boolean }, any>({
+    url: `/api/IndexNews/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
 
   useEffect(() => {
     if (id) {
-      executeIndexActivityID().then(({ data }) => {
+      executeIndexNewsID().then(({ data }) => {
         if (data?.data) {
-          setactivityName(data?.data?.activityName || "");
-          setactivityTitle(data?.data?.activityTitle || "")
-          setactivitySubTitle(data?.data?.activitySubDetail || "")
-          setactivitySubDetail(data?.data?.activitySubDetail || "")
-          setactivityImg(data?.data?.activityImg || "")
-          setactivityDate(data?.data?. activityDate || "")
-          setactivityDescription(data?.data?.activityDescription || "")
+          setnewName(data?.data?.newName || "");
+          setnewTitle(data?.data?.newTitle || "")
+          setnewSubTitle(data?.data?.newSubDetail || "")
+          setnewSubDetail(data?.data?.newSubDetail || "")
+          setnewImg(data?.data?.newImg || "")
+          setnewDate(data?.data?.newDate || "")
         /*  setimg(data?.data?.img || "")
           setBank(data?.data?.bank || "")
           setBankAccount(data?.data?.bankAccount || "")
@@ -73,15 +71,14 @@ const IndexActivityAdd: React.FC = () => {
   }, [id]);
 
   const reloadPage = () => {
-    executeIndexActivityID().then(({ data }) => {
+    executeIndexNewsID().then(({ data }) => {
       if (data?.data) {
-        setactivityName(data?.data?.activityName || "");
-          setactivityTitle(data?.data?.activityTitle || "")
-          setactivitySubTitle(data?.data?.activitySubDetail || "")
-          setactivitySubDetail(data?.data?.activitySubDetail || "")
-          setactivityImg(data?.data?.activityImg || "")
-          setactivityDate(data?.data?. activityDate || "")
-          setactivityDescription(data?.data?.activityDescription || "")
+        setnewName(data?.data?.newName || "");
+          setnewTitle(data?.data?.newTitle || "")
+          setnewSubTitle(data?.data?.newSubDetail || "")
+          setnewSubDetail(data?.data?.newSubDetail || "")
+          setnewImg(data?.data?.newImg || "")
+          setnewDate(data?.data?.newDate || "")
        /* setimg(data?.data?.img || "")
        setUsername(data?.data?.username || "");
         setPassword(data?.data?.password || "")
@@ -103,7 +100,7 @@ const IndexActivityAdd: React.FC = () => {
       reader.onloadend = () => {
         const base64String = reader.result as string;
         const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-        setactivityImg(splittedString);
+        setnewImg(splittedString);
       };
       reader.readAsDataURL(file);
     }
@@ -114,13 +111,12 @@ const IndexActivityAdd: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
     let missingFields = [];
-    if (!activityName) missingFields.push("activityName");
-    if (!activityTitle) missingFields.push("activityTitle");
-    if (!activitySubTitle) missingFields.push("activitySubTitle"); 
-    if (!activitySubDetail) missingFields.push("activitySubDetail");
-    if (!activityImg) missingFields.push("activityImg");
-    if (!activityDate) missingFields.push("activityDate"); 
-    if (!activityDescription) missingFields.push("activityDescription");  
+    if (!newName) missingFields.push("NewsName");
+    if (!newTitle) missingFields.push("NewsTitle");
+    if (!newSubTitle) missingFields.push("NewsSubTitle"); 
+    if (!newSubDetail) missingFields.push("NewsSubDetail");
+    if (!newImg) missingFields.push("NewsImg");
+    if (!newDate) missingFields.push("NewsDate"); 
   
     if (missingFields.length > 0) {
       setAlertForm("warning");
@@ -131,20 +127,19 @@ const IndexActivityAdd: React.FC = () => {
         setAlertForm("primary");
 
         const data = {
-            activityName,
-            activityTitle,
-            activitySubTitle,
-            activitySubDetail,
-            activityImg,
-            activityDate,
-            activityDescription,
+            newName,
+            newTitle,
+            newSubTitle,
+            newSubDetail,
+            newImg,
+            newDate,
           /*img,*/
         };
 
 
         // Execute the update
-        const response = await executeIndexActivityPut({
-          url: "/api/indexActivity/" + id,
+        const response = await executeIndexNewsPut({
+          url: "/api/IndexNews/" + id,
           method: "PUT",
           data
         });
@@ -174,97 +169,86 @@ const IndexActivityAdd: React.FC = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='IndexActivity-page'>
+      <div className='IndexNews-page'>
         <Card>
           <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              IndexActivity - แก้ไขข้อมูล
+              IndexNews - แก้ไขข้อมูล
             </h4>
           </Card.Header>
           <Card.Body>
             <Row>
             <Col md={4}>
-                <FloatingLabel controlId="activityName" label="activityName / ชื่อข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsName" label="NewsName / ชื่อข่าว" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && activityName !== ""}
-                    isInvalid={inputForm && activityName === ""}
+                    isValid={inputForm && newName !== ""}
+                    isInvalid={inputForm && newName === ""}
                     type="text"
-                    value={activityName}
-                    onChange={e => setactivityName(e.target.value)}
+                    value={newName}
+                    onChange={e => setnewName(e.target.value)}
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityTitle" label="activityTitle / หัวข้อข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsTitle" label="NewsTitle / หัวข้อข่าว" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && activityTitle !== ""}
-                    isInvalid={inputForm && activityTitle === ""}
+                    isValid={inputForm && newTitle !== ""}
+                    isInvalid={inputForm && newTitle === ""}
                     type="title2"
-                    value={activityTitle}
-                    onChange={e => setactivityTitle(e.target.value)}
+                    value={newTitle}
+                    onChange={e => setnewTitle(e.target.value)}
                     placeholder="title2"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubTitle" label="activitySubTitle / หัวข้อย่อยข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsSubTitle" label="NewsSubTitle / หัวข้อย่อยข่าว" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && activitySubTitle !== ""}
-                    isInvalid={inputForm && activitySubTitle === ""}
+                    isValid={inputForm && newSubTitle !== ""}
+                    isInvalid={inputForm && newSubTitle === ""}
                     type="text"
-                    value={activitySubTitle}
-                    onChange={e => setactivitySubTitle(e.target.value)}
-                    placeholder="activitySubTitle"
+                    value={newSubTitle}
+                    onChange={e => setnewSubTitle(e.target.value)}
+                    placeholder="NewsSubTitle"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubDetail" label="activitySubDetail / รายละเอียดข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsSubDetail" label="NewsSubDetail / รายละเอียดข่าว" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && activitySubDetail !== ""}
-                    isInvalid={inputForm && activitySubDetail === ""}
+                    isValid={inputForm && newSubDetail !== ""}
+                    isInvalid={inputForm && newSubDetail === ""}
                     type="text"
-                    value={activitySubDetail}
-                    onChange={e => setactivitySubDetail(e.target.value)}
-                    placeholder="activitySubDetail"
+                    value={newSubDetail}
+                    onChange={e => setnewSubDetail(e.target.value)}
+                    placeholder="NewsSubDetail"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityDate" label="activityDate / วันที่ ข่าว " className="mb-3">
+                <FloatingLabel controlId="NewsDate" label="NewsDate / วันที่ ข่าว " className="mb-3">
                   <Form.Control
-                    isValid={inputForm && activityDate !== ""}
-                    isInvalid={inputForm && activityDate === ""}
+                    isValid={inputForm && newDate !== ""}
+                    isInvalid={inputForm && newDate === ""}
                     type="text"
-                    value={activityDate}
-                    onChange={e => setactivityDate(e.target.value)}
-                    placeholder="activityDate"
+                    value={newDate}
+                    onChange={e => setnewDate(e.target.value)}
+                    placeholder="NewsDate"
                   />
                 </FloatingLabel>
               </Col>
-             < Col md={4}>
-                <FloatingLabel controlId="activityDescription" label="activityDescription / คําอธิบายข่าว" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && activityDescription !== ""}
-                    isInvalid={inputForm && activityDescription === ""}
-                    type="text"
-                    value={activityDescription}
-                    onChange={e => setactivityDescription(e.target.value)}
-                    placeholder="activityDescription"
-                  />
-                </FloatingLabel>
-              </Col>
+        
               <Col md={4}>
-                <FloatingLabel controlId="activityImg" label="activityImg / รูปภาพ" className="mb-3">
+                <FloatingLabel controlId="NewsImg" label="NewsImg / รูปภาพ" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && activityImg !== ""}
-                    isInvalid={inputForm && activityImg === ""}
+                    isValid={inputForm && newImg !== ""}
+                    isInvalid={inputForm && newImg === ""}
                     type="file"
-                    defaultValue={activityImg}
+                    defaultValue={newImg}
                     onChange={handleFileUpload}
-                    placeholder="activityImg"/> 
+                    placeholder="NewsImg"/> 
                 </FloatingLabel>
               </Col>
               
@@ -280,7 +264,7 @@ const IndexActivityAdd: React.FC = () => {
             <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button>
-            <Link href="/IndexActivity" className="btn btn-danger mx-2">
+            <Link href="/IndexNews" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -289,7 +273,7 @@ const IndexActivityAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default IndexActivityAdd;
+export default IndexNewsAdd;
 
 function setAlertForm(arg0: string) {
   throw new Error("Function not implemented.");
