@@ -40,7 +40,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/recommend" || checkClickPath === "/recommend/agent" || checkClickPath === "/recommend/member" || asPath === "/recommend/member/add"} >
-                            <Link href="/indexSlder" className={asPath === "/indexSlder" || asPath === "/indexSlder/agent" ? "nav-link active" : "nav-link"}>
+                            <Link href="/indexSlider" className={asPath === "/indexSlider" || asPath === "/indexSlider/agent" ? "nav-link active" : "nav-link"}>
                                 <span>รูปภาพหน้าแรก</span>
                             </Link>
                             <Link href="/recommend/member" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
