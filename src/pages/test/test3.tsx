@@ -2,27 +2,10 @@ import React, { useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
 function ImageUploadButton() {
+
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
-
-  const allowedExtensions = ['.png', '.jpg', '.jpeg'];
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0];
-
-    if (selectedFile) {
-      const fileExtension = selectedFile.name.slice(selectedFile.name.lastIndexOf('.')).toLowerCase();
-      
-      if (allowedExtensions.includes(fileExtension)) {
-        setSelectedImage(selectedFile);
-        setErrorMessage('');
-      } else {
-        setSelectedImage(null);
-        setErrorMessage('กรุณาเลือกรูปภาพที่มีนามสกุล JPG , jPEG หรือ PNG เท่านั้น');
-      }
-    }
-  };
-
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -49,15 +32,34 @@ function ImageUploadButton() {
             } catch (error) {
                 console.error(error);
             }
-
         }
     }
-
 };
 
+  const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files && event.target.files[0];
+
+    if (selectedFile) {
+      const fileExtension = selectedFile.name.slice(selectedFile.name.lastIndexOf('.')).toLowerCase();
+      
+      if (allowedExtensions.includes(fileExtension)) {
+        setSelectedImage(selectedFile);
+        setErrorMessage('');
+      } else {
+        setSelectedImage(null);
+        setErrorMessage('กรุณาเลือกรูปภาพที่มีนามสกุล JPG , jPEG หรือ PNG เท่านั้น');
+      }
+    }
+  };
+
+
+
+
   return (
+    <>
     <div>
-      {/* <input type="file" accept=".png,.jpg,.jpeg" onChange={handleImageChange} /> */}
+      <input type="file" accept=".png,.jpg,.jpeg" onChange={handleImageChange} />
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       {selectedImage && (
         <div>
@@ -72,10 +74,12 @@ function ImageUploadButton() {
       <Form.Label>อัพโหลดไฟล์รูปภาพ</Form.Label>
       <Form.Control type="file" accept=".png,.jpg,.jpeg" onChange={handleImageChange} />
     </Form.Group>
-    <Button as="input" type="submit" value="ยืนยันการอัพโหลด" onClick={handleUpload} />
+    <Button onClick={handleUpload} as="input" type="submit" value="ยืนยันการอัพโหลด"  />
+
+    <button onClick={handleUpload}>Upload</button>
     </div>
 
-    
+    </>
   );
 }
 
