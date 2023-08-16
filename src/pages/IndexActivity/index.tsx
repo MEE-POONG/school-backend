@@ -134,7 +134,7 @@ const indexActivity: React.FC = () => {
                     <td>{indexActivity.activityDescription}</td>
                     <td>
                       <Image
-                        src={`data:image/png;base64, ${indexActivity.activityImg}`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${indexActivity.activityImg}/public`}
                         alt="indexActivity imge"
                         thumbnail
                       />
@@ -176,6 +176,8 @@ const indexActivity: React.FC = () => {
         </Card>
       </div>
     </LayOut>
+
+    
   );
 };
 export default indexActivity;
