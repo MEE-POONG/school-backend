@@ -29,7 +29,6 @@ model AdminUser {
 // รูปสไลด์แรก
 model IndexSlder {
   id   String  @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
   img1 String?
 }
 

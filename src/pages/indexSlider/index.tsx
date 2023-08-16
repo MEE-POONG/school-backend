@@ -108,7 +108,6 @@ const indexSlder: React.FC = () => {
               <thead>
                 <tr>
                   <th className="no">No</th>
-                  <th>ชื่อ</th>
                   <th>รูป</th>
                   <th>จัดการ</th>
                 </tr>
@@ -118,11 +117,10 @@ const indexSlder: React.FC = () => {
                 {filteredindexSldersData.map((indexSlder, index) => (
                   <tr key={indexSlder.id}>
                     <td>{index + 1}</td>
-                    <td>{indexSlder.title}</td>
                     <td>
                       <Image
-                        src={`data:image/png;base64, ${indexSlder.img1}`}
-                        alt="indexSlder imge"
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${indexSlder.img1}/public`}
+                        alt="indexActivity imge"
                         thumbnail
                       />
                     </td>

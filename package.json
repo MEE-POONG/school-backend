@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
     "@prisma/client": "^5.1.1",
@@ -21,6 +23,7 @@
     "bootstrap": "^5.3.1",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
+    "mdb-react-ui-kit": "^6.2.0",
     "next": "13.4.13",
     "node-fetch": "^3.3.2",
     "postcss": "8.4.27",

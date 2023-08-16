@@ -23,13 +23,6 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
         <>
             <Offcanvas show={show} onHide={handleClose} placement="start" backdrop={false} scroll={true} >
                 <Offcanvas.Body className='ps-0 pe-2'>
-                    <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
-                        <i >
-                            <FaTachometerAlt />
-                        </i>
-                        <span className="ms-2">หน้าแรก</span>
-                    </Link>
-
 
                     <div id="recommend" className='select-page'>
                         <Dropdown.Toggle onClick={() => handlePath('/recommend')} className={asPath === "/recommend" || asPath === "/recommend/agent" || asPath === "/recommend/member" || asPath === "/partner/member/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >

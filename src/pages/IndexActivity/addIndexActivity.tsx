@@ -97,7 +97,7 @@ const IndexActivityAdd: React.FC = () => {
               activityImg: imageId, // Use the uploaded image ID
               activityDate,
               activityDescription,
-            };
+            };    
   
             const response = await executeIndexActivity({ data });
             if (response && response.status === 201) {
