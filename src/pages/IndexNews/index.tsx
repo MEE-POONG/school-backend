@@ -141,7 +141,7 @@ const indexNews: React.FC = () => {
                   <tr key={indexNews.id}>
                     <td>{index + 1}</td>
                     {/* <td>{indexNews.regId}</td> */}
-                    <td>{indexNews.newName}</td>   
+                    <td>{indexNews.newName}</td>
                     {/* <td>{indexNews.regBirth}</td> */}
                     <td>{indexNews.newTitle}</td>
                     <td>{indexNews.newSubTitle}</td>
@@ -150,10 +150,10 @@ const indexNews: React.FC = () => {
                     <td>{indexNews.newDate}</td>
                     {/* <td>{indexNews.regEname}</td>
                     <td>{indexNews.regElastname}</td> */}
-                    
+
                     <td>
                       <Image
-                        src={`data:image/png;base64, ${indexNews.newImg}`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${indexNews.newImg}/public`}
                         alt="indexNews imge"
                         thumbnail
                       />
