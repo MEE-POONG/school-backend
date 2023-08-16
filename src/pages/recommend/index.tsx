@@ -1,9 +1,14 @@
-import React from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Image, Row } from "react-bootstrap";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const ReComMend: React.FC = () => {
+
+const ReComMend: React.FC = (onUpload) => {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+
   return (
     <LayOut>
       <Head>
@@ -18,7 +23,7 @@ const ReComMend: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              แก้ไขรูปภาพสไลด์ 
+              แก้ไขรูปภาพสไลด์
             </h4>
             <span>
               <Button className="ms-2 btn" bsPrefix="icon">
@@ -34,23 +39,14 @@ const ReComMend: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <Row>
-              <Col lg="3" className="text-center">
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="logo" />
-                <div className="d-flex justify-content-center">
-                  <div className="btn btn-primary btn-rounded">
-                    <label className="form-label text-white m-1" htmlFor="customFile1">Logo</label>
-                    <input type="file" className="form-control d-none" id="customFile1" />
-                  </div>
-                </div>
-                <Image src="./images/logo-default.png" width={'200px'} className="m-3" alt="QR Code" />
-                <div className="d-flex justify-content-center">
-                  <div className="btn btn-primary btn-rounded">
-                    <label className="form-label text-white m-1" htmlFor="customFile1">QR Code Line</label>
-                    <input type="file" className="form-control d-none" id="customFile1" />
-                  </div>
-                </div>
-              </Col>
-              <Col lg="9" >
+
+
+
+
+
+             
+
+              {/* <Col lg="9" >
                 <Row>
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -77,7 +73,7 @@ const ReComMend: React.FC = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-              </Col>
+              </Col> */}
             </Row>
           </Card.Body>
           <Card.Footer className="d-flex space-between">
