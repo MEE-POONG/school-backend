@@ -4,6 +4,7 @@ import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
+import axios from "axios";  
 import Link from "next/link";
 
 const IndexActivityAdd: React.FC = () => {
@@ -12,7 +13,7 @@ const IndexActivityAdd: React.FC = () => {
   const [activityTitle, setactivityTitle] = useState<string>("");
   const [activitySubTitle, setactivitySubTitle] = useState<string>("");
   const [activitySubDetail, setactivitySubDetail] = useState<string>("");
-  const [activityImg, setactivityImg] = useState<string>("");
+  const [activityImg, setactivityImg] = useState<File | null>(null);
   const [activityDate, setactivityDate] = useState<string>("");
   const [activityDescription, setactivityDescription] = useState<string>("");
   const [alertForm, setAlertForm] = useState<string>("not");
@@ -35,7 +36,7 @@ const IndexActivityAdd: React.FC = () => {
     setactivityTitle("");
     setactivitySubTitle("");
     setactivitySubDetail("");
-    setactivityImg("");
+    setactivityImg(null);
     setactivityDate("");
     setactivityDescription("");
     
@@ -47,13 +48,7 @@ const IndexActivityAdd: React.FC = () => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-        setactivityImg(splittedString);
-      };
-      reader.readAsDataURL(file);
+      setactivityImg(file); // Store the File object
     }
   };
 
@@ -61,6 +56,7 @@ const IndexActivityAdd: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
     let missingFields = [];
+    // Check for missing fields here...
     if (!activityName) missingFields.push("activityName");
     if (!activityTitle) missingFields.push("activityTitle");
     if (!activitySubTitle) missingFields.push("activitySubTitle");
@@ -69,36 +65,54 @@ const IndexActivityAdd: React.FC = () => {
     if (!activityDate) missingFields.push("activityDate");
     if (!activityDescription) missingFields.push("activityDescription");
 
-    /*if (!img) missingFields.push("img");*/
+  
     if (missingFields.length > 0) {
+      // Handle missing fields...
       setAlertForm("warning");
       setInputForm(true);
       setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
     } else {
       try {
         setAlertForm("primary"); // set to loading
-
-        // Prepare the data to send
-        const data = {
-         activityName,
-         activityTitle,
-         activitySubTitle,
-         activitySubDetail,
-         activityImg,
-         activityDate,
-         activityDescription,
-         
-        };
-
-        const response = await executeIndexActivity({ data });
-        if (response && response.status === 201) {
-          setAlertForm("success");
-          setTimeout(() => {
-            clear();
-          }, 5000);
-        } else {
-          setAlertForm("danger");
-          throw new Error('Failed to send data');
+  
+        // Upload the image
+        if (activityImg) {
+          const formData = new FormData();
+          formData.append("file", activityImg); // Assuming 'activityImg' is a File object
+          const uploadResponse = await axios.post(
+            "https://upload-image.me-prompt-technology.com/",
+            formData
+          );
+  
+          if (uploadResponse.status === 200) {
+            const responseData = uploadResponse.data;
+            const imageId = responseData.result.id;
+            
+            // Prepare the data to send
+            const data = {
+              activityName,
+              activityTitle,
+              activitySubTitle,
+              activitySubDetail,
+              activityImg: imageId, // Use the uploaded image ID
+              activityDate,
+              activityDescription,
+            };
+  
+            const response = await executeIndexActivity({ data });
+            if (response && response.status === 201) {
+              setAlertForm("success");
+              setTimeout(() => {
+                clear();
+              }, 5000);
+            } else {
+              setAlertForm("danger");
+              throw new Error('Failed to send data');
+            }
+          } else {
+            setAlertForm("danger");
+            throw new Error('Image upload failed');
+          }
         }
       } catch (error) {
         setAlertForm("danger");
@@ -203,10 +217,10 @@ const IndexActivityAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel controlId="activityImg" label="activityImg / รูปภาพ" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && activityImg !== ""}
-                    isInvalid={inputForm && activityImg === ""}
+                    isValid={inputForm && activityImg !== null}
+                    isInvalid={inputForm && activityImg === null}
                     type="file"
-                    defaultValue={activityImg}
+                    //defaultValue={activityImg}
                     onChange={handleFileUpload}
                     placeholder="activityImg"/> 
                 </FloatingLabel>
