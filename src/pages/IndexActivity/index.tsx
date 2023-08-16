@@ -97,20 +97,6 @@ const indexActivity: React.FC = () => {
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อกิจกรรม</h4>
 
-            {/* ค้นหาข้อมูล */}
-            {/* <InputGroup className="w-auto" bsPrefix="input-icon">
-              <InputGroup.Text id="basic-addon1">
-                <FaSearch />
-              </InputGroup.Text>
-              <Form.Control
-                onChange={e => handleChangeSearchTerm(e.target.value)}
-                placeholder="ค้นหาโปรโมชั่น"
-                aria-label="Fullname"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup> */}
-            {/* <AddListName /> */}
-
             <Link href="/IndexActivity/addIndexActivity" className="ms-2 btn icon icofn-primary">
               เพิ่มกิจกรรม
             </Link>
@@ -140,16 +126,11 @@ const indexActivity: React.FC = () => {
                 {filteredindexActivitysData.map((indexActivity, index) => (
                   <tr key={indexActivity.id}>
                     <td>{index + 1}</td>
-                    {/* <td>{indexActivity.regId}</td> */}
                     <td>{indexActivity.activityName}</td>
-                    {/* <td>{indexActivity.regBirth}</td> */}
                     <td>{indexActivity.activityTitle}</td>
                     <td>{indexActivity.activitySubTitle}</td>
-                    {/* <td>{indexActivity.regNation}</td> */}
                     <td>{indexActivity.activitySubDetail}</td>
                     <td>{indexActivity.activityDate}</td>
-                    {/* <td>{indexActivity.regEname}</td>
-                    <td>{indexActivity.regElastname}</td> */}
                     <td>{indexActivity.activityDescription}</td>
                     <td>
                       <Image
