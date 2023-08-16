@@ -39,7 +39,7 @@ const RegisterFormAdd: React.FC = () => {
   const [regElastname, setregElastname] = useState<string>("");
   const [regPhone, setregPhone] = useState<string>("");
   const [regEmail, setregEmail] = useState<string>("");
-  const [regImg, setregImg] = useState<string>("");
+  const [regImg, setregImg] = useState<File | null>(null);
 
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
@@ -85,7 +85,7 @@ const RegisterFormAdd: React.FC = () => {
           setregElastname(data?.RegisterForm?.regElastname || "");
           setregPhone(data?.RegisterForm?.regPhone || "");
           setregEmail(data?.RegisterForm?.regEmail || "");
-          setregImg(data?.RegisterForm?.regImg || "");
+          //setregImg(data?.RegisterForm?.regImg || "");
 
         }
       });
@@ -107,21 +107,16 @@ const RegisterFormAdd: React.FC = () => {
         setregElastname(data?.RegisterForm?.regElastname || "");
         setregPhone(data?.RegisterForm?.regPhone || "");
         setregEmail(data?.RegisterForm?.regEmail || "");
-        setregImg(data?.RegisterForm?.regImg || "");
+        setregImg(null);
 
       }
     });
   };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-        setregImg(splittedString);
-      };
-      reader.readAsDataURL(file);
+      setregImg(file); // Store the File object
     }
   };
 
@@ -397,22 +392,22 @@ const RegisterFormAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
 
-              <Col md={4}>
+              {/* <Col md={4}>
                 <FloatingLabel
                   controlId="regImg"
                   label="Img / รูปภาพผู้สมัคร"
                   className="mb-3"
                 >
                   <Form.Control
-                    isValid={inputForm && regImg !== ""}
-                    isInvalid={inputForm && regImg === ""}
+                    isValid={inputForm && regImg !== null}
+                    isInvalid={inputForm && regImg === null}
                     type="file"
-                    defaultValue={regImg}
+                   // defaultValue={regImg}
                     onChange={handleFileUpload}
                     placeholder="regImg"
                   />
                 </FloatingLabel>
-              </Col>
+              </Col> */}
 
 
 
