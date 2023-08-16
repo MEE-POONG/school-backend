@@ -66,8 +66,6 @@ const IndexSlderAdd: React.FC = () => {
         // Prepare the data to send
         const data = {
          title,
-         subtitle,
-         detail,
          img1,
          
         };
@@ -119,30 +117,6 @@ const IndexSlderAdd: React.FC = () => {
                     value={title}
                     onChange={e => settitle(e.target.value)}
                     placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="subtitle" label="subtitle / หัวข้อย่อย" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && subtitle !== ""}
-                    isInvalid={inputForm && subtitle === ""}
-                    type="subtitle"
-                    value={subtitle}
-                    onChange={e => setsubtitle(e.target.value)}
-                    placeholder="subtitle"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="detail" label="detail / รายละเอียด" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && detail !== ""}
-                    isInvalid={inputForm && detail === ""}
-                    type="text"
-                    value={detail}
-                    onChange={e => setdetail(e.target.value)}
-                    placeholder="detail"
                   />
                 </FloatingLabel>
               </Col>
