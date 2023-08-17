@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 const UploadPage = () => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);

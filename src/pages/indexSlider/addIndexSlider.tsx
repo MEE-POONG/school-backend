@@ -1,26 +1,19 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-// import { bankMap } from '@/test';
-// import { IndexSlder } from '@prisma/client';
-import { IndexSlder } from "@prisma/client";
+import axios from "axios";
 
-const IndexSlderAdd: React.FC = () => {
-  // const [{ error: errorMessage, loading: IndexSlderLoading  }, executeIndexSlder ] = useAxios({ url: '/api/indexSlder', method: 'POST' }, { manual: true });
-  const [img1, setimg1] = useState<string>("");
+
+const IndexNewsAdd: React.FC = () => {
+  const [{ error: errorMessage, loading: IndexNewsLoading }, executeIndexNews] = useAxios({ url: '/api/indexSlder', method: 'POST' }, { manual: true });
+  const [img1, setimg1] = useState<File | null>(null);
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
-
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
@@ -33,55 +26,76 @@ const IndexSlderAdd: React.FC = () => {
   };
 
   const clear = () => {
-    setimg1("");
+    setimg1(null);
 
     setAlertForm("not");
     setInputForm(false);
     setCheckBody("");
   }
 
-  const handleUpload = async () => {
-    if (fileInputRef.current) {
-      const file = fileInputRef.current.files?.[0];
-      if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setimg1(file); // Store the File object
+    }
+  };
 
-        try {
-          const response = await fetch('https://upload-image.me-prompt-technology.com/', {
-            method: 'POST',
-            body: formData,
-          });
+  const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    let missingFields = [];
+    // Check for missing fields here...
+    if (!img1) missingFields.push("newsImg");
 
-          const responseData = await response.json();
-          console.log(responseData);
 
-          // สร้าง URL ของรูปภาพจาก responseData
-          if (responseData.result?.variants[0]) {
-            setImageUrl(responseData.result.variants[11]);
+    if (missingFields.length > 0) {
+      // Handle missing fields...
+      setAlertForm("warning");
+      setInputForm(true);
+      setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
+    } else {
+      try {
+        setAlertForm("primary"); // set to loading
+
+        // Upload the image
+        if (img1) {
+          const formData = new FormData();
+          formData.append("file", img1); // Assuming 'img1' is a File object
+          const uploadResponse = await axios.post(
+            "https://upload-image.me-prompt-technology.com/",
+            formData
+          );
+
+          if (uploadResponse.status === 200) {
+            const responseData = uploadResponse.data;
+            const imageId = responseData.result.id;
+
+            // Prepare the data to send
+            const data = {
+              img1: imageId, // Use the uploaded image ID
+            };
+
+            const response = await executeIndexNews({ data });
+            if (response && response.status === 201) {
+              setAlertForm("success");
+              setTimeout(() => {
+                clear();
+              }, 5000);
+            } else {
+              setAlertForm("danger");
+              throw new Error('Failed to send data');
+            }
+          } else {
+            setAlertForm("danger");
+            throw new Error('Image upload failed');
           }
-        } catch (error) {
-          console.error(error);
         }
+      } catch (error) {
+        setAlertForm("danger");
       }
     }
   };
-  const allowedExtensions = ['.png', '.jpg', '.jpeg'];
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0];
 
-    if (selectedFile) {
-      const fileExtension = selectedFile.name.slice(selectedFile.name.lastIndexOf('.')).toLowerCase();
-
-      if (allowedExtensions.includes(fileExtension)) {
-        setSelectedImage(selectedFile);
-        setErrorMessage('');
-      } else {
-        setSelectedImage(null);
-        setErrorMessage('กรุณาเลือกรูปภาพที่มีนามสกุล JPG , jPEG หรือ PNG เท่านั้น');
-      }
-    }
-  };
 
 
   return (
@@ -94,40 +108,27 @@ const IndexSlderAdd: React.FC = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='IndexSlder-page'>
+      <div className='IndexNews-page'>
         <Card>
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              IndexSlder - เพิ่มรูป
+              IndexNews - เพิ่มข่าว
             </h4>
           </Card.Header>
           <Card.Body>
             <Row>
+
               <Col md={4}>
-                {/* <FloatingLabel controlId="img1" label="img1 / รูปภาพ" className="mb-3">
+                <FloatingLabel controlId="NewsImg" label="NewsImg / รูปภาพ" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && img1 !== ""}
-                    isInvalid={inputForm && img1 === ""}
+                    isValid={inputForm && img1 !== null}
+                    isInvalid={inputForm && img1 === null}
                     type="file"
-                    defaultValue={img1}
+                    // defaultValue={img1}
                     onChange={handleFileUpload}
-                    placeholder="img1" />
-                </FloatingLabel> */}
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                {selectedImage && (
-                  <div>
-                    <p>รูปภาพที่เลือก: {selectedImage.name}</p>
-                    <img src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ maxWidth: '100%', height: 'auto' }} />
-                    {uploadSuccess && <p style={{ color: 'green' }}>อัพโหลดสำเร็จ!</p>}
-                  </div>
-                )}
-
-
-                <input type="file" accept=".png,.jpg,.jpeg" onChange={handleImageChange} ref={fileInputRef} name="image" />
-
-
-
+                    placeholder="NewsImg" />
+                </FloatingLabel>
               </Col>
 
 
@@ -135,11 +136,13 @@ const IndexSlderAdd: React.FC = () => {
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">
-            {/* <Button variant="success mx-2" onClick={handleSubmit}>
+            <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
-            </Button> */}
-            <Button onClick={handleUpload} as="input" type="submit" value="ยืนยันการอัพโหลด" />
-            <Link href="/IndexSlder" className="btn btn-danger mx-2">
+            </Button>
+            <Button variant="primary mx-2" onClick={reloadPage}>
+              ล้าง
+            </Button>
+            <Link href="/IndexNews" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -148,4 +151,4 @@ const IndexSlderAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default IndexSlderAdd;
+export default IndexNewsAdd;
