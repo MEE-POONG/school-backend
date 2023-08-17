@@ -54,7 +54,7 @@ const IndexActivityAdd: React.FC = () => {
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    event.stopPropagation();
+    //event.stopPropagation();
     let missingFields = [];
     // Check for missing fields here...
     if (!activityName) missingFields.push("activityName");
