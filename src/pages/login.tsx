@@ -4,10 +4,40 @@
 //     )
 // }
 
-
+import { useState, useEffect } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 
 export default function Login() {
+  const [data, setData] = useState<{ adminUser: { email: string, password: string } } | null>(null);
+  const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+const handleLogin = () => {
+  // เช็คว่าข้อมูลที่กรอกตรงกับข้อมูลจาก API หรือไม่
+  if (data && data.adminUser && data.adminUser.email === email && data.adminUser.password === password) {
+    // ทำการเปลี่ยนหน้าไปยัง "/"
+    window.location.href = "/";
+  } else {
+    console.log("Invalid credentials");
+  }
+};
+
+  useEffect(() => {
+    // Fetch data from the API
+    fetch("/api/checkLogin")
+      .then((response) => response.json())
+      .then((data) => {
+        // Set the fetched data to the state
+        setData(data);
+        console.log("Fetched data:", data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  
+
   return (
     <div>
       <Container>
@@ -26,7 +56,7 @@ export default function Login() {
                         <Form.Label className="text-center">
                           Email address
                         </Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
                       </Form.Group>
 
                       <Form.Group
@@ -34,7 +64,7 @@ export default function Login() {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
                       </Form.Group>
                       <Form.Group
                         className="mb-3"
@@ -42,7 +72,7 @@ export default function Login() {
                       >
                       </Form.Group>
                       <div className="d-grid">
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" onClick={handleLogin}>
                           Login
                         </Button>
                       </div>
