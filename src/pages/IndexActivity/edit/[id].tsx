@@ -118,7 +118,7 @@ const IndexActivityAdd: React.FC = () => {
     if (!activityTitle) missingFields.push("activityTitle");
     if (!activitySubTitle) missingFields.push("activitySubTitle"); 
     if (!activitySubDetail) missingFields.push("activitySubDetail");
-    if (!activityImg) missingFields.push("activityImg");
+    // if (!activityImg) missingFields.push("activityImg");
     if (!activityDate) missingFields.push("activityDate"); 
     if (!activityDescription) missingFields.push("activityDescription");  
   
@@ -135,7 +135,7 @@ const IndexActivityAdd: React.FC = () => {
             activityTitle,
             activitySubTitle,
             activitySubDetail,
-            activityImg,
+            // activityImg,
             activityDate,
             activityDescription,
           /*img,*/
@@ -256,7 +256,7 @@ const IndexActivityAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col md={4}>
+              {/* <Col md={4}>
                 <FloatingLabel controlId="activityImg" label="activityImg / รูปภาพ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityImg !== ""}
@@ -266,7 +266,7 @@ const IndexActivityAdd: React.FC = () => {
                     onChange={handleFileUpload}
                     placeholder="activityImg"/> 
                 </FloatingLabel>
-              </Col>
+              </Col> */}
               
               
             
@@ -277,9 +277,9 @@ const IndexActivityAdd: React.FC = () => {
             <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
             </Button>
-            <Button variant="primary mx-2" onClick={reloadPage}>
+            {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
-            </Button>
+            </Button> */}
             <Link href="/IndexActivity" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>

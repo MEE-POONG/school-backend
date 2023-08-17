@@ -107,7 +107,7 @@ const RegisterFormAdd: React.FC = () => {
         setregElastname(data?.RegisterForm?.regElastname || "");
         setregPhone(data?.RegisterForm?.regPhone || "");
         setregEmail(data?.RegisterForm?.regEmail || "");
-        setregImg(null);
+        //setregImg(null);
 
       }
     });
@@ -124,7 +124,7 @@ const RegisterFormAdd: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
     let missingFields = [];
-    if (!regId) missingFields.push("regId");
+   // if (!regId) missingFields.push("regId");
     if (!regIdpersonal) missingFields.push("regIdpersonal");
     if (!regBirth) missingFields.push("regBirth");
     if (!regPrefix) missingFields.push("regPrefix");
@@ -136,7 +136,7 @@ const RegisterFormAdd: React.FC = () => {
     if (!regPhone) missingFields.push("regPhone");
     if (!regEmail) missingFields.push("regEmail");
     if (!regBirth) missingFields.push("regBirth");
-    if (!regImg) missingFields.push("regImg");
+    //if (!regImg) missingFields.push("regImg");
    
 
     if (missingFields.length > 0) {
@@ -148,7 +148,7 @@ const RegisterFormAdd: React.FC = () => {
         setAlertForm("primary");
 
         const data = {
-          regId,
+          //regId,
           regIdpersonal,
           regBirth,
           regPrefix,
@@ -160,7 +160,7 @@ const RegisterFormAdd: React.FC = () => {
           regElastname,
           regPhone,
           regEmail,
-          regImg,
+         // regImg,
         };
 
         // Execute the update
@@ -422,9 +422,9 @@ const RegisterFormAdd: React.FC = () => {
             <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
             </Button>
-            <Button variant="primary mx-2" onClick={reloadPage}>
+            {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
-            </Button>
+            </Button> */}
             <Link href="/registerform" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>

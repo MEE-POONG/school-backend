@@ -115,7 +115,7 @@ const IndexNewsAdd: React.FC = () => {
     if (!newTitle) missingFields.push("NewsTitle");
     if (!newSubTitle) missingFields.push("NewsSubTitle"); 
     if (!newSubDetail) missingFields.push("NewsSubDetail");
-    if (!newImg) missingFields.push("NewsImg");
+    // if (!newImg) missingFields.push("NewsImg");
     if (!newDate) missingFields.push("NewsDate"); 
   
     if (missingFields.length > 0) {
@@ -131,7 +131,7 @@ const IndexNewsAdd: React.FC = () => {
             newTitle,
             newSubTitle,
             newSubDetail,
-            newImg,
+            // newImg,
             newDate,
           /*img,*/
         };
@@ -240,7 +240,7 @@ const IndexNewsAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
         
-              <Col md={4}>
+              {/* <Col md={4}>
                 <FloatingLabel controlId="NewsImg" label="NewsImg / รูปภาพ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newImg !== ""}
@@ -250,7 +250,7 @@ const IndexNewsAdd: React.FC = () => {
                     onChange={handleFileUpload}
                     placeholder="NewsImg"/> 
                 </FloatingLabel>
-              </Col>
+              </Col> */}
               
               
             
@@ -261,9 +261,9 @@ const IndexNewsAdd: React.FC = () => {
             <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
             </Button>
-            <Button variant="primary mx-2" onClick={reloadPage}>
+            {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
-            </Button>
+            </Button> */}
             <Link href="/IndexNews" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
