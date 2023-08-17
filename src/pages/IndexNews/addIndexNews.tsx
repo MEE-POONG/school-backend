@@ -219,9 +219,9 @@ const IndexNewsAdd: React.FC = () => {
             <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
             </Button>
-            <Button variant="primary mx-2" onClick={reloadPage}>
+            {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
-            </Button>
+            </Button> */}
             <Link href="/IndexNews" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
