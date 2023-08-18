@@ -99,7 +99,7 @@ const registerForm: React.FC = () => {
             <h4 className="mb-0 py-1">รายชื่อนักศึกษาที่สนใจเข้าเรียน</h4>
 
             {/* ค้นหาข้อมูล */}
-            {/* <InputGroup className="w-auto" bsPrefix="input-icon">
+            <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
                 <FaSearch />
               </InputGroup.Text>
@@ -109,12 +109,13 @@ const registerForm: React.FC = () => {
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
-            </InputGroup> */}
+            </InputGroup>
             {/* <AddListName /> */}
 
             {/* <Link href="/registerForm/addregisterForm" className="ms-2 btn icon icofn-primary">
               เพิ่มโปรโมชั่น
             </Link> */}
+            
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
@@ -122,14 +123,10 @@ const registerForm: React.FC = () => {
                 <tr>
                   <th className="no">No</th>
                   <th className="title">รหัสบัตรประชาชน</th>
-                  {/* <th className="subtitle">วัน/เดือน/ปี เกิด</th> */}
                   <th>คำนำหน้า</th>
                   <th>เพศ</th>
-                  {/* <th>สัญชาติ</th> */}
                   <th>ชื่อ</th>
                   <th>นามสกุล</th>
-                  {/* <th>ชื่อ ภาษาอังกฤษ</th>
-                  <th>นามสกุล ภาษาอังกฤษ</th> */}
                   <th>เบอร์โทร</th>
                   <th>E-mail</th>
                   <th>โปรไฟล์</th>
@@ -141,16 +138,11 @@ const registerForm: React.FC = () => {
                 {filteredregisterFormsData.map((registerForm, index) => (
                   <tr key={registerForm.id}>
                     <td>{index + 1}</td>
-                    {/* <td>{registerForm.regId}</td> */}
                     <td>{registerForm.regIdpersonal}</td>
-                    {/* <td>{registerForm.regBirth}</td> */}
                     <td>{registerForm.regPrefix}</td>
                     <td>{registerForm.regSex}</td>
-                    {/* <td>{registerForm.regNation}</td> */}
                     <td>{registerForm.regName}</td>
                     <td>{registerForm.regLastname}</td>
-                    {/* <td>{registerForm.regEname}</td>
-                    <td>{registerForm.regElastname}</td> */}
                     <td>{registerForm.regPhone}</td>
                     <td>{registerForm.regEmail}</td>
                     <td>
@@ -161,20 +153,7 @@ const registerForm: React.FC = () => {
                       />
                     </td>
                     <td>
-                    
-                      {/* <DetailsRegisterAddDetailsRegisterModal
-                        data={registerForm}
-                      /> */}
                         <ProfileDetailModal  data={registerForm}/>
-
-                      {/* <Link
-                        href={`/registerform/profile/${registerForm.id}`}
-                        className="mx-1 btn info icon icon-primary"
-                      >
-                         <FaUserNinja />
-                        <span className="h-tooltiptext">test</span>
-                      </Link> */}
-                      
                       <Link
                         href={`/registerform/edit/${registerForm.id}`}
                         className="mx-1 btn info icon icon-primary"
