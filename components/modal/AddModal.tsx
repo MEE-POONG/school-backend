@@ -53,7 +53,7 @@ const AddModal: React.FC<AddModalProps> = ({ checkAlertShow, setCheckAlertShow, 
                         <p className='m-0'>{boding}</p>
                         <div className='d-flex justify-content-around'>
                             <Button onClick={handleClickReload} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>เพิ่มต่อ</Button>
-                            <Button onClick={handleClickฺBack} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>กลับหน้าสมาชิก</Button>
+                            <Button onClick={handleClickฺBack} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>กลับหน้าจัดการข้อมูล</Button>
                         </div>
                     </Alert>
                 </Modal>

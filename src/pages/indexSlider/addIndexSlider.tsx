@@ -9,7 +9,7 @@ import axios from "axios";
 
 
 const IndexNewsAdd: React.FC = () => {
-  const [{ error: errorMessage, loading: IndexNewsLoading }, executeIndexNews] = useAxios({ url: '/api/indexSlder', method: 'POST' }, { manual: true });
+  const [{ error: errorMessage, loading: IndexNewsLoading }, executeIndexNews] = useAxios({ url: '/api/IndexSlder', method: 'POST' }, { manual: true });
   const [img1, setimg1] = useState<File | null>(null);
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
