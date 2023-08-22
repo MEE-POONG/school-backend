@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const indexActivity: React.FC = () => {
+const IndexActivity: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -180,4 +180,4 @@ const indexActivity: React.FC = () => {
     
   );
 };
-export default indexActivity;
+export default IndexActivity;

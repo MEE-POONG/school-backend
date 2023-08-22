@@ -23,3 +23,9 @@
 // }
 // export default PdfTest;
 
+export default function Index() {
+    return (
+        <>
+        </>
+    )
+}

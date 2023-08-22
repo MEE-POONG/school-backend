@@ -1,11 +1,11 @@
-import { Member } from '@prisma/client';
+
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaTrashAlt } from 'react-icons/fa';
 interface DeleteModalProps {
-    data: Member;
+    data: any;
     apiDelete: () => Promise<any>; // add this line
 }
 const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
@@ -15,7 +15,7 @@ const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let heading = `ลบข้อมูล : ${data?.firstname} ${data.lastname}`;
+    let heading = `ลบข้อมูล`;
     let detail = `ต้องการลบข้อมูลใช่หรือไม่`;
     let variant = "";
 

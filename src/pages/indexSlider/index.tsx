@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const indexSlder: React.FC = () => {
+const IndexSlder: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -148,4 +148,4 @@ const indexSlder: React.FC = () => {
     </LayOut>
   );
 };
-export default indexSlder;
+export default IndexSlder;

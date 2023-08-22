@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const indexNews: React.FC = () => {
+const IndexNews: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -197,4 +197,4 @@ const indexNews: React.FC = () => {
     </LayOut>
   );
 };
-export default indexNews;
+export default IndexNews;

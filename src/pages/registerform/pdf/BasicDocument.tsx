@@ -43,3 +43,11 @@
 // }
 
 // export default BasicDocument;
+
+
+export default function BasicDocument() {
+    return (
+        <>
+        </>
+    )
+}
