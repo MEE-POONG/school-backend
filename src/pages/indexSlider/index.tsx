@@ -34,7 +34,7 @@ const IndexSlder: React.FC = () => {
   });
 
   const [{ data: indexSlderData }, getindexSlder] = useAxios({
-    url: `/api/indexSlder?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+    url: `/api/IndexSlder?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
 
