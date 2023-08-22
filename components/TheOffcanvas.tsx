@@ -36,12 +36,10 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             <Link href="/indexSlider" className={asPath === "/indexSlider" || asPath === "/indexSlider/agent" ? "nav-link active" : "nav-link"}>
                                 <span>รูปภาพหน้าแรก</span>
                             </Link>
-                            <Link href="/recommend/member" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
+                            <Link href="/IndexActivity" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
                                 <span>รูปภาพกิจกรรม</span>
                             </Link>
-                            <Link href="/recommend/member" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
-                                <span>สถิติ</span>
-                            </Link>
+                            
                         </Dropdown.Menu>
                     </div>
 
