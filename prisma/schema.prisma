@@ -45,16 +45,6 @@ model NewsSchool {
 }
 
 
-// รูปสไลด์ข่าวว
-model ImgNewSlider{
- id  String  @id @default(auto()) @map("_id") @db.ObjectId
- img1 String?
- img2 String?
- img3 String?
- img4 String?
- img5 String?
- img6 String?
-}
 
 
 //หน้า สมัครเรียน  (แต่ไม่ใช่แบบฟอร์มสมัคร)
