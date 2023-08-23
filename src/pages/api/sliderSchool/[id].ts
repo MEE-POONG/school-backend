@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.indexSlder.findUnique({
+                const data = await prisma.sliderSchool.findUnique({
                     where: {
                         id: id as string,
                     },
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.indexSlder.update({
+                const data = await prisma.sliderSchool.update({
                     where: {
                         id: id as string,
                     },
@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             try {
                 const id = req.query.id;
 
-                const data = await prisma.indexSlder.delete({
+                const data = await prisma.sliderSchool.delete({
                     where: {
                         id: id as string,
                     },

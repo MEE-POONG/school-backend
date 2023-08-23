@@ -20,87 +20,20 @@ datasource db {
 
 // ล็อคอินแอดมิน
 model AdminUser {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String?
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
   username String?
   password String?
+
 }
 
 // หมวดหมู่หน้า INDEX
 // รูปสไลด์แรก
-model IndexSlder {
+model SliderSchool {
   id   String  @id @default(auto()) @map("_id") @db.ObjectId
   img1 String?
 }
 
-// รูปสไลด์ข่าวว
-model ImgNewSlider {
-  id   String  @id @default(auto()) @map("_id") @db.ObjectId
-  img1 String?
-  img2 String?
-  img3 String?
-  img4 String?
-  img5 String?
-}
-
-
-
-//สวัสดิการ
-model Welfare {
-  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
-  welfareTitle       String?
-  welfareDescription String?
-}
-
-//หน้า สมัครเรียน  (แต่ไม่ใช่แบบฟอร์มสมัคร)
-model IndexReg {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  irImg         String?
-  irDescription String?
-}
-
-//ทีมที่ปรึกษา
-model Advisor {
-  id              String  @id @default(auto()) @map("_id") @db.ObjectId
-  advisorName     String?
-  advisorPosition String?
-  advisorTel      String?
-  advisorAddress  String?
-  advisorFB       String?
-  advisorLine     String?
-
-  //เชื่อมต่อกับ หน้าแรก เพื่อเอาข้อมูลไปโชว์ในสถิติ
-  indexId   String?
-  IndexPage IndexPage? @relation(fields: [indexId], references: [id])
-}
-
-//หน้าแรก
-model IndexPage {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  indexImg String?
-
-  //สถิติดึงข้อมูลมาโชว์
-  sFaculty Faculty[]
-  sMajor   Major[]
-  sAdvisor Advisor[]
-  sStudent Int?
-  sVistor  Int?
-}
-
-//กิจกรรมในหน้า index
-model IndexActivity {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  activityName      String? // ชื่อกิจกรรม
-  activityTitle     String? // // หัวข้อหลัก
-  activitySubTitle  String? // หัวข้อย่่อ 
-  activitySubDetail String? // รายละเอียด
-  activityImg       String? // รูปกิจกรรม
-  activityDate      String? // วันที่
-
-  activityDescription String? // รายละเอียดขอมูลกิจกรรม
-}
-
-model IndexNews {
+model NewsSchool {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   newName      String? // ชื่อกิจกรรม
   newTitle     String? // // หัวข้อหลัก
@@ -111,96 +44,76 @@ model IndexNews {
 
 }
 
-//รู้จักพนมวัน  
-model AboutPanom {
-  //เกี่ยวกับโรงเรียน
-  id               String  @id @default(auto()) @map("_id") @db.ObjectId
-  aboutDescription String? // รายละเอียดเกี่ยวกับโรงเรียน
-  aboutImage       String? // เก็บทั้ง แบนเนอร์ ตราสัญลักษณ์ และสีประจำ
+
+// รูปสไลด์ข่าวว
+model ImgNewSlider{
+ id  String  @id @default(auto()) @map("_id") @db.ObjectId
+ img1 String?
+ img2 String?
+ img3 String?
+ img4 String?
+ img5 String?
+ img6 String?
 }
 
-//คณะกรรมการ
-model Board {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  boardName     String?
-  boardImg      String?
-  boardPosition String?
+
+//หน้า สมัครเรียน  (แต่ไม่ใช่แบบฟอร์มสมัคร)
+model RegSchool  {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  irImg String?
+  irDescription String? 
 }
+
+
+//กิจกรรมในหน้า index
+model ActivitySchool  { 
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  activityName String? // ชื่อกิจกรรม
+  activityTitle String? // // หัวข้อหลัก
+  activitySubTitle String? // หัวข้อย่่อ 
+  activitySubDetail String? // รายละเอียด
+  activityImg String? // รูปกิจกรรม
+  activityDate String? // วันที่
+
+  activityDescription String? // รายละเอียดขอมูลกิจกรรม
+}
+
+
 
 //ฟอร์มสมัคร 
-model RegisterForm {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+model RegisterForm  { 
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
   //ข้อมูลผู้สมัคร
-  regId         String?
-  regIdpersonal String?
-  regBirth      String?
-  regPrefix     String?
-  regSex        String?
-  regNation     String?
-  regName       String?
-  regLastname   String?
-  regEname      String?
-  regElastname  String?
-  regPhone      String?
-  regEmail      String?
-  regImg        String?
+  regId String? //รหัสนักศึกษา
+  regIdpersonal String? //รหัหสบัตรประชาชน
+  regBirth String? //วันเกิด
+  regPrefix String? // คำนำหน้า
+  regSex String? // เพศ
+  regNation String? // ประเทศ
+  regName String?  //ชื่อ
+  regLastname String? //นามสกุล
+  regEname String? //ชื่ออิง
+  regElastname String? // นามสกุลอิง
+  regPhone String? //เบอร์
+  regEmail String? //เมล
+  regImg String? //รูป
 
   //ประวัติการศึกษา
   regSchool String?
   regDegree String?
-  regGpa    String?
+  regGpa String?
 
   //ข้างล่างเป็นเกี่ยวกับคณะและหลักสูตร
-  regProgram String? //หลักสูตร
+  regProgram String?//หลักสูตร
   regFaculty String?
-  regMajor   String?
+  regMajor String?
+
 }
 
-//คณะและหลักสูตร
-model Faculty {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  //คณะ
-  facName String?
-  facImg  String?
-  //เชื่อมต่อกับ สาขา
-  major   Major[]
-
-  //เชื่อมต่อกับ หน้าแรก เพื่อเอาข้อมูลไปโชว์ในสถิติ
-  indexId   String?
-  IndexPage IndexPage? @relation(fields: [indexId], references: [id])
-}
-
-//สาขา
-model Major {
+model IPAddress {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  majorName String?
-
-  facId   String?
-  faculty Faculty? @relation(fields: [facId], references: [id])
-
-  //เชื่อมต่อกับ หน้าแรก เพื่อเอาข้อมูลไปโชว์ในสถิติ
-  indexId   String?
-  IndexPage IndexPage? @relation(fields: [indexId], references: [id])
+  ipAddress String?
 }
 
-//หน้าติดต่อส่วนโรงเรียน
-model ContactSchool {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  //โรงเรียน
-  schoolAddress String?
-  schoolTel     String?
-  schoolFax     String?
-  schoolEmail   String?
-  schoolImg     String?
-}
 
-//หน้าติดต่อส่วนอาจารย์
-model ContactAdvisor {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  //ที่ปรึกษา (ติดต่อ)
-  advisorName   String?
-  advisorAddres String?
-  advisorTel    String?
-  advisorFB     String?
-  advisorLine   String?
-}
+

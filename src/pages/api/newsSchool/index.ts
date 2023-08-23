@@ -12,28 +12,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const page: number = Number(req.query.page) || 1;
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
-                const indexActivity = await prisma.indexActivity.findMany({
-                    skip: (page - 1) * pageSize,
-                    take: pageSize,
+                const newsSchool = await prisma.newsSchool.findMany({
+                    // skip: (page - 1) * pageSize,
+                    // take: pageSize,
                 });
 
-                const totalindexActivity = await prisma.indexActivity.count();
-                const totalPage: number = Math.ceil(totalindexActivity / pageSize);
-                res.status(200).json({ indexActivity });
+                const totalnewsSchool = await prisma.newsSchool.count();
+                const totalPage: number = Math.ceil(totalnewsSchool / pageSize);
+                res.status(200).json({ newsSchool });
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while fetching the indexActivity" });
+                res.status(500).json({ error: "An error occurred while fetching the newsSchool" });
             }
             break;
 
         case 'POST':
             try {
-                const newindexActivity = await prisma.indexActivity.create({
+                const newnewsSchool = await prisma.newsSchool.create({
                     data: req.body,
                 });
 
-                res.status(201).json(newindexActivity);
+                res.status(201).json(newnewsSchool);
             } catch (error) {
-                res.status(500).json({ error: "An error occurred while creating the indexActivity" });
+                res.status(500).json({ error: "An error occurred while creating the newsSchool" });
             }
             break;
 
