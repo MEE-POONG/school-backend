@@ -16,8 +16,8 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 // import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { IndexActivity } from '@prisma/client';
-import IndexActivityAddIndexActivityModal from "@/container/IndexActivity/AddIndexActivity";
+import { ActivitySchool } from '@prisma/client';
+import ActivitySchoolAddActivitySchoolModal from "@/container/ActivitySchool/AddActivitySchool";
 
 interface Params {
   page: number;
@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const IndexActivity: React.FC = () => {
+const ActivitySchool: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -33,32 +33,32 @@ const IndexActivity: React.FC = () => {
     totalPages: 1,
   });
 
-  const [{ data: indexActivityData }, getindexActivity] = useAxios({
-    url: `/api/indexActivity?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+  const [{ data: ActivitySchoolData }, getActivitySchool] = useAxios({
+    url: `/api/ActivitySchool?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
 
   const [
-    { loading: deleteindexActivityLoading, error: deleteindexActivityError },
-    executeindexActivityDelete,
+    { loading: deleteActivitySchoolLoading, error: deleteActivitySchoolError },
+    executeActivitySchoolDelete,
   ] = useAxios({}, { manual: true });
 
-  const [filteredindexActivitysData, setFilteredindexActivitysData] = useState<
-    IndexActivity[]
+  const [filteredActivitySchoolsData, setFilteredActivitySchoolsData] = useState<
+    ActivitySchool[]
   >([]);
 
   useEffect(() => {
-    setFilteredindexActivitysData(indexActivityData?.indexActivity ?? []);
-    console.log(indexActivityData);
-  }, [indexActivityData]);
+    setFilteredActivitySchoolsData(ActivitySchoolData?.ActivitySchool ?? []);
+    console.log(ActivitySchoolData);
+  }, [ActivitySchoolData]);
 
-  const deleteindexActivity = (id: string): Promise<any> => {
-    return executeindexActivityDelete({
-      url: "/api/indexActivity/" + id,
+  const deleteActivitySchool = (id: string): Promise<any> => {
+    return executeActivitySchoolDelete({
+      url: "/api/ActivitySchool/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredindexActivitysData((previndexActivitys) =>
-        previndexActivitys.filter((indexActivity) => indexActivity.id !== id)
+      setFilteredActivitySchoolsData((prevActivitySchools) =>
+        prevActivitySchools.filter((ActivitySchool) => ActivitySchool.id !== id)
       );
     });
   };
@@ -97,7 +97,7 @@ const IndexActivity: React.FC = () => {
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อกิจกรรม</h4>
 
-            <Link href="/IndexActivity/addIndexActivity" className="ms-2 btn icon icofn-primary">
+            <Link href="/ActivitySchool/addActivitySchool" className="ms-2 btn icon icofn-primary">
               เพิ่มกิจกรรม
             </Link>
           </Card.Header>
@@ -123,41 +123,41 @@ const IndexActivity: React.FC = () => {
               </thead>
 
               <tbody className="text-center">
-                {filteredindexActivitysData.map((indexActivity, index) => (
-                  <tr key={indexActivity.id}>
+                {filteredActivitySchoolsData.map((ActivitySchool, index) => (
+                  <tr key={ActivitySchool.id}>
                     <td>{index + 1}</td>
-                    <td>{indexActivity.activityName}</td>
-                    <td>{indexActivity.activityTitle}</td>
-                    <td>{indexActivity.activitySubTitle}</td>
-                    <td>{indexActivity.activitySubDetail}</td>
-                    <td>{indexActivity.activityDate}</td>
-                    <td>{indexActivity.activityDescription}</td>
+                    <td>{ActivitySchool.activityName}</td>
+                    <td>{ActivitySchool.activityTitle}</td>
+                    <td>{ActivitySchool.activitySubTitle}</td>
+                    <td>{ActivitySchool.activitySubDetail}</td>
+                    <td>{ActivitySchool.activityDate}</td>
+                    <td>{ActivitySchool.activityDescription}</td>
                     <td>
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${indexActivity.activityImg}/public`}
-                        alt="indexActivity imge"
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${ActivitySchool.activityImg}/public`}
+                        alt="ActivitySchool imge"
                         thumbnail
                       />
                     </td>
 
-                    {/* <img src={indexActivity.img} alt="indexActivity" /> */}
+                    {/* <img src={ActivitySchool.img} alt="ActivitySchool" /> */}
 
                     <td>
                       {/* <BasicDocument/> */}
-                      {/* <indexActivityAddindexActivityModal data={indexActivity} /> */}
+                      {/* <ActivitySchoolAddActivitySchoolModal data={ActivitySchool} /> */}
 
 
-                      {/* <EditindexActivityModal data={indexActivity} apiEdit={() => editindexActivity(editList)} /> */}
+                      {/* <EditActivitySchoolModal data={ActivitySchool} apiEdit={() => editActivitySchool(editList)} /> */}
                       <Link
-                        href={`/IndexActivity/edit/${indexActivity.id}`}
+                        href={`/ActivitySchool/edit/${ActivitySchool.id}`}
                         className="mx-1 btn info icon icon-primary"
                       >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
                       <DeleteModal
-                        data={indexActivity}
-                        apiDelete={() => deleteindexActivity(indexActivity.id)}
+                        data={ActivitySchool}
+                        apiDelete={() => deleteActivitySchool(ActivitySchool.id)}
                       />
                     </td>
                   </tr>
@@ -168,7 +168,7 @@ const IndexActivity: React.FC = () => {
           <Card.Footer>
             <PageSelect
               page={params.page}
-              totalPages={indexActivityData?.pagination?.total}
+              totalPages={ActivitySchoolData?.pagination?.total}
               onChangePage={handleChangePage}
               onChangePageSize={handleChangePageSize}
             />
@@ -180,4 +180,4 @@ const IndexActivity: React.FC = () => {
     
   );
 };
-export default IndexActivity;
+export default ActivitySchool;
