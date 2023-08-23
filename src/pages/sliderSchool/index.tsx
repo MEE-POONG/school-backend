@@ -16,7 +16,7 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 // import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { IndexSlder } from "@prisma/client";
+import { SliderSchool } from "@prisma/client";
 
 
 interface Params {
@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const IndexSlder: React.FC = () => {
+const sliderSchool: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -33,32 +33,32 @@ const IndexSlder: React.FC = () => {
     totalPages: 1,
   });
 
-  const [{ data: indexSlderData }, getindexSlder] = useAxios({
-    url: `/api/IndexSlder?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+  const [{ data: sliderSchoolData }, getsliderSchool] = useAxios({
+    url: `/api/sliderSchool?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
 
   const [
-    { loading: deleteindexSlderLoading, error: deleteindexSlderError },
-    executeindexSlderDelete,
+    { loading: deletesliderSchoolLoading, error: deletesliderSchoolError },
+    executesliderSchoolDelete,
   ] = useAxios({}, { manual: true });
 
-  const [filteredindexSldersData, setFilteredindexSldersData] = useState<
-    IndexSlder[]
+  const [filteredsliderSchoolsData, setFilteredsliderSchoolsData] = useState<
+    SliderSchool[]
   >([]);
 
   useEffect(() => {
-    setFilteredindexSldersData(indexSlderData?.indexSlder ?? []);
-    console.log(indexSlderData);
-  }, [indexSlderData]);
+    setFilteredsliderSchoolsData(sliderSchoolData?.sliderSchool ?? []);
+    console.log(sliderSchoolData);
+  }, [sliderSchoolData]);
 
-  const deleteindexSlder = (id: string): Promise<any> => {
-    return executeindexSlderDelete({
-      url: "/api/indexSlder/" + id,
+  const deletesliderSchool = (id: string): Promise<any> => {
+    return executesliderSchoolDelete({
+      url: "/api/sliderSchool/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredindexSldersData((previndexSlders) =>
-        previndexSlders.filter((indexSlder) => indexSlder.id !== id)
+      setFilteredsliderSchoolsData((prevsliderSchools) =>
+        prevsliderSchools.filter((sliderSchool) => sliderSchool.id !== id)
       );
     });
   };
@@ -96,7 +96,7 @@ const IndexSlder: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รูปภาพสไลด์</h4>
-            <Link href="/indexSlider/addIndexSlider" className="ms-2 btn icon icofn-primary">
+            <Link href="/sliderSchool/addsliderSchool" className="ms-2 btn icon icofn-primary">
               เพิ่มรูปภาพ
             </Link>
           </Card.Header>
@@ -114,20 +114,20 @@ const IndexSlder: React.FC = () => {
               </thead>
 
               <tbody className="text-center">
-                {filteredindexSldersData.map((indexSlder, index) => (
-                  <tr key={indexSlder.id}>
+                {filteredsliderSchoolsData.map((sliderSchool, index) => (
+                  <tr key={sliderSchool.id}>
                     <td>{index + 1}</td>
                     <td>
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${indexSlder.img1}/public`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${sliderSchool.img1}/public`}
                         alt="indexActivity imge"
                         thumbnail
                       />
                     </td>
                     <td>
                       <DeleteModal
-                        data={indexSlder}
-                        apiDelete={() => deleteindexSlder(indexSlder.id)}
+                        data={sliderSchool}
+                        apiDelete={() => deletesliderSchool(sliderSchool.id)}
                       />
                     </td>
                   </tr>
@@ -138,7 +138,7 @@ const IndexSlder: React.FC = () => {
           <Card.Footer>
             <PageSelect
               page={params.page}
-              totalPages={indexSlderData?.pagination?.total}
+              totalPages={sliderSchoolData?.pagination?.total}
               onChangePage={handleChangePage}
               onChangePageSize={handleChangePageSize}
             />
@@ -148,4 +148,4 @@ const IndexSlder: React.FC = () => {
     </LayOut>
   );
 };
-export default IndexSlder;
+export default sliderSchool;
