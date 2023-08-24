@@ -1,14 +1,14 @@
-import { IndexNews } from '@prisma/client';
+import { NewsSchool } from '@prisma/client';
 import React, { useState } from 'react';
 import { Badge, Col, Image, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegEye } from 'react-icons/fa';
 
-interface IndexNewsViewIndexNewsModalProps {
-    data: IndexNews;
+interface NewsSchoolViewNewsSchoolModalProps {
+    data: NewsSchool;
 }
-const IndexNewsViewIndexNewsModal: React.FC<IndexNewsViewIndexNewsModalProps> = ({ data }) => {
+const NewsSchoolViewNewsSchoolModal: React.FC<NewsSchoolViewNewsSchoolModalProps> = ({ data }) => {
     const [show, setShow] = useState<boolean>(false);
 
     const handleClose = () => setShow(false);
@@ -91,4 +91,4 @@ const IndexNewsViewIndexNewsModal: React.FC<IndexNewsViewIndexNewsModalProps> = 
     );
 }
 
-export default IndexNewsViewIndexNewsModal;
+export default NewsSchoolViewNewsSchoolModal;

@@ -1,14 +1,14 @@
-import {  IndexNews } from '@prisma/client';
+import {  NewsSchool } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaPen, FaTrashAlt } from 'react-icons/fa';
-interface EditIndexNewsModalProps {
-    data: IndexNews;
+interface EditNewsSchoolModalProps {
+    data: NewsSchool;
     apiEdit: () => Promise<any>; // add this line
 }
-const EditIndexNewsModal: React.FC<EditIndexNewsModalProps> = ({ data, apiEdit }) => {
+const EditNewsSchoolModal: React.FC<EditNewsSchoolModalProps> = ({ data, apiEdit }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkEdit, setCheckEdit] = useState<string>("not");
 
@@ -79,4 +79,4 @@ const EditIndexNewsModal: React.FC<EditIndexNewsModalProps> = ({ data, apiEdit }
     );
 }
 
-export default EditIndexNewsModal;
+export default EditNewsSchoolModal;

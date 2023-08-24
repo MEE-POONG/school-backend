@@ -13,19 +13,13 @@
 
 
 
-// import BasicDocument from "./BasicDocument";
-// function PdfTest() {
-//   return (
-//     <div className="App">
-//       <BasicDocument />
-//     </div>
-//   );
-// }
-// export default PdfTest;
-
-export default function Index() {
-    return (
-        <>
-        </>
-    )
+import BasicDocument from "./BasicDocument";
+function PdfTest() {
+  return (
+    <div className="App">
+      <BasicDocument />
+    </div>
+  );
 }
+export default PdfTest;
+

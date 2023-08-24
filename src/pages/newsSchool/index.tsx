@@ -16,8 +16,8 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 // import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { IndexNews } from '@prisma/client';
-import IndexNewsAddIndexNewsModal from "@/container/IndexNews/AddIndexNews";
+import { NewsSchool } from '@prisma/client';
+import NewsSchoolAddNewsSchoolModal from "@/container/NewsSchool/AddNewsSchool";
 
 interface Params {
   page: number;
@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const IndexNews: React.FC = () => {
+const newsSchool: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -33,32 +33,32 @@ const IndexNews: React.FC = () => {
     totalPages: 1,
   });
 
-  const [{ data: indexNewsData }, getindexNews] = useAxios({
-    url: `/api/IndexNews?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+  const [{ data: newsSchoolData }, getnewsSchool] = useAxios({
+    url: `/api/newsSchool?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
 
   const [
-    { loading: deleteindexNewsLoading, error: deleteindexNewsError },
-    executeindexNewsDelete,
+    { loading: deletenewsSchoolLoading, error: deletenewsSchoolError },
+    executenewsSchoolDelete,
   ] = useAxios({}, { manual: true });
 
-  const [filteredindexNewssData, setFilteredindexNewssData] = useState<
-    IndexNews[]
+  const [filterednewsSchoolsData, setFilterednewsSchoolsData] = useState<
+    NewsSchool[]
   >([]);
 
   useEffect(() => {
-    setFilteredindexNewssData(indexNewsData?.indexNews ?? []);
-    console.log(indexNewsData);
-  }, [indexNewsData]);
+    setFilterednewsSchoolsData(newsSchoolData?.newsSchool ?? []);
+    console.log(newsSchoolData);
+  }, [newsSchoolData]);
 
-  const deleteindexNews = (id: string): Promise<any> => {
-    return executeindexNewsDelete({
-      url: "/api/IndexNews/" + id,
+  const deletenewsSchool = (id: string): Promise<any> => {
+    return executenewsSchoolDelete({
+      url: "/api/newsSchool/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredindexNewssData((previndexNewss) =>
-        previndexNewss.filter((indexNews) => indexNews.id !== id)
+      setFilterednewsSchoolsData((prevnewsSchools) =>
+        prevnewsSchools.filter((newsSchool) => newsSchool.id !== id)
       );
     });
   };
@@ -111,7 +111,7 @@ const IndexNews: React.FC = () => {
             </InputGroup> */}
             {/* <AddListName /> */}
 
-            <Link href="/IndexNews/addIndexNews" className="ms-2 btn icon icofn-primary">
+            <Link href="/newsSchool/addnewsSchool" className="ms-2 btn icon icofn-primary">
               เพิ่มข่าว
             </Link>
           </Card.Header>
@@ -137,46 +137,46 @@ const IndexNews: React.FC = () => {
               </thead>
 
               <tbody className="text-center">
-                {filteredindexNewssData.map((indexNews, index) => (
-                  <tr key={indexNews.id}>
+                {filterednewsSchoolsData.map((newsSchool, index) => (
+                  <tr key={newsSchool.id}>
                     <td>{index + 1}</td>
-                    {/* <td>{indexNews.regId}</td> */}
-                    <td>{indexNews.newName}</td>
-                    {/* <td>{indexNews.regBirth}</td> */}
-                    <td>{indexNews.newTitle}</td>
-                    <td>{indexNews.newSubTitle}</td>
-                    {/* <td>{indexNews.regNation}</td> */}
-                    <td>{indexNews.newSubDetail}</td>
-                    <td>{indexNews.newDate}</td>
-                    {/* <td>{indexNews.regEname}</td>
-                    <td>{indexNews.regElastname}</td> */}
+                    {/* <td>{newsSchool.regId}</td> */}
+                    <td>{newsSchool.newName}</td>
+                    {/* <td>{newsSchool.regBirth}</td> */}
+                    <td>{newsSchool.newTitle}</td>
+                    <td>{newsSchool.newSubTitle}</td>
+                    {/* <td>{newsSchool.regNation}</td> */}
+                    <td>{newsSchool.newSubDetail}</td>
+                    <td>{newsSchool.newDate}</td>
+                    {/* <td>{newsSchool.regEname}</td>
+                    <td>{newsSchool.regElastname}</td> */}
 
                     <td>
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${indexNews.newImg}/public`}
-                        alt="indexNews imge"
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${newsSchool.newImg}/public`}
+                        alt="newsSchool imge"
                         thumbnail
                       />
                     </td>
 
-                    {/* <img src={indexNews.img} alt="indexNews" /> */}
+                    {/* <img src={newsSchool.img} alt="newsSchool" /> */}
 
                     <td>
                       {/* <BasicDocument/> */}
-                      {/* <indexNewsAddindexNewsModal data={indexNews} /> */}
+                      {/* <newsSchoolAddnewsSchoolModal data={newsSchool} /> */}
 
 
-                      {/* <EditindexNewsModal data={indexNews} apiEdit={() => editindexNews(editList)} /> */}
+                      {/* <EditnewsSchoolModal data={newsSchool} apiEdit={() => editnewsSchool(editList)} /> */}
                       <Link
-                        href={`/IndexNews/edit/${indexNews.id}`}
+                        href={`/newsSchool/edit/${newsSchool.id}`}
                         className="mx-1 btn info icon icon-primary"
                       >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
                       <DeleteModal
-                        data={indexNews}
-                        apiDelete={() => deleteindexNews(indexNews.id)}
+                        data={newsSchool}
+                        apiDelete={() => deletenewsSchool(newsSchool.id)}
                       />
                     </td>
                   </tr>
@@ -187,7 +187,7 @@ const IndexNews: React.FC = () => {
           <Card.Footer>
             <PageSelect
               page={params.page}
-              totalPages={indexNewsData?.pagination?.total}
+              totalPages={newsSchoolData?.pagination?.total}
               onChangePage={handleChangePage}
               onChangePageSize={handleChangePageSize}
             />
@@ -197,4 +197,4 @@ const IndexNews: React.FC = () => {
     </LayOut>
   );
 };
-export default IndexNews;
+export default newsSchool;
