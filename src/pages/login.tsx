@@ -9,7 +9,7 @@ import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { useRouter } from "next/router";
 
 export default function Login() {
-  const [data, setData] = useState<{ adminUser: { email: string, password: string } } | null>(null);
+  const [data, setData] = useState<{ adminUser: { username: string, password: string } } | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
@@ -23,8 +23,8 @@ export default function Login() {
       const data = await response.json();
 
       // Iterate through each adminUser in the array
-      const match = data?.adminUser?.some((user: { email: string, password: string }) => {
-        return user.email === email && user.password === password;
+      const match = data?.adminUser?.some((user: { username: string, password: string }) => {
+        return user.username === email && user.password === password;
       });
 
       if (match) {
@@ -32,7 +32,7 @@ export default function Login() {
         router.push("/");
       } else {
         // Credentials do not match, show an error message
-        setLoginMessage("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+        setLoginMessage("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -69,14 +69,14 @@ export default function Login() {
                 <div className="mb-3 mt-md-4">
                   {/* <img src="https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/2663e300-1089-4f86-d2bb-77a993ed4700/250" className="" alt="" /> */}
                   <h2 className="fw-bold mb-2 text-uppercase text-center ">วิทยาลัยเทคโนโลยีพนมวันท์</h2>
-                  <p className=" mb-5">Please enter your login and password!</p>
+                  <p className=" mb-5">Please enter your username and password!</p>
                   <div className="mb-3">
                     <Form>
                       <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="text-center">
-                          Email address
+                          Username
                         </Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <Form.Control type="text" placeholder="Enter Username" value={email} onChange={(e) => setEmail(e.target.value)} />
                       </Form.Group>
 
                       <Form.Group
