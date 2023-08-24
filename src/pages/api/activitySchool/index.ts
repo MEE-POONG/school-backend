@@ -13,8 +13,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const pageSize: number = Number(req.query.pageSize) || 10;
 
                 const activitySchool = await prisma.activitySchool.findMany({
-                    // skip: (page - 1) * pageSize,
-                    // take: pageSize,
+                    skip: (page - 1) * pageSize,
+                    take: pageSize,
                 });
 
                 const totalactivitySchool = await prisma.activitySchool.count();
