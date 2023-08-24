@@ -41,57 +41,57 @@ const NewsSchoolAdd: React.FC = () => {
     }
   };
 
-  const [
-    { data: NewsSchoolID, loading: NewsSchoolIDLoading, error: NewsSchoolIDError },
-    executeNewsSchoolID,
-  ] = useAxios<{ data: NewsSchool; success: boolean }, any>({
-    url: `/api/news/${id}`,
-    method: "GET",
-  }, { autoCancel: false, manual: true });
+  // const [
+  //   { data: NewsSchoolID, loading: NewsSchoolIDLoading, error: NewsSchoolIDError },
+  //   executeNewsSchoolID,
+  // ] = useAxios<{ data: NewsSchool; success: boolean }, any>({
+  //   url: `/api/news/${id}`,
+  //   method: "GET",
+  // }, { autoCancel: false, manual: true });
 
-  useEffect(() => {
-    if (id) {
-      executeNewsSchoolID().then(({ data }) => {
-        if (data?.data) {
-          setnewName(data?.data?.newName || "");
-          setnewTitle(data?.data?.newTitle || "")
-          setnewSubTitle(data?.data?.newSubDetail || "")
-          setnewSubDetail(data?.data?.newSubDetail || "")
-          setnewImg(data?.data?.newImg || "")
-          setnewDate(data?.data?.newDate || "")
-        /*  setimg(data?.data?.img || "")
-          setBank(data?.data?.bank || "")
-          setBankAccount(data?.data?.bankAccount || "")
-          setPhone(data?.data?.phone || "")
-          setLine(data?.data?.line || "")
-          setEmail(data?.data?.email || "")*/
-        }
-      });
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     executeNewsSchoolID().then(({ data }) => {
+  //       if (data?.data) {
+  //         setnewName(data?.data?.newName || "");
+  //         setnewTitle(data?.data?.newTitle || "")
+  //         setnewSubTitle(data?.data?.newSubDetail || "")
+  //         setnewSubDetail(data?.data?.newSubDetail || "")
+  //         setnewImg(data?.data?.newImg || "")
+  //         setnewDate(data?.data?.newDate || "")
+  //       /*  setimg(data?.data?.img || "")
+  //         setBank(data?.data?.bank || "")
+  //         setBankAccount(data?.data?.bankAccount || "")
+  //         setPhone(data?.data?.phone || "")
+  //         setLine(data?.data?.line || "")
+  //         setEmail(data?.data?.email || "")*/
+  //       }
+  //     });
+  //   }
+  // }, [id]);
 
-  const reloadPage = () => {
-    executeNewsSchoolID().then(({ data }) => {
-      if (data?.data) {
-        setnewName(data?.data?.newName || "");
-          setnewTitle(data?.data?.newTitle || "")
-          setnewSubTitle(data?.data?.newSubDetail || "")
-          setnewSubDetail(data?.data?.newSubDetail || "")
-          setnewImg(data?.data?.newImg || "")
-          setnewDate(data?.data?.newDate || "")
-       /* setimg(data?.data?.img || "")
-       setUsername(data?.data?.username || "");
-        setPassword(data?.data?.password || "")
-        setFirstname(data?.data?.firstname || "")
-        setLastname(data?.data?.lastname || "")
-        setBank(data?.data?.bank || "")
-        setBankAccount(data?.data?.bankAccount || "")
-        setPhone(data?.data?.phone || "")
-        setLine(data?.data?.line || "")
-        setEmail(data?.data?.email || "")*/
-      }
-    });
-  };
+  // const reloadPage = () => {
+  //   executeNewsSchoolID().then(({ data }) => {
+  //     if (data?.data) {
+  //       setnewName(data?.data?.newName || "");
+  //         setnewTitle(data?.data?.newTitle || "")
+  //         setnewSubTitle(data?.data?.newSubDetail || "")
+  //         setnewSubDetail(data?.data?.newSubDetail || "")
+  //         setnewImg(data?.data?.newImg || "")
+  //         setnewDate(data?.data?.newDate || "")
+  //      /* setimg(data?.data?.img || "")
+  //      setUsername(data?.data?.username || "");
+  //       setPassword(data?.data?.password || "")
+  //       setFirstname(data?.data?.firstname || "")
+  //       setLastname(data?.data?.lastname || "")
+  //       setBank(data?.data?.bank || "")
+  //       setBankAccount(data?.data?.bankAccount || "")
+  //       setPhone(data?.data?.phone || "")
+  //       setLine(data?.data?.line || "")
+  //       setEmail(data?.data?.email || "")*/
+  //     }
+  //   });
+  // };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -146,7 +146,7 @@ const NewsSchoolAdd: React.FC = () => {
         if (response && response.status === 200) {
           setAlertForm("success");
           setTimeout(() => {
-            reloadPage();
+            // reloadPage();
           }, 5000);
         } else {
           setAlertForm("danger");
