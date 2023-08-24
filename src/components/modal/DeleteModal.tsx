@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -7,14 +8,14 @@ interface DeleteModalProps {
     data: any;
     apiDelete: () => Promise<any>; // add this line
 }
-const DeleteModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
+const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkDelete, setCheckDelete] = useState<string>("not");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let heading = `ลบข้อมูล : ${data?.firstname !== undefined ? data?.firstname : ""} ${data?.lastname !== undefined ? data?.lastname : ""} ${data?.userAG !== undefined ? data?.userAG : ""}`;
+    let heading = `ลบข้อมูล`;
     let detail = `ต้องการลบข้อมูลใช่หรือไม่`;
     let variant = "";
 
@@ -79,4 +80,4 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
     );
 }
 
-export default DeleteModal;
+export default DeleteMemberModal;
