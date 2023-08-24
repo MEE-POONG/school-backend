@@ -44,14 +44,14 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                     </div>
 
                     <div id="admin" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/admin')} className={asPath === "/admin" || asPath === "/admin/user" /*|| asPath === "/partner/member/add*/ ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                        <Dropdown.Toggle onClick={() => handlePath('/')} className={asPath === "/" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
                             </i>
                             <span className="ms-2">จัดการข่าว</span>
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/admin"  || checkClickPath === "/admin/user" } >
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/"  } >
                             <Link href="/newsSchool" className={asPath === "/newsSchool"  ? "nav-link active" : "nav-link"}>
                                 <span>จัดการข่าว</span>
                             </Link>
