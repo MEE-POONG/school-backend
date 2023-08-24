@@ -36,13 +36,13 @@ const NewsSchoolAddNewsSchoolModal: React.FC<NewsSchoolAddNewsSchoolModalProps> 
                 <Modal.Body>
                     <Row>
                         <Col sm="12">
-                            <div className='text-center'>Master</div>
+                          
                             <Badge className="mx-1" bg="info">
                                 Info
                             </Badge>
                         </Col>
                         <Col sm="12">
-                            <div className='text-center'>Agent</div>
+                        
                             <Badge className="mx-1" bg="info">
                                 Info
                             </Badge>

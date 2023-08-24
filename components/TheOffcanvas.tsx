@@ -25,15 +25,15 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                 <Offcanvas.Body className='ps-0 pe-2'>
 
                     <div id="recommend" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/recommend')} className={asPath === "/recommend" || asPath === "/recommend/agent" || asPath === "/recommend/member" || asPath === "/partner/member/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                        <Dropdown.Toggle onClick={() => handlePath('/')} className={asPath === "/"  ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
                             </i>
                             <span className="ms-2">จัดการหน้าแรก</span>
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/recommend" || checkClickPath === "/recommend/agent" || checkClickPath === "/recommend/member" || asPath === "/recommend/member/add"} >
-                            <Link href="/sliderSchool" className={asPath === "/indexSlider" || asPath === "/indexSlider/agent" ? "nav-link active" : "nav-link"}>
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/"} >
+                            <Link href="/sliderSchool" className={asPath === "/"  ? "nav-link active" : "nav-link"}>
                                 <span>รูปภาพหน้าแรก</span>
                             </Link>
                             {/* <Link href="/activity" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
@@ -44,18 +44,18 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                     </div>
 
                     <div id="admin" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/admin')} className={asPath === "/admin" /*|| asPath === "/partner/agent"*/ || asPath === "/admin/user" /*|| asPath === "/partner/member/add*/ ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                        <Dropdown.Toggle onClick={() => handlePath('/admin')} className={asPath === "/admin" || asPath === "/admin/user" /*|| asPath === "/partner/member/add*/ ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
                             </i>
                             <span className="ms-2">จัดการข่าว</span>
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/admin" /*|| checkClickPath === "/partner/agent" */ || checkClickPath === "/admin/user" /*|| asPath === "/partner/member/add"*/} >
-                            <Link href="/newsSchool" className={asPath === "/newsSchool" /*|| asPath === "/partner/agent"*/ ? "nav-link active" : "nav-link"}>
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/admin"  || checkClickPath === "/admin/user" } >
+                            <Link href="/newsSchool" className={asPath === "/newsSchool"  ? "nav-link active" : "nav-link"}>
                                 <span>จัดการข่าว</span>
                             </Link>
-                            <Link href="/activity" className={asPath === "/activity" /*|| asPath === "/partner/member/add"*/ ? "nav-link active" : "nav-link"}>
+                            <Link href="/activity" className={asPath === "/activity" ? "nav-link active" : "nav-link"}>
                                 <span>จัดการกิจกรรม</span>
                             </Link>
                         </Dropdown.Menu>
@@ -64,7 +64,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
 
 
                     <div id="registerform" className='select-page'>
-                        <Link href="/registerform" className={asPath === "/registerform" || asPath === "/registerform/agent" ? "nav-link active" : "nav-link"}>
+                        <Link href="/registerform" className={asPath === "/registerform"  ? "nav-link active" : "nav-link"}>
                             <span className="ms-2">ผู้สนใจสมัคร</span>
                         </Link>
 
