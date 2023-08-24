@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import LayOut from "@/components/LayOut";
+import LayOut from "@/components/RootPage/TheLayOut";
 import {
   Badge,
   Card,
