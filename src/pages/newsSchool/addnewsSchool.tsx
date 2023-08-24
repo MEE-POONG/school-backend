@@ -8,8 +8,8 @@ import Link from "next/link";
 import axios from "axios";  
 
 
-const IndexNewsAdd: React.FC = () => {
-  const [{ error: errorMessage, loading: IndexNewsLoading }, executeIndexNews] = useAxios({ url: '/api/IndexNews', method: 'POST' }, { manual: true });
+const NewsSchoolAdd: React.FC = () => {
+  const [{ error: errorMessage, loading: NewsSchoolLoading }, executeNewsSchool] = useAxios({ url: '/api/newsSchool', method: 'POST' }, { manual: true });
   const [newName,  setnewName] = useState<string>("");
   const [newTitle, setnewTitle] = useState<string>("");
   const [newSubTitle, setnewSubTitle] = useState<string>("");
@@ -96,7 +96,7 @@ const IndexNewsAdd: React.FC = () => {
               newDate,
             };
   
-            const response = await executeIndexNews({ data });
+            const response = await executeNewsSchool({ data });
             if (response && response.status === 201) {
               setAlertForm("success");
               setTimeout(() => {
@@ -129,12 +129,12 @@ const IndexNewsAdd: React.FC = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='IndexNews-page'>
+      <div className='NewsSchool-page'>
         <Card>
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              IndexNews - เพิ่มข่าว
+              NewsSchool - เพิ่มข่าว
             </h4>
           </Card.Header>
           <Card.Body>
@@ -222,7 +222,7 @@ const IndexNewsAdd: React.FC = () => {
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}
-            <Link href="/IndexNews" className="btn btn-danger mx-2">
+            <Link href="/newsSchool" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -231,4 +231,4 @@ const IndexNewsAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default IndexNewsAdd;
+export default NewsSchoolAdd;

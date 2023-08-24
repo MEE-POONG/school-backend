@@ -7,16 +7,16 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { IndexNews } from "@prisma/client";
+import { NewsSchool } from "@prisma/client";
 
 
 
-const IndexNewsAdd: React.FC = () => {
+const NewsSchoolAdd: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [
-    { loading: updateIndexNewsLoading, error: updateIndexNewsError },
-    executeIndexNewsPut,
+    { loading: updateNewsSchoolLoading, error: updateNewsSchoolError },
+    executeNewsSchoolPut,
   ] = useAxios({}, { manual: true });
   const [newName, setnewName] = useState<string>("");
   const [newTitle, setnewTitle] = useState<string>("");
@@ -42,16 +42,16 @@ const IndexNewsAdd: React.FC = () => {
   };
 
   const [
-    { data: IndexNewsID, loading: IndexNewsIDLoading, error: IndexNewsIDError },
-    executeIndexNewsID,
-  ] = useAxios<{ data: IndexNews; success: boolean }, any>({
-    url: `/api/IndexNews/${id}`,
+    { data: NewsSchoolID, loading: NewsSchoolIDLoading, error: NewsSchoolIDError },
+    executeNewsSchoolID,
+  ] = useAxios<{ data: NewsSchool; success: boolean }, any>({
+    url: `/api/newsSchool/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
 
   useEffect(() => {
     if (id) {
-      executeIndexNewsID().then(({ data }) => {
+      executeNewsSchoolID().then(({ data }) => {
         if (data?.data) {
           setnewName(data?.data?.newName || "");
           setnewTitle(data?.data?.newTitle || "")
@@ -71,7 +71,7 @@ const IndexNewsAdd: React.FC = () => {
   }, [id]);
 
   const reloadPage = () => {
-    executeIndexNewsID().then(({ data }) => {
+    executeNewsSchoolID().then(({ data }) => {
       if (data?.data) {
         setnewName(data?.data?.newName || "");
           setnewTitle(data?.data?.newTitle || "")
@@ -138,8 +138,8 @@ const IndexNewsAdd: React.FC = () => {
 
 
         // Execute the update
-        const response = await executeIndexNewsPut({
-          url: "/api/IndexNews/" + id,
+        const response = await executeNewsSchoolPut({
+          url: "/api/newsSchool/" + id,
           method: "PUT",
           data
         });
@@ -169,12 +169,12 @@ const IndexNewsAdd: React.FC = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='IndexNews-page'>
+      <div className='NewsSchool-page'>
         <Card>
           <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              IndexNews - แก้ไขข้อมูล
+              NewsSchool - แก้ไขข้อมูล
             </h4>
           </Card.Header>
           <Card.Body>
@@ -264,7 +264,7 @@ const IndexNewsAdd: React.FC = () => {
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}
-            <Link href="/IndexNews" className="btn btn-danger mx-2">
+            <Link href="/newsSchool" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -273,7 +273,7 @@ const IndexNewsAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default IndexNewsAdd;
+export default NewsSchoolAdd;
 
 function setAlertForm(arg0: string) {
   throw new Error("Function not implemented.");
