@@ -1,14 +1,14 @@
-import {  IndexActivity } from '@prisma/client';
+import {  ActivitySchool } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaPen, FaTrashAlt } from 'react-icons/fa';
-interface EditIndexActivityModalProps {
-    data: IndexActivity;
+interface EditActivityModalProps {
+    data: ActivitySchool;
     apiEdit: () => Promise<any>; // add this line
 }
-const EditIndexActivityModal: React.FC<EditIndexActivityModalProps> = ({ data, apiEdit }) => {
+const EditActivityModal: React.FC<EditActivityModalProps> = ({ data, apiEdit }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkEdit, setCheckEdit] = useState<string>("not");
 
@@ -79,4 +79,4 @@ const EditIndexActivityModal: React.FC<EditIndexActivityModalProps> = ({ data, a
     );
 }
 
-export default EditIndexActivityModal;
+export default EditActivityModal;

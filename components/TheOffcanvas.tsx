@@ -36,7 +36,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             <Link href="/sliderSchool" className={asPath === "/indexSlider" || asPath === "/indexSlider/agent" ? "nav-link active" : "nav-link"}>
                                 <span>รูปภาพหน้าแรก</span>
                             </Link>
-                            <Link href="/IndexActivity" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
+                            <Link href="/activity" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
                                 <span>รูปภาพกิจกรรม</span>
                             </Link>
                             
@@ -55,7 +55,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             <Link href="/IndexNews" className={asPath === "/IndexNews" /*|| asPath === "/partner/agent"*/ ? "nav-link active" : "nav-link"}>
                                 <span>จัดการข่าว</span>
                             </Link>
-                            <Link href="/IndexActivity" className={asPath === "/IndexActivity" /*|| asPath === "/partner/member/add"*/ ? "nav-link active" : "nav-link"}>
+                            <Link href="/activity" className={asPath === "/activity" /*|| asPath === "/partner/member/add"*/ ? "nav-link active" : "nav-link"}>
                                 <span>จัดการกิจกรรม</span>
                             </Link>
                         </Dropdown.Menu>

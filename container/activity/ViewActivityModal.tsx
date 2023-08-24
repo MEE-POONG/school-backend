@@ -1,14 +1,14 @@
-import { IndexActivity } from '@prisma/client';
+import { ActivitySchool } from '@prisma/client';
 import React, { useState } from 'react';
 import { Badge, Col, Image, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegEye } from 'react-icons/fa';
 
-interface IndexActivityViewIndexActivityModalProps {
-    data: IndexActivity;
+interface ViewActivityModalProps {
+    data: ActivitySchool;
 }
-const IndexActivityViewIndexActivityModal: React.FC<IndexActivityViewIndexActivityModalProps> = ({ data }) => {
+const ViewActivityModal: React.FC<ViewActivityModalProps> = ({ data }) => {
     const [show, setShow] = useState<boolean>(false);
 
     const handleClose = () => setShow(false);
@@ -93,4 +93,4 @@ const IndexActivityViewIndexActivityModal: React.FC<IndexActivityViewIndexActivi
     );
 }
 
-export default IndexActivityViewIndexActivityModal;
+export default ViewActivityModal;

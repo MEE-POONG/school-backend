@@ -7,11 +7,11 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { IndexActivity } from "@prisma/client";
+import { ActivitySchool } from "@prisma/client";
 
 
 
-const IndexActivityAdd: React.FC = () => {
+const ActivityEdit: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [
@@ -45,8 +45,8 @@ const IndexActivityAdd: React.FC = () => {
   const [
     { data: IndexActivityID, loading: IndexActivityIDLoading, error: IndexActivityIDError },
     executeIndexActivityID,
-  ] = useAxios<{ data: IndexActivity; success: boolean }, any>({
-    url: `/api/indexActivity/${id}`,
+  ] = useAxios<{ data: ActivitySchool; success: boolean }, any>({
+    url: `/api/activitySchool/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
 
@@ -144,7 +144,7 @@ const IndexActivityAdd: React.FC = () => {
 
         // Execute the update
         const response = await executeIndexActivityPut({
-          url: "/api/indexActivity/" + id,
+          url: "/api/activitySchool/" + id,
           method: "PUT",
           data
         });
@@ -280,7 +280,7 @@ const IndexActivityAdd: React.FC = () => {
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}
-            <Link href="/IndexActivity" className="btn btn-danger mx-2">
+            <Link href="/activity" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -289,7 +289,7 @@ const IndexActivityAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default IndexActivityAdd;
+export default ActivityEdit;
 
 function setAlertForm(arg0: string) {
   throw new Error("Function not implemented.");

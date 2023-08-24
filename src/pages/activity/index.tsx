@@ -17,7 +17,7 @@ import PageSelect from "@/components/PageSelect";
 // import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { ActivitySchool } from '@prisma/client';
-import ActivitySchoolAddActivitySchoolModal from "@/container/ActivitySchool/AddActivitySchool";
+import ActivityAdd from "@/container/activity/AddActivity";
 
 interface Params {
   page: number;
@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const ActivitySchool: React.FC = () => {
+const activitySchoolPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -33,32 +33,32 @@ const ActivitySchool: React.FC = () => {
     totalPages: 1,
   });
 
-  const [{ data: ActivitySchoolData }, getActivitySchool] = useAxios({
-    url: `/api/ActivitySchool?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+  const [{ data: activitySchoolData }, getactivitySchool] = useAxios({
+    url: `/api/activitySchool?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
 
   const [
-    { loading: deleteActivitySchoolLoading, error: deleteActivitySchoolError },
-    executeActivitySchoolDelete,
+    { loading: deleteactivitySchoolLoading, error: deleteactivitySchoolError },
+    executeactivitySchoolDelete,
   ] = useAxios({}, { manual: true });
 
-  const [filteredActivitySchoolsData, setFilteredActivitySchoolsData] = useState<
+  const [filteredactivitySchoolsData, setFilteredactivitySchoolsData] = useState<
     ActivitySchool[]
   >([]);
 
   useEffect(() => {
-    setFilteredActivitySchoolsData(ActivitySchoolData?.ActivitySchool ?? []);
-    console.log(ActivitySchoolData);
-  }, [ActivitySchoolData]);
+    setFilteredactivitySchoolsData(activitySchoolData?.activitySchool ?? []);
+    console.log(activitySchoolData);
+  }, [activitySchoolData]);
 
-  const deleteActivitySchool = (id: string): Promise<any> => {
-    return executeActivitySchoolDelete({
-      url: "/api/ActivitySchool/" + id,
+  const deleteactivitySchool = (id: string): Promise<any> => {
+    return executeactivitySchoolDelete({
+      url: "/api/activitySchool/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredActivitySchoolsData((prevActivitySchools) =>
-        prevActivitySchools.filter((ActivitySchool) => ActivitySchool.id !== id)
+      setFilteredactivitySchoolsData((prevactivitySchools) =>
+        prevactivitySchools.filter((activitySchool) => activitySchool.id !== id)
       );
     });
   };
@@ -97,7 +97,7 @@ const ActivitySchool: React.FC = () => {
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อกิจกรรม</h4>
 
-            <Link href="/ActivitySchool/addActivitySchool" className="ms-2 btn icon icofn-primary">
+            <Link href="/activity/addActivity" className="ms-2 btn icon icofn-primary">
               เพิ่มกิจกรรม
             </Link>
           </Card.Header>
@@ -123,41 +123,41 @@ const ActivitySchool: React.FC = () => {
               </thead>
 
               <tbody className="text-center">
-                {filteredActivitySchoolsData.map((ActivitySchool, index) => (
-                  <tr key={ActivitySchool.id}>
+                {filteredactivitySchoolsData.map((activitySchool, index) => (
+                  <tr key={activitySchool.id}>
                     <td>{index + 1}</td>
-                    <td>{ActivitySchool.activityName}</td>
-                    <td>{ActivitySchool.activityTitle}</td>
-                    <td>{ActivitySchool.activitySubTitle}</td>
-                    <td>{ActivitySchool.activitySubDetail}</td>
-                    <td>{ActivitySchool.activityDate}</td>
-                    <td>{ActivitySchool.activityDescription}</td>
+                    <td>{activitySchool.activityName}</td>
+                    <td>{activitySchool.activityTitle}</td>
+                    <td>{activitySchool.activitySubTitle}</td>
+                    <td>{activitySchool.activitySubDetail}</td>
+                    <td>{activitySchool.activityDate}</td>
+                    <td>{activitySchool.activityDescription}</td>
                     <td>
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${ActivitySchool.activityImg}/public`}
-                        alt="ActivitySchool imge"
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${activitySchool.activityImg}/public`}
+                        alt="activitySchool imge"
                         thumbnail
                       />
                     </td>
 
-                    {/* <img src={ActivitySchool.img} alt="ActivitySchool" /> */}
+                    {/* <img src={activitySchool.img} alt="activitySchool" /> */}
 
                     <td>
                       {/* <BasicDocument/> */}
-                      {/* <ActivitySchoolAddActivitySchoolModal data={ActivitySchool} /> */}
+                      {/* <activitySchoolAddactivitySchoolModal data={activitySchool} /> */}
 
 
-                      {/* <EditActivitySchoolModal data={ActivitySchool} apiEdit={() => editActivitySchool(editList)} /> */}
+                      {/* <EditactivitySchoolModal data={activitySchool} apiEdit={() => editactivitySchool(editList)} /> */}
                       <Link
-                        href={`/ActivitySchool/edit/${ActivitySchool.id}`}
+                        href={`/activity/edit/${activitySchool.id}`}
                         className="mx-1 btn info icon icon-primary"
                       >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
                       <DeleteModal
-                        data={ActivitySchool}
-                        apiDelete={() => deleteActivitySchool(ActivitySchool.id)}
+                        data={activitySchool}
+                        apiDelete={() => deleteactivitySchool(activitySchool.id)}
                       />
                     </td>
                   </tr>
@@ -168,7 +168,7 @@ const ActivitySchool: React.FC = () => {
           <Card.Footer>
             <PageSelect
               page={params.page}
-              totalPages={ActivitySchoolData?.pagination?.total}
+              totalPages={activitySchoolData?.pagination?.total}
               onChangePage={handleChangePage}
               onChangePageSize={handleChangePageSize}
             />
@@ -180,4 +180,4 @@ const ActivitySchool: React.FC = () => {
     
   );
 };
-export default ActivitySchool;
+export default activitySchoolPage;

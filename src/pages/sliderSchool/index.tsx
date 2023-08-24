@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const sliderSchool: React.FC = () => {
+const SliderPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -148,4 +148,4 @@ const sliderSchool: React.FC = () => {
     </LayOut>
   );
 };
-export default sliderSchool;
+export default SliderPage;

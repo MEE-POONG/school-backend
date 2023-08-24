@@ -7,8 +7,8 @@ import useAxios from "axios-hooks";
 import axios from "axios";  
 import Link from "next/link";
 
-const IndexActivityAdd: React.FC = () => {
-  const [{ error: errorMessage, loading: IndexActivityLoading }, executeIndexActivity] = useAxios({ url: '/api/indexActivity', method: 'POST' }, { manual: true });
+const ActivityAdd: React.FC = () => {
+  const [{ error: errorMessage, loading: IndexActivityLoading }, executeIndexActivity] = useAxios({ url: '/api/activitySchool', method: 'POST' }, { manual: true });
   const [activityName, setactivityName] = useState<string>("");
   const [activityTitle, setactivityTitle] = useState<string>("");
   const [activitySubTitle, setactivitySubTitle] = useState<string>("");
@@ -237,7 +237,7 @@ const IndexActivityAdd: React.FC = () => {
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}
-            <Link href="/IndexActivity" className="btn btn-danger mx-2">
+            <Link href="/activity" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>
@@ -246,4 +246,4 @@ const IndexActivityAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default IndexActivityAdd;
+export default ActivityAdd;
