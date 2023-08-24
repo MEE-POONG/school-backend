@@ -48,7 +48,6 @@ const NewsSchoolPage: React.FC = () => {
 
   useEffect(() => {
     setFilterednewsSchoolsData(newsSchoolData?.newsSchool ?? []);
-    console.log(newsSchoolData);
   }, [newsSchoolData]);
 
   const deletenewsSchool = (id: string): Promise<any> => {

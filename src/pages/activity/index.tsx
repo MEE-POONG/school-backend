@@ -48,7 +48,6 @@ const ActivitySchoolPage: React.FC = () => {
 
   useEffect(() => {
     setFilteredactivitySchoolsData(activitySchoolData?.activitySchool ?? []);
-    console.log(activitySchoolData);
   }, [activitySchoolData]);
 
   const deleteactivitySchool = (id: string): Promise<any> => {

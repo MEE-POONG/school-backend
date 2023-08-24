@@ -47,7 +47,7 @@ export default function Login() {
       .then((data) => {
         // Set the fetched data to the state
         setData(data);
-        // console.log("Fetched data:", data);
+         console.log("Fetched data:", data);
         // console.log(data.adminUser.email);
         // console.log(data.adminUser.password);
       })
@@ -63,7 +63,7 @@ export default function Login() {
       <Container>
         <Row className="vh-100 d-flex justify-content-center align-items-center">
           <Col md={8} lg={6} xs={12}>
-            <div className="border border-3 border-primary"></div>
+            {/* <div className="border border-3 border-primary"></div> */}
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
