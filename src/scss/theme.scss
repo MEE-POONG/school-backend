@@ -6,7 +6,7 @@
     --light: #6c7293;
     --dark: #e8e8e8;
     --bs-body-font-family: "Sarabun", sans-serif;
-    --bg-active: linear-gradient(90deg, #1F306A 0%, #495ea3 50%, #677dc0 100%);
+    --bg-active: linear-gradient(90deg, #16474d 0%, #12323d 50%, #133041 100%);
 }
 .text-primary {
     color: var(--primary) !important;
@@ -14,7 +14,7 @@
 
 .paper {
     transition: margin-left 0.5s ease-in-out 0s, width 0.5s ease-in-out 0s;
-    padding: 1rem;
+    padding: 1rem 1rem 0 1rem;
     height: calc(100vh - 55px);
 }
 button,
@@ -358,8 +358,8 @@ button.bar-slide {
     margin: 0;
     tbody {
         display: block;
-        height: calc(90vh - 185px);
-        overflow-y: auto;
+        height: calc(90vh - 209px);
+        overflow-y: scroll;
     }
     thead,
     tbody tr {

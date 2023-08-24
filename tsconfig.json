@@ -22,22 +22,13 @@
       "@/*": [
         "./src/*"
       ],
-      "@/test": [
-        "./data/test.ts"
-      ],
-      "@/components/*": [
-        "./components/*"
-      ],
-      "@/container/*": [
-        "./container/*"
-      ]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/pages/gamepond/calculator"  ],
+  ],
   "exclude": [
     "node_modules"
   ]
