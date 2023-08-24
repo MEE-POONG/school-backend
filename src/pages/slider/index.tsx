@@ -6,11 +6,10 @@ import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-import PartnerViewsliderModal from "@/container/Partner/ViewModal";
+// import PartnerViewsliderModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { SliderSchool } from "@prisma/client";
-import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
-import { bankMap } from "@/data/test";
+// import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
 import Image from "next/image";
 
 interface Params {
