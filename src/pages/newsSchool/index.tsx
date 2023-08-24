@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const newsSchool: React.FC = () => {
+const NewsSchoolPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -197,4 +197,4 @@ const newsSchool: React.FC = () => {
     </LayOut>
   );
 };
-export default newsSchool;
+export default NewsSchoolPage;

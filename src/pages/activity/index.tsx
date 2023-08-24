@@ -25,7 +25,7 @@ interface Params {
   searchTerm: string;
   totalPages: number;
 }
-const activitySchoolPage: React.FC = () => {
+const ActivitySchoolPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -180,4 +180,4 @@ const activitySchoolPage: React.FC = () => {
     
   );
 };
-export default activitySchoolPage;
+export default ActivitySchoolPage;
