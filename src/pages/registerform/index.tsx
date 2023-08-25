@@ -85,6 +85,24 @@ const RegisterForm: React.FC = () => {
     }));
   };
 
+  useEffect(() => {
+    if (registerFormData?.registerForm) {
+      // Filter the registerForm data based on searchKey
+      const filteredData = registerFormData.registerForm.filter((registerForm:any) =>
+        // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
+        registerForm.regIdpersonal.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.regPrefix.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.regSex.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.regName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.regLastname.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.regPhone.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.regEmail.toLowerCase().includes(params.searchKey.toLowerCase())
+      );
+
+      setFilteredregisterFormsData(filteredData);
+    }
+  }, [registerFormData, params.searchKey]);
+  
   return (
     <LayOut>
       <Head>
@@ -98,7 +116,7 @@ const RegisterForm: React.FC = () => {
             <h4 className="mb-0 py-1">รายชื่อนักศึกษาที่สนใจเข้าเรียน</h4>
 
             {/* ค้นหาข้อมูล */}
-            {/* <InputGroup className="w-auto" bsPrefix="input-icon">
+            <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
                 <FaSearch />
               </InputGroup.Text>
@@ -108,7 +126,7 @@ const RegisterForm: React.FC = () => {
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
-            </InputGroup> */}
+            </InputGroup>
             {/* <AddListName /> */}
 
             {/* <Link href="/registerForm/addregisterForm" className="ms-2 btn icon icofn-primary">
