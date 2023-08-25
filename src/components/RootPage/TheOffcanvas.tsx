@@ -18,59 +18,71 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
         setCheckClickPath(asPath);
     }, [asPath])
     const handlePath = (valPath: string): void => { checkClickPath === valPath ? setCheckClickPath('') : setCheckClickPath(valPath) };
-
+    const navItems = [
+        {
+            id: "partner",
+            label: "Partner",
+            icon: <FaTachometerAlt />,
+            path: "/partner",
+            subItems: [
+                { label: "พันธมิตร", path: "/partner" },
+                { label: "UserAg", path: "/partner/user-ag" }
+            ]
+        },
+        {
+            id: "bot-auto",
+            label: "Bot Auto",
+            icon: <FaTachometerAlt />,
+            path: "/bot",
+            subItems: [
+                { label: "คำสั่งบอท", path: "/bot" },
+                { label: "ลูกค้า", path: "/bot/customer" },
+                { label: "เอเย่น", path: "/bot/agent" },
+                { label: "มาสเตอร์", path: "/bot/master" }
+            ]
+        },
+        // ... Add other sections similarly
+    ];
     return (
         <>
             <Offcanvas show={show} onHide={handleClose} placement="start" backdrop={false} scroll={true} >
                 <Offcanvas.Body className='ps-0 pe-2'>
-
-                    <div id="recommend" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/')} className={asPath === "/"  ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
-                            <i >
-                                <FaTachometerAlt />
-                            </i>
-                            <span className="ms-2">จัดการหน้าแรก</span>
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/"} >
-                            <Link href="/slider" className={asPath === "/"  ? "nav-link active" : "nav-link"}>
-                                <span>รูปภาพหน้าแรก</span>
-                            </Link>
-                            {/* <Link href="/activity" className={asPath === "/recommend/member" || asPath === "/recommend/member/add" ? "nav-link active" : "nav-link"}>
-                                <span>รูปภาพกิจกรรม</span>
-                            </Link> */}
-                            
-                        </Dropdown.Menu>
-                    </div>
-
-                    <div id="admin" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/')} className={asPath === "/" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
-                            <i >
-                                <FaTachometerAlt />
-                            </i>
-                            <span className="ms-2">จัดการข่าว</span>
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/"  } >
-                            <Link href="/newsSchool" className={asPath === "/newsSchool"  ? "nav-link active" : "nav-link"}>
-                                <span>จัดการข่าว</span>
-                            </Link>
-                            <Link href="/activity" className={asPath === "/activity" ? "nav-link active" : "nav-link"}>
-                                <span>จัดการกิจกรรม</span>
-                            </Link>
-                        </Dropdown.Menu>
-                    </div>
+                    <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">Home</span>
+                    </Link>
 
 
+                    <Link href="/slider" className={asPath === "/slider" || asPath === "/slider/add"  ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">รูปภาพหน้าแรก</span>
+                    </Link>
 
-                    <div id="registerform" className='select-page'>
-                        <Link href="/registerform" className={asPath === "/registerform"  ? "nav-link active" : "nav-link"}>
-                            <span className="ms-2">ผู้สนใจสมัคร</span>
-                        </Link>
+                    <Link href="/newsSchool" className={asPath === "/newsSchool" || asPath === "/newsSchool/addnewsSchool" || asPath.startsWith("/newsSchool/edit/")  ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">ข่าว</span>
+                    </Link>
 
-                    </div>
+                    <Link href="/activity" className={asPath === "/activity" || asPath.startsWith("/activity/add")  ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">กิจกรรม</span>
+                    </Link>
 
-                
+                    <Link href="/registerform" className={asPath === "/registerform" || asPath.startsWith("/registerform/edit")  ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">ผู้สนใจสมัคร</span>
+                    </Link>
+                    
                 </Offcanvas.Body>
             </Offcanvas>
 

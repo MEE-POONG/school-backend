@@ -47,7 +47,7 @@ export default function Login() {
       .then((data) => {
         // Set the fetched data to the state
         setData(data);
-         console.log("Fetched data:", data);
+        //  console.log("Fetched data:", data);
         // console.log(data.adminUser.email);
         // console.log(data.adminUser.password);
       })
