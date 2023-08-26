@@ -1,15 +1,22 @@
 
-
-import { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { FaUserNinja } from "react-icons/fa";
 import { RegisterForm } from "@prisma/client";
+import { useReactToPrint } from 'react-to-print';
 
 
 export default function ProfileDetailModal(props: { data: any }) {
+  const conponentPDF = useRef<HTMLDivElement>(null);  
   const [showCheck, setShowCheck] = useState(false);
   const handleShow = () => setShowCheck(true);
   const handleClose = () => setShowCheck(false);
+
+  const generatePDF = useReactToPrint({
+    content: () => conponentPDF.current!,
+    documentTitle: "Userdata",
+    onAfterPrint: () => alert("Data saved in PDF")
+});
   return (
     <>
       <Button
@@ -29,6 +36,7 @@ export default function ProfileDetailModal(props: { data: any }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <div ref={conponentPDF} style={{ width:'595px',height:'842px'}}>
           <Row>
             <Col md={{ span: 1, offset: 8 }}><img className="" src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${props?.data?.regImg}/500`} alt=""width={200} height={250} /></Col>
           </Row>
@@ -45,9 +53,9 @@ export default function ProfileDetailModal(props: { data: any }) {
       </Row>
       <Row className="py-2">
         <Col xs={3} >วัน/เดือน/ปีเกิด: {props?.data?.regBirth} </Col>
-        <Col xs={1}>เพศ:{props?.data?.regSex}</Col>
-        <Col xs={2}>สัญชาติ: {props?.data?.regNation}</Col>
-        <Col xs={3}>เบอร์โทรศัพท์: {props?.data?.regPhone} </Col>
+        <Col xs={2}>เพศ:{props?.data?.regSex}</Col>
+        <Col xs={3}>สัญชาติ: {props?.data?.regNation}</Col>
+        <Col xs={4}>เบอร์โทรศัพท์: {props?.data?.regPhone} </Col>
        <Row className="py-2"><Col>Email: {props?.data?.regEmail}</Col></Row>
       </Row>
     
@@ -66,6 +74,8 @@ export default function ProfileDetailModal(props: { data: any }) {
               <Row className="py-2"><Col>สาขา: {props?.data?.regMajor}</Col></Row>
             </Row>
       </Container>
+      </div>
+      </div>
             {/* <p >คำนำหน้าชื่อ: {props?.data?.regPrefix}</p>
             <p>ชื่อ: {props?.data?.regName}</p>
             <p>นามสกุล: {props?.data?.regLastname}</p>
@@ -88,8 +98,11 @@ export default function ProfileDetailModal(props: { data: any }) {
             <p>หลักสูตร: {props?.data?.regProgram}</p>
             <p>คณะ: {props?.data?.regFaculty}</p>
             <p>สาขา: {props?.data?.regMajor}</p> */}
+             <div className="d-grid d-md-flex justify-content-md-end mb-3">
+                            <button className="btn btn-success" onClick={generatePDF}>PDF</button>
+                        </div>
 
-          </div>
+         
 
         </Modal.Body>
       </Modal>
