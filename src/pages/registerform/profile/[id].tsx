@@ -68,6 +68,7 @@ export default function ProfileDetailModal(props: { data: any }) {
       </Row>
       <h4>คณะ/สาขา</h4>
             
+            
             <Row className="py-2">
               <Col xs={2}>หลักสูตร: {props?.data?.regProgram}</Col> 
               <Col xs={4}>คณะ: {props?.data?.regFaculty}</Col>
