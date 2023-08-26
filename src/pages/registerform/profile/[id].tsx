@@ -14,10 +14,11 @@ export default function ProfileDetailModal(props: { data: any }) {
     <>
       <Button
         bsPrefix="create"
-        className={showCheck ? "icon active" : "icon "}
+        className={`btn icon ${showCheck ? "active" : " "} `}
         onClick={handleShow}
       >
         <FaUserNinja />
+        <span className="h-tooltiptext">ดูรายละเอียด</span>
       </Button>
 
 
