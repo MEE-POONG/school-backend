@@ -37,19 +37,19 @@ export default function ProfileDetailModal(props: { data: any }) {
         </Modal.Header>
         <Modal.Body>
         <div ref={conponentPDF} style={{ width:'595px',height:'842px'}}>
+          
+
+          <div className="container">
+         <div className="p-4">
           <Row>
-            <Col md={{ span: 1, offset: 8 }}><img className="" src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${props?.data?.regImg}/500`} alt=""width={200} height={250} /></Col>
+            <Col><img className="md:justify-center"src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${props?.data?.regImg}/500`} alt=""width={200} height={250} /></Col>
           </Row>
-
-          <h2 className="">รายละเอียดข้อมูล</h2>
-
-          <div className="p-4">
+          <h3 className="py-2">รายละเอียดข้อมูล</h3>
             <h4>ข้อมูลผู้สมัคร</h4>
-            <Container>
       <Row className="py-2">
-        <Col>ชื่อ:{props?.data?.regPrefix} {props?.data?.regName} {props?.data?.regLastname}</Col>
-        <Col>Name:{props?.data?.regEname} {props?.data?.regElastname}</Col>
-        <Col xs={5}>บัตรประจำตัวประชาชน:{props?.data?.regIdpersonal}</Col> 
+        <Col xs={5}>ชื่อ:{props?.data?.regPrefix} {props?.data?.regName} {props?.data?.regLastname}</Col>
+        <Col xs={5}>Name:{props?.data?.regEname} {props?.data?.regElastname}</Col>
+        <Col className=" mt-2" xs={7}>บัตรประจำตัวประชาชน:{props?.data?.regIdpersonal}</Col> 
       </Row>
       <Row className="py-2">
         <Col xs={3} >วัน/เดือน/ปีเกิด: {props?.data?.regBirth} </Col>
@@ -73,8 +73,8 @@ export default function ProfileDetailModal(props: { data: any }) {
               <Col xs={4}>คณะ: {props?.data?.regFaculty}</Col>
               <Row className="py-2"><Col>สาขา: {props?.data?.regMajor}</Col></Row>
             </Row>
-      </Container>
-      </div>
+            </div>
+            </div>
       </div>
             {/* <p >คำนำหน้าชื่อ: {props?.data?.regPrefix}</p>
             <p>ชื่อ: {props?.data?.regName}</p>
