@@ -82,6 +82,13 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </i>
                         <span className="ms-2">ผู้สนใจสมัคร</span>
                     </Link>
+
+                    <Link href="/admin" className={asPath === "/admin" || asPath === "/admin/add" || asPath.startsWith("/admin/edit")  ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">แอดมิน</span>
+                    </Link>
                     
                 </Offcanvas.Body>
             </Offcanvas>
