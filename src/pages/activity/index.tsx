@@ -21,19 +21,19 @@ import LayOut from "@/components/RootPage/TheLayOut";
 interface Params {
   page: number;
   pageSize: number;
-  searchTerm: string;
+  searchKey: string;
   totalPages: number;
 }
 const ActivitySchoolPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchTerm: "",
+    searchKey: "",
     totalPages: 1,
   });
 
   const [{ data: activitySchoolData }, getactivitySchool] = useAxios({
-    url: `/api/activity?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+    url: `/api/activity?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchKey}`,
     method: "GET",
   });
 
@@ -76,12 +76,28 @@ const ActivitySchoolPage: React.FC = () => {
     }));
   };
 
-  const handleChangeSearchTerm = (search: string) => {
-    setParams((prevParams) => ({
+  const handleChangesearchKey = (search: string) => {
+    setParams(prevParams => ({
       ...prevParams,
-      searchTerm: search,
+      searchKey: search,
     }));
   };
+
+
+  useEffect(() => {
+    if (activitySchoolData?.activitySchool) {
+      // Filter the registerForm data based on searchKey
+      const filteredData = activitySchoolData.activitySchool.filter((activitySchool:any) =>
+        // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
+        activitySchool.activityName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        activitySchool.activityTitle.toLowerCase().includes(params.searchKey.toLowerCase())||
+        activitySchool.activitySubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        activitySchool.activitySubDetail.toLowerCase().includes(params.searchKey.toLowerCase())  
+      );
+
+      setFilteredactivitySchoolsData(filteredData);
+    }
+  }, [activitySchoolData, params.searchKey]);
 
   return (
     <LayOut>
@@ -95,9 +111,25 @@ const ActivitySchoolPage: React.FC = () => {
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อกิจกรรม</h4>
 
+
+            {/* ค้นหาข้อมูล */}
+            <InputGroup className="w-auto" bsPrefix="input-icon">
+              <InputGroup.Text id="basic-addon1">
+                <FaSearch />
+              </InputGroup.Text>
+              <Form.Control
+                onChange={e => handleChangesearchKey(e.target.value)}
+                placeholder="ค้นหากิจกรรม"
+                aria-label="activity"
+                aria-describedby="basic-addon1"
+              />
+            </InputGroup>
+
             <Link href="/activity/addActivity" className="ms-2 btn icon icofn-primary">
               เพิ่มกิจกรรม
             </Link>
+
+            
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">

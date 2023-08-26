@@ -122,8 +122,8 @@ const RegisterFormPage: React.FC = () => {
               </InputGroup.Text>
               <Form.Control
                 onChange={e => handleChangesearchKey(e.target.value)}
-                placeholder="ค้นหาผู้ใช้"
-                aria-label="Fullname"
+                placeholder="ผู้สนใจสมัคร"
+                aria-label="registerForm"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>

@@ -21,19 +21,19 @@ import LayOut from "@/components/RootPage/TheLayOut";
 interface Params {
   page: number;
   pageSize: number;
-  searchTerm: string;
+  searchKey: string;
   totalPages: number;
 }
 const NewsSchoolPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchTerm: "",
+    searchKey: "",
     totalPages: 1,
   });
 
   const [{ data: newsSchoolData }, getnewsSchool] = useAxios({
-    url: `/api/news?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+    url: `/api/news?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchKey}`,
     method: "GET",
   });
 
@@ -76,12 +76,28 @@ const NewsSchoolPage: React.FC = () => {
     }));
   };
 
-  const handleChangeSearchTerm = (search: string) => {
-    setParams((prevParams) => ({
+  const handleChangesearchKey = (search: string) => {
+    setParams(prevParams => ({
       ...prevParams,
-      searchTerm: search,
+      searchKey: search,
     }));
   };
+
+
+  useEffect(() => {
+    if (newsSchoolData?.newsSchool) {
+      // Filter the registerForm data based on searchKey
+      const filteredData = newsSchoolData.newsSchool.filter((newsSchool:any) =>
+        // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
+        newsSchool.newName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        newsSchool.newTitle.toLowerCase().includes(params.searchKey.toLowerCase())||
+        newsSchool.newSubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        newsSchool.newSubDetail.toLowerCase().includes(params.searchKey.toLowerCase())  
+      );
+
+      setFilterednewsSchoolsData(filteredData);
+    }
+  }, [newsSchoolData, params.searchKey]);
 
   return (
     <LayOut>
@@ -108,6 +124,19 @@ const NewsSchoolPage: React.FC = () => {
               />
             </InputGroup> */}
             {/* <AddListName /> */}
+
+            {/* ค้นหาข้อมูล */}
+            <InputGroup className="w-auto" bsPrefix="input-icon">
+              <InputGroup.Text id="basic-addon1">
+                <FaSearch />
+              </InputGroup.Text>
+              <Form.Control
+                onChange={e => handleChangesearchKey(e.target.value)}
+                placeholder="ค้นหาข่าว"
+                aria-label="newsSchool"
+                aria-describedby="basic-addon1"
+              />
+            </InputGroup>
 
             <Link href="/newsSchool/addnewsSchool" className="ms-2 btn icon icofn-primary">
               เพิ่มข่าว
