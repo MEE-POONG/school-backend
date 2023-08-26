@@ -15,7 +15,7 @@ export default function ProfileDetailModal(props: { data: any }) {
   const generatePDF = useReactToPrint({
     content: () => conponentPDF.current!,
     documentTitle: "Userdata",
-    onAfterPrint: () => alert("Data saved in PDF")
+    // onAfterPrint: () => alert("Data saved in PDF")
 });
   return (
     <>
@@ -100,7 +100,7 @@ export default function ProfileDetailModal(props: { data: any }) {
             <p>คณะ: {props?.data?.regFaculty}</p>
             <p>สาขา: {props?.data?.regMajor}</p> */}
              <div className="d-grid d-md-flex justify-content-md-end mb-3">
-                            <button className="btn btn-success" onClick={generatePDF}>PDF</button>
+                            <button className="btn btn-success" onClick={generatePDF}>สั่งพิมพ์</button>
                         </div>
 
          
