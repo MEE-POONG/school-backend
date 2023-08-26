@@ -92,7 +92,8 @@ const NewsSchoolPage: React.FC = () => {
         newsSchool.newName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
         newsSchool.newTitle.toLowerCase().includes(params.searchKey.toLowerCase())||
         newsSchool.newSubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        newsSchool.newSubDetail.toLowerCase().includes(params.searchKey.toLowerCase())  
+        newsSchool.newSubDetail.toLowerCase().includes(params.searchKey.toLowerCase())||
+        newsSchool.newDate.toLowerCase().includes(params.searchKey.toLowerCase())   
       );
 
       setFilterednewsSchoolsData(filteredData);

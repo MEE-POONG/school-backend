@@ -92,7 +92,8 @@ const ActivitySchoolPage: React.FC = () => {
         activitySchool.activityName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
         activitySchool.activityTitle.toLowerCase().includes(params.searchKey.toLowerCase())||
         activitySchool.activitySubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        activitySchool.activitySubDetail.toLowerCase().includes(params.searchKey.toLowerCase())  
+        activitySchool.activitySubDetail.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        activitySchool.activityDate.toLowerCase().includes(params.searchKey.toLowerCase()) 
       );
 
       setFilteredactivitySchoolsData(filteredData);
