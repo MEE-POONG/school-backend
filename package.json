@@ -29,6 +29,7 @@
     "react-parallax": "^3.5.1",
     "react-select": "^5.7.3",
     "react-slick": "^0.29.0",
+    "react-to-print": "^2.14.13",
     "sass": "^1.58.3",
     "slick-carousel": "^1.8.1"
   },
