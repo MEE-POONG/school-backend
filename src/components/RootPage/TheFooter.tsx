@@ -12,7 +12,7 @@ const TheFooter: React.FC = () => {
         <div className="bg-white rounded-top p-3">
           <div className="row">
             <div className="col-12 col-sm-6 text-center text-sm-start">
-              &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+              &copy; <a >Phanomwan College</a>, All Right Reserved.
             </div>
             <div className="col-12 col-sm-6 text-center text-sm-end">
               Designed By <a href="https://htmlcodex.com">HTML Codex</a>{' '}{' '}

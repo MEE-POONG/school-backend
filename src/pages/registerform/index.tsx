@@ -26,7 +26,7 @@ interface Params {
   searchKey: string;
   totalPages: number;
 }
-const RegisterForm: React.FC = () => {
+const RegisterFormPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -201,4 +201,4 @@ const RegisterForm: React.FC = () => {
     </LayOut>
   );
 };
-export default RegisterForm;
+export default RegisterFormPage;
