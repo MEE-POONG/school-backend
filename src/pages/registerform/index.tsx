@@ -106,7 +106,7 @@ const RegisterFormPage: React.FC = () => {
   return (
     <LayOut>
       <Head>
-        <title>Wellcome | MePrompt-BackOffice</title>
+        <title>Phanomwan Backend</title>
         <meta name="description" content="T ACTIVE" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
