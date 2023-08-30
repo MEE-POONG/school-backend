@@ -19,20 +19,23 @@ export default function Login() {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
+
       const response = await fetch("/api/checkLogin");
       const data = await response.json();
 
-      // Iterate through each adminUser in the array
       const match = data?.adminUser?.some((user: { username: string, password: string }) => {
         return user.username === email && user.password === password;
       });
-
+      // Simulate login logic, replace with actual API call
       if (match) {
-        // Credentials match, navigate to the desired page
+        // Set login success and save to localStorage
+        setLoginSuccess(true);
+        localStorage.setItem("isLoggedIn", "true"); // Set the logged-in state
         router.push("/welcome");
       } else {
         // Credentials do not match, show an error message
-        setLoginMessage("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
+        setLoginSuccess(false);
+        setLoginMessage("Invalid username or password");
       }
     } catch (error) {
       console.error("An error occurred:", error);
