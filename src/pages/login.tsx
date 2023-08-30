@@ -29,7 +29,7 @@ export default function Login() {
 
       if (match) {
         // Credentials match, navigate to the desired page
-        router.push("/");
+        router.push("/welcome");
       } else {
         // Credentials do not match, show an error message
         setLoginMessage("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
