@@ -31,7 +31,7 @@ export default function Login() {
         // Set login success and save to localStorage
         setLoginSuccess(true);
         localStorage.setItem("isLoggedIn", "true"); // Set the logged-in state
-        router.push("/welcome");
+        router.push("/");
       } else {
         // Credentials do not match, show an error message
         setLoginSuccess(false);

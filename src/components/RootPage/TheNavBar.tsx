@@ -21,7 +21,7 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
     <Navbar className="navbar-expand navbar-head sticky-top px-4 py-0">
 
       <Container fluid>
-        <Link href="/welcome" className="navbar-brand me-4">
+        <Link href="/" className="navbar-brand me-4">
           <h3 className="text-primary">
             <FaUserEdit className="fa me-2" />
             Phanomwan College
