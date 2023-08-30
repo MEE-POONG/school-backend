@@ -16,7 +16,7 @@ const TheSEO: React.FC<TheSEOProps> = ({ show, onToggleShow }) => {
 
     return (
         <Head>
-            <title>Wellcome | MePrompt-BackOffice</title>
+            <title>Phanomwan Backend</title>
             <meta
                 name="description"
                 content="T ACTIVE"

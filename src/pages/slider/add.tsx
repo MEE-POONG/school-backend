@@ -101,7 +101,7 @@ const SliderAdd: React.FC = () => {
   return (
     <LayOut>
       <Head>
-        <title>Wellcome | MePrompt-BackOffice</title>
+        <title>Phanomwan Backend</title>
         <meta
           name="description"
           content="T ACTIVE"
