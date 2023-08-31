@@ -180,19 +180,24 @@ const NewsSchoolAdd: React.FC = () => {
           <Card.Body>
             <Row>
             <Col md={4}>
-                <FloatingLabel controlId="NewsName" label="NewsName / ชื่อข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsName" label="ชื่อข่าว" className="mb-3" style={{ color: 'red' }}>
                   <Form.Control
                     isValid={inputForm && newName !== ""}
                     isInvalid={inputForm && newName === ""}
                     type="text"
                     value={newName}
-                    onChange={e => setnewName(e.target.value)}
+                    onChange={e => {
+                      const newValue = e.target.value;
+                      if (newValue.length <= 50) {
+                        setnewName(newValue);
+                      }
+                    }}
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsTitle" label="NewsTitle / หัวข้อข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsTitle" label="หัวข้อข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newTitle !== ""}
                     isInvalid={inputForm && newTitle === ""}
@@ -204,7 +209,7 @@ const NewsSchoolAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsSubTitle" label="NewsSubTitle / หัวข้อย่อยข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsSubTitle" label="หัวข้อย่อยข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newSubTitle !== ""}
                     isInvalid={inputForm && newSubTitle === ""}
@@ -216,7 +221,7 @@ const NewsSchoolAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsSubDetail" label="NewsSubDetail / รายละเอียดข่าว" className="mb-3">
+                <FloatingLabel controlId="NewsSubDetail" label="รายละเอียดข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newSubDetail !== ""}
                     isInvalid={inputForm && newSubDetail === ""}
@@ -228,11 +233,11 @@ const NewsSchoolAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="NewsDate" label="NewsDate / วันที่ ข่าว " className="mb-3">
+                <FloatingLabel controlId="NewsDate" label="วันที่ " className="mb-3">
                   <Form.Control
                     isValid={inputForm && newDate !== ""}
                     isInvalid={inputForm && newDate === ""}
-                    type="text"
+                    type="date"
                     value={newDate}
                     onChange={e => setnewDate(e.target.value)}
                     placeholder="NewsDate"

@@ -146,7 +146,7 @@ const ActivitySchoolPage: React.FC = () => {
                   <th>วันที่</th>
                   {/* <th>ชื่อ ภาษาอังกฤษ</th>
                   <th>นามสกุล ภาษาอังกฤษ</th> */}
-                  <th>คำอธิบายกิจกรรม</th>
+                  {/* <th>คำอธิบายกิจกรรม</th> */}
 
                   <th>รูปภาพ</th>
                   <th>จัดการ</th>
@@ -162,7 +162,7 @@ const ActivitySchoolPage: React.FC = () => {
                     <td>{activitySchool.activitySubTitle}</td>
                     <td>{activitySchool.activitySubDetail}</td>
                     <td>{activitySchool.activityDate}</td>
-                    <td>{activitySchool.activityDescription}</td>
+                    {/* <td>{activitySchool.activityDescription}</td> */}
                     <td>
                       <Image
                         src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${activitySchool.activityImg}/public`}

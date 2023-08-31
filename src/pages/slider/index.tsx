@@ -36,7 +36,7 @@ const SliderPage: React.FC = () => {
 
   useEffect(() => {
     setFilteredslidersData(slidersData?.sliderSchool ?? []);
-    console.log(slidersData);
+    // console.log(slidersData);
   }, [slidersData]);
 
   const deleteslider = (id: string): Promise<any> => {

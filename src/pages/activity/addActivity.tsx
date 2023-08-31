@@ -63,7 +63,7 @@ const ActivityAdd: React.FC = () => {
     if (!activitySubDetail) missingFields.push("activitySubDetail");
     if (!activityImg) missingFields.push("activityImg");
     if (!activityDate) missingFields.push("activityDate");
-    if (!activityDescription) missingFields.push("activityDescription");
+    // if (!activityDescription) missingFields.push("activityDescription");
 
   
     if (missingFields.length > 0) {
@@ -96,7 +96,7 @@ const ActivityAdd: React.FC = () => {
               activitySubDetail,
               activityImg: imageId, // Use the uploaded image ID
               activityDate,
-              activityDescription,
+              // activityDescription,
             };    
   
             const response = await executeActivity({ data });
@@ -137,25 +137,30 @@ const ActivityAdd: React.FC = () => {
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Activity - เพิ่มกิจกรรม
+              เพิ่มกิจกรรม
             </h4>
           </Card.Header>
           <Card.Body>
             <Row>
               <Col md={4}>
-                <FloatingLabel controlId="activityName" label="activityName / ชื่อกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activityName" label="ชื่อกิจกรรม * จำกัด 50 ตัวอักษร" className="mb-3" style={{ color: 'red' }}>
                   <Form.Control
                     isValid={inputForm && activityName !== ""}
                     isInvalid={inputForm && activityName === ""}
                     type="text"
                     value={activityName}
-                    onChange={e => setactivityName(e.target.value)}
+                    onChange={e => {
+                      const newValue = e.target.value;
+                      if (newValue.length <= 50) {
+                        setactivityName(newValue);
+                      }
+                    }}
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityTitle" label="activityTitle / หัวข้อกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activityTitle" label="หัวข้อกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityTitle !== ""}
                     isInvalid={inputForm && activityTitle === ""}
@@ -167,7 +172,7 @@ const ActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubTitle" label="activitySubTitle / หัวข้อย่อย" className="mb-3">
+                <FloatingLabel controlId="activitySubTitle" label="หัวข้อย่อย" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubTitle !== ""}
                     isInvalid={inputForm && activitySubTitle === ""}
@@ -179,7 +184,7 @@ const ActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubDetail" label="activitySubDetail / รายละเอียดกิจกรรม" className="mb-3">
+                <FloatingLabel controlId="activitySubDetail" label="รายละเอียดกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubDetail !== ""}
                     isInvalid={inputForm && activitySubDetail === ""}
@@ -191,19 +196,19 @@ const ActivityAdd: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityDate" label="activityDate / วันที่ " className="mb-3">
+                <FloatingLabel controlId="activityDate" label="วันที่ " className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDate !== ""}
                     isInvalid={inputForm && activityDate === ""}
-                    type="text"
+                    type="date"
                     value={activityDate}
                     onChange={e => setactivityDate(e.target.value)}
                     placeholder="activityDate"
                   />
                 </FloatingLabel>
               </Col>
-             < Col md={4}>
-                <FloatingLabel controlId="activityDescription" label="activityDescription / คำอธิบายกิจกรรม" className="mb-3">
+             {/* < Col md={4}>
+                <FloatingLabel controlId="activityDescription" label="คำอธิบายกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDescription !== ""}
                     isInvalid={inputForm && activityDescription === ""}
@@ -213,9 +218,9 @@ const ActivityAdd: React.FC = () => {
                     placeholder="activityDescription"
                   />
                 </FloatingLabel>
-              </Col>
+              </Col> */}
               <Col md={4}>
-                <FloatingLabel controlId="activityImg" label="activityImg / รูปภาพ" className="mb-3">
+                <FloatingLabel controlId="activityImg" label="รูปภาพ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityImg !== null}
                     isInvalid={inputForm && activityImg === null}

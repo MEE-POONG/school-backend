@@ -120,14 +120,14 @@ const SliderAdd: React.FC = () => {
             <Row>
 
               <Col md={4}>
-                <FloatingLabel controlId="NewsImg" label="NewsImg / รูปภาพ" className="mb-3">
+                <FloatingLabel controlId="NewsImg" label="รูปภาพ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && img1 !== null}
                     isInvalid={inputForm && img1 === null}
                     type="file"
                     // defaultValue={img1}
                     onChange={handleFileUpload}
-                    placeholder="NewsImg" />
+                    placeholder="รูปภาพ" />
                 </FloatingLabel>
               </Col>
 

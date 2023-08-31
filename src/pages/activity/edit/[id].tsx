@@ -120,7 +120,7 @@ const ActivityEdit: React.FC = () => {
     if (!activitySubDetail) missingFields.push("activitySubDetail");
     // if (!activityImg) missingFields.push("activityImg");
     if (!activityDate) missingFields.push("activityDate"); 
-    if (!activityDescription) missingFields.push("activityDescription");  
+    // if (!activityDescription) missingFields.push("activityDescription");  
   
     if (missingFields.length > 0) {
       setAlertForm("warning");
@@ -137,7 +137,7 @@ const ActivityEdit: React.FC = () => {
             activitySubDetail,
             // activityImg,
             activityDate,
-            activityDescription,
+            // activityDescription,
           /*img,*/
         };
 
@@ -179,25 +179,30 @@ const ActivityEdit: React.FC = () => {
           <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Activity - แก้ไขข้อมูล
+              แก้ไขข้อมูล
             </h4>
           </Card.Header>
           <Card.Body>
             <Row>
             <Col md={4}>
-                <FloatingLabel controlId="activityName" label="activityName / ชื่อข่าว" className="mb-3">
+                <FloatingLabel controlId="activityName" label="ชื่อข่าว * จำกัด 50 ตัวอักษร" className="mb-3" style={{ color: 'red' }}>
                   <Form.Control
                     isValid={inputForm && activityName !== ""}
                     isInvalid={inputForm && activityName === ""}
                     type="text"
                     value={activityName}
-                    onChange={e => setactivityName(e.target.value)}
+                    onChange={e => {
+                      const newValue = e.target.value;
+                      if (newValue.length <= 50) {
+                        setactivityName(newValue);
+                      }
+                    }}
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityTitle" label="activityTitle / หัวข้อข่าว" className="mb-3">
+                <FloatingLabel controlId="activityTitle" label="หัวข้อข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityTitle !== ""}
                     isInvalid={inputForm && activityTitle === ""}
@@ -209,7 +214,7 @@ const ActivityEdit: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubTitle" label="activitySubTitle / หัวข้อย่อยข่าว" className="mb-3">
+                <FloatingLabel controlId="activitySubTitle" label="หัวข้อย่อยข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubTitle !== ""}
                     isInvalid={inputForm && activitySubTitle === ""}
@@ -221,7 +226,7 @@ const ActivityEdit: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activitySubDetail" label="activitySubDetail / รายละเอียดข่าว" className="mb-3">
+                <FloatingLabel controlId="activitySubDetail" label="รายละเอียดข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activitySubDetail !== ""}
                     isInvalid={inputForm && activitySubDetail === ""}
@@ -233,19 +238,19 @@ const ActivityEdit: React.FC = () => {
                 </FloatingLabel>
               </Col>
               <Col md={4}>
-                <FloatingLabel controlId="activityDate" label="activityDate / วันที่ ข่าว " className="mb-3">
+                <FloatingLabel controlId="activityDate" label="วันที่" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDate !== ""}
                     isInvalid={inputForm && activityDate === ""}
-                    type="text"
+                    type="date"
                     value={activityDate}
                     onChange={e => setactivityDate(e.target.value)}
                     placeholder="activityDate"
                   />
                 </FloatingLabel>
               </Col>
-             < Col md={4}>
-                <FloatingLabel controlId="activityDescription" label="activityDescription / คําอธิบายข่าว" className="mb-3">
+             {/* < Col md={4}>
+                <FloatingLabel controlId="activityDescription" label="คําอธิบายข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDescription !== ""}
                     isInvalid={inputForm && activityDescription === ""}
@@ -255,7 +260,7 @@ const ActivityEdit: React.FC = () => {
                     placeholder="activityDescription"
                   />
                 </FloatingLabel>
-              </Col>
+              </Col> */}
               {/* <Col md={4}>
                 <FloatingLabel controlId="activityImg" label="activityImg / รูปภาพ" className="mb-3">
                   <Form.Control
