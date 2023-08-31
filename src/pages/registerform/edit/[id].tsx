@@ -205,7 +205,7 @@ const RegisterFormAdd: React.FC = () => {
           />
           
           <Card.Header className="d-flex space-between">
-            <h4 className="mb-0 py-1">RegisterForm - แก้ไขข้อมูล</h4>
+            <h4 className="mb-0 py-1">แก้ไขข้อมูล</h4>
           </Card.Header>
 
 
@@ -233,7 +233,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regBirth"
-                  label="Birth / วันเกิด"
+                  label="วันเกิด"
                   className="mb-3"
                 >
                   <Form.Control
@@ -249,7 +249,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regPrefix"
-                  label="Prefix / คำนำหน้า"
+                  label="คำนำหน้า"
                   className="mb-3"
                 >
                   <Form.Control
@@ -265,7 +265,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regSex"
-                  label="Sex / เพศ"
+                  label="เพศ"
                   className="mb-3"
                 >
                   <Form.Control
@@ -281,7 +281,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regNation"
-                  label="Nation / สัญชาติ"
+                  label="สัญชาติ"
                   className="mb-3"
                 >
                   <Form.Control
@@ -297,7 +297,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regName"
-                  label="Name / ชื่อ"
+                  label="ชื่อ"
                   className="mb-3"
                 >
                   <Form.Control
@@ -313,7 +313,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regLastname"
-                  label="Lastname / นามสกุล"
+                  label="นามสกุล"
                   className="mb-3"
                 >
                   <Form.Control
@@ -361,7 +361,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regPhone"
-                  label="Phone / เบอร์โทรศัพท์"
+                  label="เบอร์โทรศัพท์"
                   className="mb-3"
                 >
                   <Form.Control
@@ -377,7 +377,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regEmail"
-                  label="Email / อีเมล"
+                  label="อีเมล"
                   className="mb-3"
                 >
                   <Form.Control
