@@ -17,6 +17,7 @@ import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { ActivitySchool } from '@prisma/client';
 import LayOut from "@/components/RootPage/TheLayOut";
+import ViewDetail from "@/pages/activity/viewdetail/[id]";
 
 interface Params {
   page: number;
@@ -87,13 +88,13 @@ const ActivitySchoolPage: React.FC = () => {
   useEffect(() => {
     if (activitySchoolData?.activitySchool) {
       // Filter the registerForm data based on searchKey
-      const filteredData = activitySchoolData.activitySchool.filter((activitySchool:any) =>
+      const filteredData = activitySchoolData.activitySchool.filter((activitySchool: any) =>
         // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
         activitySchool.activityName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        activitySchool.activityTitle.toLowerCase().includes(params.searchKey.toLowerCase())||
+        activitySchool.activityTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
         activitySchool.activitySubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
         activitySchool.activitySubDetail.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        activitySchool.activityDate.toLowerCase().includes(params.searchKey.toLowerCase()) 
+        activitySchool.activityDate.toLowerCase().includes(params.searchKey.toLowerCase())
       );
 
       setFilteredactivitySchoolsData(filteredData);
@@ -130,7 +131,7 @@ const ActivitySchoolPage: React.FC = () => {
               เพิ่มกิจกรรม
             </Link>
 
-            
+
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
@@ -160,7 +161,13 @@ const ActivitySchoolPage: React.FC = () => {
                     <td>{activitySchool.activityName}</td>
                     <td>{activitySchool.activityTitle}</td>
                     <td>{activitySchool.activitySubTitle}</td>
-                    <td>{activitySchool.activitySubDetail}</td>
+                    <td>{activitySchool.activitySubDetail ? (
+                      activitySchool.activitySubDetail.length > 100 ? (
+                        `${activitySchool.activitySubDetail.substring(0, 100)}...`
+                      ) : (
+                        activitySchool.activitySubDetail
+                      )
+                    ) : null}</td>
                     <td>{activitySchool.activityDate}</td>
                     {/* <td>{activitySchool.activityDescription}</td> */}
                     <td>
@@ -179,6 +186,8 @@ const ActivitySchoolPage: React.FC = () => {
 
 
                       {/* <EditactivitySchoolModal data={activitySchool} apiEdit={() => editactivitySchool(editList)} /> */}
+                      <ViewDetail data={activitySchool}/>
+                      
                       <Link
                         href={`/activity/edit/${activitySchool.id}`}
                         className="mx-1 btn info icon icon-primary"
@@ -208,7 +217,7 @@ const ActivitySchoolPage: React.FC = () => {
       </div>
     </LayOut>
 
-    
+
   );
 };
 export default ActivitySchoolPage;

@@ -1,16 +1,16 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Head from 'next/head';
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import axios from "axios";  
+import axios from "axios";
 import LayOut from "@/components/RootPage/TheLayOut";
 
 
 const NewsSchoolAdd: React.FC = () => {
   const [{ error: errorMessage, loading: NewsSchoolLoading }, executeNewsSchool] = useAxios({ url: '/api/news', method: 'POST' }, { manual: true });
-  const [newName,  setnewName] = useState<string>("");
+  const [newName, setnewName] = useState<string>("");
   const [newTitle, setnewTitle] = useState<string>("");
   const [newSubTitle, setnewSubTitle] = useState<string>("");
   const [newSubDetail, setnewSubDetail] = useState<string>("");
@@ -38,7 +38,7 @@ const NewsSchoolAdd: React.FC = () => {
     setnewSubDetail("");
     setnewImg(null);
     setnewDate("");
-    
+
     setAlertForm("not");
     setInputForm(false);
     setCheckBody("");
@@ -63,7 +63,7 @@ const NewsSchoolAdd: React.FC = () => {
     if (!newImg) missingFields.push("newsImg");
     if (!newDate) missingFields.push("newsDate");
 
-  
+
     if (missingFields.length > 0) {
       // Handle missing fields...
       setAlertForm("warning");
@@ -72,7 +72,7 @@ const NewsSchoolAdd: React.FC = () => {
     } else {
       try {
         setAlertForm("primary"); // set to loading
-  
+
         // Upload the image
         if (newImg) {
           const formData = new FormData();
@@ -81,11 +81,11 @@ const NewsSchoolAdd: React.FC = () => {
             "https://upload-image.me-prompt-technology.com/",
             formData
           );
-  
+
           if (uploadResponse.status === 200) {
             const responseData = uploadResponse.data;
             const imageId = responseData.result.id;
-            
+
             // Prepare the data to send
             const data = {
               newName,
@@ -95,7 +95,7 @@ const NewsSchoolAdd: React.FC = () => {
               newImg: imageId, // Use the uploaded image ID
               newDate,
             };
-  
+
             const response = await executeNewsSchool({ data });
             if (response && response.status === 201) {
               setAlertForm("success");
@@ -117,8 +117,8 @@ const NewsSchoolAdd: React.FC = () => {
     }
   };
 
-  
-  
+
+
   return (
     <LayOut>
       <Head>
@@ -180,18 +180,7 @@ const NewsSchoolAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="NewsSubDetail" label="รายละเอียดข่าว" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && newSubDetail !== ""}
-                    isInvalid={inputForm && newSubDetail === ""}
-                    type="text"
-                    value={newSubDetail}
-                    onChange={e => setnewSubDetail(e.target.value)}
-                    placeholder="NewsSubDetail"
-                  />
-                </FloatingLabel>
-              </Col>
+
               <Col md={4}>
                 <FloatingLabel controlId="NewsDate" label="วันที่ " className="mb-3">
                   <Form.Control
@@ -212,13 +201,34 @@ const NewsSchoolAdd: React.FC = () => {
                     type="file"
                     // defaultValue={newImg}
                     onChange={handleFileUpload}
-                    placeholder="NewsImg"/> 
+                    placeholder="NewsImg" />
                 </FloatingLabel>
               </Col>
-            
-              
-             
+
+
+
             </Row>
+
+            <Col md={8}>
+              <FloatingLabel controlId="NewsSubDetail" label="รายละเอียดข่าว" className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  isValid={inputForm && newSubDetail !== ""}
+                  isInvalid={inputForm && newSubDetail === ""}
+                  // type="text"
+                  value={newSubDetail}
+                  onChange={e => setnewSubDetail(e.target.value)}
+                  placeholder="NewsSubDetail"
+                  style={{ width: "100%", height: "200px" }} // Adjust the height as needed
+
+                />
+              </FloatingLabel>
+            </Col>
+
+
+
+
+
           </Card.Body>
           <Card.Footer className="text-end">
             <Button variant="success mx-2" onClick={handleSubmit}>

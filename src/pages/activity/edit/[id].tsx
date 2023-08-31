@@ -25,14 +25,14 @@ const ActivityEdit: React.FC = () => {
   const [activityImg, setactivityImg] = useState<string>("");
   const [activityDate, setactivityDate] = useState<string>("");
   const [activityDescription, setactivityDescription] = useState<string>("");
- /* const [img, setimg] = useState<string>("");*/
+  /* const [img, setimg] = useState<string>("");*/
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
- /* const [bankAccount, setBankAccount] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [line, setLine] = useState<string>("");
-  const [email, setEmail] = useState<string>("");*/
+  /* const [bankAccount, setBankAccount] = useState<string>("");
+   const [phone, setPhone] = useState<string>("");
+   const [line, setLine] = useState<string>("");
+   const [email, setEmail] = useState<string>("");*/
 
 
   const handleInputChange = (setter: any) => (event: any) => {
@@ -59,14 +59,14 @@ const ActivityEdit: React.FC = () => {
           setactivitySubTitle(data?.data?.activitySubDetail || "")
           setactivitySubDetail(data?.data?.activitySubDetail || "")
           setactivityImg(data?.data?.activityImg || "")
-          setactivityDate(data?.data?. activityDate || "")
+          setactivityDate(data?.data?.activityDate || "")
           setactivityDescription(data?.data?.activityDescription || "")
-        /*  setimg(data?.data?.img || "")
-          setBank(data?.data?.bank || "")
-          setBankAccount(data?.data?.bankAccount || "")
-          setPhone(data?.data?.phone || "")
-          setLine(data?.data?.line || "")
-          setEmail(data?.data?.email || "")*/
+          /*  setimg(data?.data?.img || "")
+            setBank(data?.data?.bank || "")
+            setBankAccount(data?.data?.bankAccount || "")
+            setPhone(data?.data?.phone || "")
+            setLine(data?.data?.line || "")
+            setEmail(data?.data?.email || "")*/
         }
       });
     }
@@ -76,22 +76,22 @@ const ActivityEdit: React.FC = () => {
     executeIndexActivityID().then(({ data }) => {
       if (data?.data) {
         setactivityName(data?.data?.activityName || "");
-          setactivityTitle(data?.data?.activityTitle || "")
-          setactivitySubTitle(data?.data?.activitySubDetail || "")
-          setactivitySubDetail(data?.data?.activitySubDetail || "")
-          setactivityImg(data?.data?.activityImg || "")
-          setactivityDate(data?.data?. activityDate || "")
-          setactivityDescription(data?.data?.activityDescription || "")
-       /* setimg(data?.data?.img || "")
-       setUsername(data?.data?.username || "");
-        setPassword(data?.data?.password || "")
-        setFirstname(data?.data?.firstname || "")
-        setLastname(data?.data?.lastname || "")
-        setBank(data?.data?.bank || "")
-        setBankAccount(data?.data?.bankAccount || "")
-        setPhone(data?.data?.phone || "")
-        setLine(data?.data?.line || "")
-        setEmail(data?.data?.email || "")*/
+        setactivityTitle(data?.data?.activityTitle || "")
+        setactivitySubTitle(data?.data?.activitySubDetail || "")
+        setactivitySubDetail(data?.data?.activitySubDetail || "")
+        setactivityImg(data?.data?.activityImg || "")
+        setactivityDate(data?.data?.activityDate || "")
+        setactivityDescription(data?.data?.activityDescription || "")
+        /* setimg(data?.data?.img || "")
+        setUsername(data?.data?.username || "");
+         setPassword(data?.data?.password || "")
+         setFirstname(data?.data?.firstname || "")
+         setLastname(data?.data?.lastname || "")
+         setBank(data?.data?.bank || "")
+         setBankAccount(data?.data?.bankAccount || "")
+         setPhone(data?.data?.phone || "")
+         setLine(data?.data?.line || "")
+         setEmail(data?.data?.email || "")*/
       }
     });
   };
@@ -116,12 +116,12 @@ const ActivityEdit: React.FC = () => {
     let missingFields = [];
     if (!activityName) missingFields.push("activityName");
     if (!activityTitle) missingFields.push("activityTitle");
-    if (!activitySubTitle) missingFields.push("activitySubTitle"); 
+    if (!activitySubTitle) missingFields.push("activitySubTitle");
     if (!activitySubDetail) missingFields.push("activitySubDetail");
     // if (!activityImg) missingFields.push("activityImg");
-    if (!activityDate) missingFields.push("activityDate"); 
+    if (!activityDate) missingFields.push("activityDate");
     // if (!activityDescription) missingFields.push("activityDescription");  
-  
+
     if (missingFields.length > 0) {
       setAlertForm("warning");
       setInputForm(true);
@@ -131,13 +131,13 @@ const ActivityEdit: React.FC = () => {
         setAlertForm("primary");
 
         const data = {
-            activityName,
-            activityTitle,
-            activitySubTitle,
-            activitySubDetail,
-            // activityImg,
-            activityDate,
-            // activityDescription,
+          activityName,
+          activityTitle,
+          activitySubTitle,
+          activitySubDetail,
+          // activityImg,
+          activityDate,
+          // activityDescription,
           /*img,*/
         };
 
@@ -162,7 +162,7 @@ const ActivityEdit: React.FC = () => {
       }
     }
   };
-  
+
 
   return (
     <LayOut>
@@ -184,8 +184,8 @@ const ActivityEdit: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <Row>
-            <Col md={4}>
-                <FloatingLabel controlId="activityName" label="ชื่อข่าว * จำกัด 50 ตัวอักษร" className="mb-3" style={{ color: 'red' }}>
+              <Col md={4}>
+                <FloatingLabel controlId="activityName" label="ชื่อกิจกรรม * จำกัด 50 ตัวอักษร" className="mb-3" style={{ color: 'red' }}>
                   <Form.Control
                     isValid={inputForm && activityName !== ""}
                     isInvalid={inputForm && activityName === ""}
@@ -225,18 +225,7 @@ const ActivityEdit: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="activitySubDetail" label="รายละเอียดข่าว" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && activitySubDetail !== ""}
-                    isInvalid={inputForm && activitySubDetail === ""}
-                    type="text"
-                    value={activitySubDetail}
-                    onChange={e => setactivitySubDetail(e.target.value)}
-                    placeholder="activitySubDetail"
-                  />
-                </FloatingLabel>
-              </Col>
+
               <Col md={4}>
                 <FloatingLabel controlId="activityDate" label="วันที่" className="mb-3">
                   <Form.Control
@@ -249,7 +238,7 @@ const ActivityEdit: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-             {/* < Col md={4}>
+              {/* < Col md={4}>
                 <FloatingLabel controlId="activityDescription" label="คําอธิบายข่าว" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDescription !== ""}
@@ -272,11 +261,31 @@ const ActivityEdit: React.FC = () => {
                     placeholder="activityImg"/> 
                 </FloatingLabel>
               </Col> */}
-              
-              
-            
-          
+
+
+
+
             </Row>
+
+
+
+            <Col md={8}>
+              <FloatingLabel controlId="activitySubDetail" label="รายละเอียดกิจกรรม" className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  isValid={inputForm && activitySubDetail !== ""}
+                  isInvalid={inputForm && activitySubDetail === ""}
+                  // type="text"
+                  value={activitySubDetail}
+                  onChange={e => setactivitySubDetail(e.target.value)}
+                  placeholder="activitySubDetail"
+                  style={{ width: "100%", height: "200px" }} // Adjust the height as needed
+                />
+              </FloatingLabel>
+            </Col>
+
+
+
           </Card.Body>
           <Card.Footer className="text-end">
             <Button variant="success mx-2" onClick={handleSubmit}>

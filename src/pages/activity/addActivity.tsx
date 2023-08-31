@@ -1,9 +1,9 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Head from 'next/head';
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
-import axios from "axios";  
+import axios from "axios";
 import Link from "next/link";
 import LayOut from "@/components/RootPage/TheLayOut";
 
@@ -39,7 +39,7 @@ const ActivityAdd: React.FC = () => {
     setactivityImg(null);
     setactivityDate("");
     setactivityDescription("");
-    
+
     setAlertForm("not");
     setInputForm(false);
     setCheckBody("");
@@ -65,7 +65,7 @@ const ActivityAdd: React.FC = () => {
     if (!activityDate) missingFields.push("activityDate");
     // if (!activityDescription) missingFields.push("activityDescription");
 
-  
+
     if (missingFields.length > 0) {
       // Handle missing fields...
       setAlertForm("warning");
@@ -74,7 +74,7 @@ const ActivityAdd: React.FC = () => {
     } else {
       try {
         setAlertForm("primary"); // set to loading
-  
+
         // Upload the image
         if (activityImg) {
           const formData = new FormData();
@@ -83,11 +83,11 @@ const ActivityAdd: React.FC = () => {
             "https://upload-image.me-prompt-technology.com/",
             formData
           );
-  
+
           if (uploadResponse.status === 200) {
             const responseData = uploadResponse.data;
             const imageId = responseData.result.id;
-            
+
             // Prepare the data to send
             const data = {
               activityName,
@@ -97,8 +97,8 @@ const ActivityAdd: React.FC = () => {
               activityImg: imageId, // Use the uploaded image ID
               activityDate,
               // activityDescription,
-            };    
-  
+            };
+
             const response = await executeActivity({ data });
             if (response && response.status === 201) {
               setAlertForm("success");
@@ -120,8 +120,8 @@ const ActivityAdd: React.FC = () => {
     }
   };
 
-  
-  
+
+
   return (
     <LayOut>
       <Head>
@@ -183,18 +183,7 @@ const ActivityAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="activitySubDetail" label="รายละเอียดกิจกรรม" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && activitySubDetail !== ""}
-                    isInvalid={inputForm && activitySubDetail === ""}
-                    type="text"
-                    value={activitySubDetail}
-                    onChange={e => setactivitySubDetail(e.target.value)}
-                    placeholder="activitySubDetail"
-                  />
-                </FloatingLabel>
-              </Col>
+
               <Col md={4}>
                 <FloatingLabel controlId="activityDate" label="วันที่ " className="mb-3">
                   <Form.Control
@@ -207,7 +196,7 @@ const ActivityAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-             {/* < Col md={4}>
+              {/* < Col md={4}>
                 <FloatingLabel controlId="activityDescription" label="คำอธิบายกิจกรรม" className="mb-3">
                   <Form.Control
                     isValid={inputForm && activityDescription !== ""}
@@ -227,13 +216,32 @@ const ActivityAdd: React.FC = () => {
                     type="file"
                     //defaultValue={activityImg}
                     onChange={handleFileUpload}
-                    placeholder="activityImg"/> 
+                    placeholder="activityImg" />
                 </FloatingLabel>
               </Col>
-            
-              
-             
+
+
+
             </Row>
+
+            <Col md={8}>
+              <FloatingLabel controlId="activitySubDetail" label="รายละเอียดกิจกรรม" className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  isValid={inputForm && activitySubDetail !== ""}
+                  isInvalid={inputForm && activitySubDetail === ""}
+                  // type="text"
+                  value={activitySubDetail}
+                  onChange={e => setactivitySubDetail(e.target.value)}
+                  placeholder="activitySubDetail"
+                  style={{ width: "100%" , height: "200px" }} // Adjust the height as needed
+                />
+              </FloatingLabel>
+            </Col>
+
+
+
+
           </Card.Body>
           <Card.Footer className="text-end">
             <Button variant="success mx-2" onClick={handleSubmit}>

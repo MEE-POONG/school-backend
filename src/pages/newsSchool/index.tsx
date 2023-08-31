@@ -17,6 +17,7 @@ import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { NewsSchool } from '@prisma/client';
 import LayOut from "@/components/RootPage/TheLayOut";
+import ViewDetail from "@/pages/newsSchool/viewdetail/[id]";
 
 interface Params {
   page: number;
@@ -87,13 +88,13 @@ const NewsSchoolPage: React.FC = () => {
   useEffect(() => {
     if (newsSchoolData?.newsSchool) {
       // Filter the registerForm data based on searchKey
-      const filteredData = newsSchoolData.newsSchool.filter((newsSchool:any) =>
+      const filteredData = newsSchoolData.newsSchool.filter((newsSchool: any) =>
         // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
         newsSchool.newName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        newsSchool.newTitle.toLowerCase().includes(params.searchKey.toLowerCase())||
+        newsSchool.newTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
         newsSchool.newSubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        newsSchool.newSubDetail.toLowerCase().includes(params.searchKey.toLowerCase())||
-        newsSchool.newDate.toLowerCase().includes(params.searchKey.toLowerCase())   
+        newsSchool.newSubDetail.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        newsSchool.newDate.toLowerCase().includes(params.searchKey.toLowerCase())
       );
 
       setFilterednewsSchoolsData(filteredData);
@@ -154,7 +155,7 @@ const NewsSchoolPage: React.FC = () => {
                   <th>หัวข้อย่อยข่าว</th>
                   {/* <th>สัญชาติ</th> */}
                   <th>รายละเอียดข่าว</th>
-                  
+
                   {/* <th>ชื่อ ภาษาอังกฤษ</th>
                   <th>นามสกุล ภาษาอังกฤษ</th> */}
                   {/* <th>คำอธิบายข่าว</th> */}
@@ -174,7 +175,17 @@ const NewsSchoolPage: React.FC = () => {
                     <td>{newsSchool.newTitle}</td>
                     <td>{newsSchool.newSubTitle}</td>
                     {/* <td>{newsSchool.regNation}</td> */}
-                    <td>{newsSchool.newSubDetail}</td>
+                    {/* <td>{newsSchool.newSubDetail}</td> */}
+
+                    <td>{newsSchool.newSubDetail ? (
+                      newsSchool.newSubDetail.length > 100 ? (
+                        `${newsSchool.newSubDetail.substring(0, 100)}...`
+                      ) : (
+                        newsSchool.newSubDetail
+                      )
+                    ) : null}</td>
+
+
                     <td>{newsSchool.newDate}</td>
                     {/* <td>{newsSchool.regEname}</td>
                     <td>{newsSchool.regElastname}</td> */}
@@ -195,6 +206,8 @@ const NewsSchoolPage: React.FC = () => {
 
 
                       {/* <EditnewsSchoolModal data={newsSchool} apiEdit={() => editnewsSchool(editList)} /> */}
+                      <ViewDetail data={newsSchool}/>
+                      
                       <Link
                         href={`/newsSchool/edit/${newsSchool.id}`}
                         className="mx-1 btn info icon icon-primary"
