@@ -40,6 +40,14 @@ const RegisterFormAdd: React.FC = () => {
   const [regEmail, setregEmail] = useState<string>("");
   const [regImg, setregImg] = useState<File | null>(null);
 
+
+  const [regSchool, setregSchool] = useState<string>("");
+  const [regDegree, setregDegree] = useState<string>("");
+  const [regGpa, setregGpa] = useState<string>("");
+  const [regProgram, setregProgram] = useState<string>("");
+  const [regFaculty, setregFaculty] = useState<string>("");
+  const [regMajor, setregMajor] = useState<string>("");
+
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
@@ -85,6 +93,12 @@ const RegisterFormAdd: React.FC = () => {
           setregPhone(data?.RegisterForm?.regPhone || "");
           setregEmail(data?.RegisterForm?.regEmail || "");
           //setregImg(data?.RegisterForm?.regImg || "");
+          setregSchool(data?.RegisterForm?.regSchool || "");
+          setregDegree(data?.RegisterForm?.regDegree || "");
+          setregGpa(data?.RegisterForm?.regGpa || "");
+          setregProgram(data?.RegisterForm?.regProgram || "");
+          setregFaculty(data?.RegisterForm?.regFaculty || "");
+          setregMajor(data?.RegisterForm?.regMajor || "");
 
         }
       });
@@ -92,24 +106,7 @@ const RegisterFormAdd: React.FC = () => {
   }, [id]);
 
   const reloadPage = () => {
-    executeRegisterFormID().then(({ data }) => {
-      if (data?.RegisterForm) {
-        setregId(data?.RegisterForm?.regId || "");
-        setregIdpersonal(data?.RegisterForm?.regIdpersonal || "");
-        setregBirth(data?.RegisterForm?.regBirth || "");
-        setregPrefix(data?.RegisterForm?.regPrefix || "");
-        setregSex(data?.RegisterForm?.regSex || "");
-        setregNation(data?.RegisterForm?.regNation || "");
-        setregName(data?.RegisterForm?.regName || "");
-        setregLastname(data?.RegisterForm?.regLastname || "");
-        setregEname(data?.RegisterForm?.regEname || "");
-        setregElastname(data?.RegisterForm?.regElastname || "");
-        setregPhone(data?.RegisterForm?.regPhone || "");
-        setregEmail(data?.RegisterForm?.regEmail || "");
-        //setregImg(null);
-
-      }
-    });
+    window.location.reload();
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -217,7 +214,7 @@ const RegisterFormAdd: React.FC = () => {
               <Col md={4}>
                 <FloatingLabel
                   controlId="regIdpersonal"
-                  label="personal / รหัสบัตรประชาชน"
+                  label="รหัสบัตรประชาชน"
                   className="mb-3"
                 >
                   <Form.Control
@@ -387,6 +384,113 @@ const RegisterFormAdd: React.FC = () => {
                     value={regEmail}
                     onChange={(e) => setregEmail(e.target.value)}
                     placeholder="regEmail"
+                  />
+                </FloatingLabel>
+              </Col>
+
+              <Col md={4}>
+                <FloatingLabel
+                  controlId="regSchool"
+                  label="สถาบันการศึกษา"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    isValid={inputForm && regSchool !== ""}
+                    isInvalid={inputForm && regSchool === ""}
+                    type="text"
+                    value={regSchool}
+                    onChange={(e) => setregSchool(e.target.value)}
+                    placeholder="regSchool"
+                  />
+                </FloatingLabel>
+              </Col>
+
+
+              <Col md={4}>
+                <FloatingLabel
+                  controlId="regDegree"
+                  label="สำเร็จการศึกษาระดับ"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    isValid={inputForm && regDegree !== ""}
+                    isInvalid={inputForm && regDegree === ""}
+                    type="text"
+                    value={regDegree}
+                    onChange={(e) => setregDegree(e.target.value)}
+                    placeholder="regDegree"
+                  />
+                </FloatingLabel>
+              </Col>
+
+
+
+              <Col md={4}>
+                <FloatingLabel
+                  controlId="regGpa"
+                  label="เกรดเฉลี่ย"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    isValid={inputForm && regGpa !== ""}
+                    isInvalid={inputForm && regGpa === ""}
+                    type="text"
+                    value={regGpa}
+                    onChange={(e) => setregGpa(e.target.value)}
+                    placeholder="regGpa"
+                  />
+                </FloatingLabel>
+              </Col>
+
+              <Col md={4}>
+                <FloatingLabel
+                  controlId="regProgram"
+                  label="หลักสูตร"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    isValid={inputForm && regProgram !== ""}
+                    isInvalid={inputForm && regProgram === ""}
+                    type="text"
+                    value={regProgram}
+                    onChange={(e) => setregProgram(e.target.value)}
+                    placeholder="regProgram"
+                  />
+                </FloatingLabel>
+              </Col>
+
+
+              <Col md={4}>
+                <FloatingLabel
+                  controlId="regFaculty"
+                  label="คณะ"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    isValid={inputForm && regFaculty !== ""}
+                    isInvalid={inputForm && regFaculty === ""}
+                    type="text"
+                    value={regFaculty}
+                    onChange={(e) => setregFaculty(e.target.value)}
+                    placeholder="regFaculty"
+                  />
+                </FloatingLabel>
+              </Col>
+
+
+              <Col md={4}>
+                <FloatingLabel
+                  controlId="regMajor"
+                  label="สาขา"
+                  className="mb-3"
+                >
+                  <Form.Control
+                    isValid={inputForm && regMajor !== ""}
+                    isInvalid={inputForm && regMajor === ""}
+                    type="text"
+                    value={regMajor}
+                    onChange={(e) => setregMajor(e.target.value)}
+                    placeholder="regMajor"
                   />
                 </FloatingLabel>
               </Col>
