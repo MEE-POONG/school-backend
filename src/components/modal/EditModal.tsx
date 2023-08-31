@@ -8,10 +8,11 @@ interface EditModalProps {
     checkAlertShow: string;
     setCheckAlertShow: React.Dispatch<React.SetStateAction<string>>;
     checkBody: string;
+    pathBack : string
 
 }
 
-const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow, checkBody }) => {
+const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow, checkBody , pathBack }) => {
     const handleClose = () => setCheckAlertShow('not');
     const router = useRouter();
 
@@ -38,12 +39,16 @@ const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow
     }
     const handleClickReload = () => {
         setCheckAlertShow('not')
-        router.reload();
+        window.location.reload();
     };
-    const handleClickฺBack = () => {
-        router.back();
+    const handleClickBack = () => {
+        setCheckAlertShow('not')
+        if (pathBack !== "") {
+            router.push(pathBack).then(() => {
+                window.location.reload();
+            });
+        }
     };
-
     return (
         <>
             {checkAlertShow !== 'not' && (
@@ -53,7 +58,7 @@ const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow
                         <p className='m-0'>{boding}</p>
                         <div className='d-flex justify-content-around'>
                             <Button onClick={handleClickReload} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>แก้ไขต่อ</Button>
-                            <Button onClick={handleClickฺBack} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>กลับหน้าสมาชิก</Button>
+                            <Button onClick={handleClickBack} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>กลับสู่หน้าหลัก</Button>
                         </div>
                     </Alert>
                 </Modal>

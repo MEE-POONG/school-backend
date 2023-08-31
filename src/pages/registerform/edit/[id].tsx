@@ -209,6 +209,9 @@ const RegisterFormEditPage: React.FC = () => {
             checkAlertShow={alertForm}
             setCheckAlertShow={setAlertForm}
             checkBody={checkBody}
+            pathBack={"/registerform"}
+
+            
           />
 
           <Card.Header className="d-flex space-between">
