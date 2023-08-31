@@ -104,7 +104,7 @@ const ActivityAdd: React.FC = () => {
               setAlertForm("success");
               setTimeout(() => {
                 clear();
-              }, 5000);
+              }, 3000);
             } else {
               setAlertForm("danger");
               throw new Error('Failed to send data');
@@ -134,7 +134,7 @@ const ActivityAdd: React.FC = () => {
       </Head>
       <div className='Activity-page'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/activity"} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               เพิ่มกิจกรรม

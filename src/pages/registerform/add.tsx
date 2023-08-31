@@ -106,7 +106,7 @@ const RegisterFormAdd: React.FC = () => {
       </Head>
       <div className='RegisterForm-page'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/registerform"}/>
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               RegisterForm - เพิ่มโปรโมชั่น

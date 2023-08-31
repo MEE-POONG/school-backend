@@ -80,7 +80,7 @@ const SliderAdd: React.FC = () => {
               setAlertForm("success");
               setTimeout(() => {
                 clear();
-              }, 5000);
+              }, 3000);
             } else {
               setAlertForm("danger");
               throw new Error('Failed to send data');
@@ -110,7 +110,7 @@ const SliderAdd: React.FC = () => {
       </Head>
       <div className='slider-page'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/slider"} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               เพิ่มรูปภาพหน้าแรก

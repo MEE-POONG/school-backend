@@ -65,7 +65,7 @@ const AdminAdd: React.FC = () => {
           setAlertForm("success");
           setTimeout(() => {
             clear();
-          }, 5000);
+          }, 3000);
         } else {
           setAlertForm("danger");
           throw new Error('Failed to send data');
@@ -90,7 +90,7 @@ const AdminAdd: React.FC = () => {
       </Head>
       <div className='adminpage'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/admin"} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               เพิ่มผู้ใช้งาน
