@@ -180,7 +180,7 @@ const NewsSchoolAdd: React.FC = () => {
           <Card.Body>
             <Row>
             <Col md={4}>
-                <FloatingLabel controlId="NewsName" label="ชื่อข่าว" className="mb-3" style={{ color: 'red' }}>
+                <FloatingLabel controlId="NewsName" label="ชื่อข่าว * จำกัด 50 ตัวอักษร" className="mb-3" style={{ color: 'red' }}>
                   <Form.Control
                     isValid={inputForm && newName !== ""}
                     isInvalid={inputForm && newName === ""}
