@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import LayOut from "@/components/RootPage/TheLayOut";import {
+import LayOut from "@/components/RootPage/TheLayOut"; import {
   Button,
   Card,
   Col,
@@ -19,7 +19,7 @@ import { RegisterForm } from "@prisma/client";
 
 
 
-const RegisterFormAdd: React.FC = () => {
+const RegisterFormEditPage: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   const [
@@ -51,57 +51,57 @@ const RegisterFormAdd: React.FC = () => {
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
 
-
-
-  const handleInputChange = (setter: any) => (event: any) => {
-    const newValue = event.target.value;
-    if (!isNaN(newValue) && !newValue.includes(".")) {
-      setter(newValue);
-    }
-  };
-
-  const [
-    {
-      data: RegisterFormID,
-      loading: RegisterFormIDLoading,
-      error: RegisterFormIDError,
-    },
-    executeRegisterFormID,
-  ] = useAxios<{ RegisterForm: RegisterForm; success: boolean }, any>(
-    {
-      url: `/api/registerForm/${id}`,
-      method: "GET",
-    },
-    { autoCancel: false, manual: true }
-  );
+  const [{ data: registerFormData }, getregisterForm] = useAxios({
+    url: `/api/registerForm/${id}`,
+    method: "GET",
+  });
 
   useEffect(() => {
-    if (id) {
-      executeRegisterFormID().then(({ data }) => {
-        if (data?.RegisterForm) {
-          setregIdpersonal(data?.RegisterForm?.regIdpersonal || "");
-          setregBirth(data?.RegisterForm?.regBirth || "");
-          setregPrefix(data?.RegisterForm?.regPrefix || "");
-          setregSex(data?.RegisterForm?.regSex || "");
-          setregNation(data?.RegisterForm?.regNation || "");
-          setregName(data?.RegisterForm?.regName || "");
-          setregLastname(data?.RegisterForm?.regLastname || "");
-          setregEname(data?.RegisterForm?.regEname || "");
-          setregElastname(data?.RegisterForm?.regElastname || "");
-          setregPhone(data?.RegisterForm?.regPhone || "");
-          setregEmail(data?.RegisterForm?.regEmail || "");
-          //setregImg(data?.RegisterForm?.regImg || "");
-          setregSchool(data?.RegisterForm?.regSchool || "");
-          setregDegree(data?.RegisterForm?.regDegree || "");
-          setregGpa(data?.RegisterForm?.regGpa || "");
-          setregProgram(data?.RegisterForm?.regProgram || "");
-          setregFaculty(data?.RegisterForm?.regFaculty || "");
-          setregMajor(data?.RegisterForm?.regMajor || "");
+    if (registerFormData) {
+      const {
+        regIdpersonal,
+        regBirth,
+        regPrefix,
+        regSex,
+        regNation,
+        regName,
+        regLastname,
+        regEname,
+        regElastname,
+        regPhone,
+        regEmail,
 
-        }
-      });
+        regSchool,
+        regDegree,
+        regGpa,
+        regProgram,
+        regFaculty,
+        regMajor,
+        // ... (ตาม field อื่น ๆ)
+      } = registerFormData;
+
+      setregIdpersonal(regIdpersonal);
+      setregBirth(regBirth);
+      setregPrefix(regPrefix);
+      setregSex(regSex);
+      setregNation(regNation);
+      setregName(regName);
+      setregLastname(regLastname);
+      setregEname(regEname);
+      setregElastname(regElastname);
+      setregPhone(regPhone);
+      setregEmail(regEmail);
+
+      setregSchool(regSchool);
+      setregDegree(regDegree);
+      setregGpa(regGpa);
+      setregProgram(regProgram);
+      setregFaculty(regFaculty);
+      setregMajor(regMajor);
+
+      // ... (กำหนดค่า state อื่น ๆ)
     }
-  }, [id]);
+  }, [registerFormData]);
 
   const reloadPage = () => {
     window.location.reload();
@@ -119,19 +119,26 @@ const RegisterFormAdd: React.FC = () => {
     event.stopPropagation();
     let missingFields = [];
 
-    if (!regIdpersonal) missingFields.push("regIdpersonal");
-    if (!regBirth) missingFields.push("regBirth");
-    if (!regPrefix) missingFields.push("regPrefix");
-    if (!regSex) missingFields.push("regSex");
-    if (!regNation) missingFields.push("regNation");
-    if (!regName) missingFields.push("regName");
-    if (!regLastname) missingFields.push("regLastname");
-    if (!regEname) missingFields.push("regEname");
-    if (!regPhone) missingFields.push("regPhone");
-    if (!regEmail) missingFields.push("regEmail");
-    if (!regBirth) missingFields.push("regBirth");
+    if (!regIdpersonal) missingFields.push("รหัสบัตรประชาชน");
+    if (!regBirth) missingFields.push("วันเกิด");
+    if (!regPrefix) missingFields.push("คำนำหน้า");
+    if (!regSex) missingFields.push("เพศ");
+    if (!regNation) missingFields.push("สัญชาติ");
+    if (!regName) missingFields.push("ชื่อ");
+    if (!regLastname) missingFields.push("นามสกุล");
+    if (!regEname) missingFields.push("ชื่อภาษาอังกฤษ");
+    if (!regElastname) missingFields.push("นามสกุลภาษาอังกฤษ");
+    if (!regPhone) missingFields.push("เบอร์โทรศัพท์");
+    if (!regEmail) missingFields.push("อีเมล");
+
+    if (!regSchool) missingFields.push("สถาบันการศึกษา");
+    if (!regDegree) missingFields.push("สำเร็จการศึกษาระดับ");
+    if (!regGpa) missingFields.push("เกรดเฉลี่ย");
+    if (!regProgram) missingFields.push("หลักสูตร");
+    if (!regFaculty) missingFields.push("คณะ");
+    if (!regMajor) missingFields.push("สาขา");
     //if (!regImg) missingFields.push("regImg");
-   
+
 
     if (missingFields.length > 0) {
       setAlertForm("warning");
@@ -153,6 +160,13 @@ const RegisterFormAdd: React.FC = () => {
           regElastname,
           regPhone,
           regEmail,
+
+          regSchool,
+          regDegree,
+          regGpa,
+          regProgram,
+          regFaculty,
+          regMajor,
         };
 
         // Execute the update
@@ -196,7 +210,7 @@ const RegisterFormAdd: React.FC = () => {
             setCheckAlertShow={setAlertForm}
             checkBody={checkBody}
           />
-          
+
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">แก้ไขข้อมูล</h4>
           </Card.Header>
@@ -206,7 +220,7 @@ const RegisterFormAdd: React.FC = () => {
 
           <Card.Body>
             <Row>
-             
+
               <Col md={4}>
                 <FloatingLabel
                   controlId="regIdpersonal"
@@ -512,9 +526,9 @@ const RegisterFormAdd: React.FC = () => {
 
 
 
-              
 
-              
+
+
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">
@@ -533,7 +547,7 @@ const RegisterFormAdd: React.FC = () => {
     </LayOut>
   );
 };
-export default RegisterFormAdd;
+export default RegisterFormEditPage;
 
 function setAlertForm(arg0: string) {
   throw new Error("Function not implemented.");
