@@ -104,7 +104,7 @@ const RegisterFormEditPage: React.FC = () => {
   }, [registerFormData]);
 
   const reloadPage = () => {
-    window.location.reload();
+    router.reload();
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,7 +179,7 @@ const RegisterFormEditPage: React.FC = () => {
           setAlertForm("success");
           setTimeout(() => {
             reloadPage();
-          }, 5000);
+          }, 3000);
         } else {
           setAlertForm("danger");
           throw new Error("Failed to update data");
@@ -249,7 +249,7 @@ const RegisterFormEditPage: React.FC = () => {
                   <Form.Control
                     isValid={inputForm && regBirth !== ""}
                     isInvalid={inputForm && regBirth === ""}
-                    type="text"
+                    type="date"
                     value={regBirth}
                     onChange={(e) => setregBirth(e.target.value)}
                     placeholder="regBirth"

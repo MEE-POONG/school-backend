@@ -39,7 +39,10 @@ const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow
     }
     const handleClickReload = () => {
         setCheckAlertShow('not')
-        window.location.reload();
+        if (pathBack !== "") {
+            router.reload();
+        }
+        
     };
     const handleClickBack = () => {
         setCheckAlertShow('not')

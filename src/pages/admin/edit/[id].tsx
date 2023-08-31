@@ -36,44 +36,33 @@ const RegisterFormAdd: React.FC = () => {
 
 
 
-  const handleInputChange = (setter: any) => (event: any) => {
-    const newValue = event.target.value;
-    if (!isNaN(newValue) && !newValue.includes(".")) {
-      setter(newValue);
-    }
-  };
 
-  const [
-    {
-      data: RegisterFormID,
-      loading: RegisterFormIDLoading,
-      error: RegisterFormIDError,
-    },
-    executeRegisterFormID,
-  ] = useAxios<{ RegisterForm: AdminUser; success: boolean }, any>(
-    {
-      url: `/api/checkLogin/${id}`,
-      method: "GET",
-    },
-    { autoCancel: false, manual: true }
-  );
+  const [{ data: AdminUserData }, getAdminUser] = useAxios({
+    url: `/api/checkLogin/${id}`,
+    method: "GET",
+  });
 
-  useEffect(() => {
-    if (id) {
-      executeRegisterFormID().then(({ data }) => {
-        if (data?.RegisterForm) {
-          setusername(data?.RegisterForm?.username || "");
-          setpassword(data?.RegisterForm?.password || "");
-
-        }
-      });
-    }
-  }, [id]);
 
   const reloadPage = () => {
     window.location.reload();
   };
 
+
+  useEffect(() => {
+    if (AdminUserData) {
+      const {
+        username,
+        password,
+        // ... (ตาม field อื่น ๆ)
+      } = AdminUserData;
+
+      setusername(username);
+      setpassword(password);
+
+
+      // ... (กำหนดค่า state อื่น ๆ)
+    }
+  }, [AdminUserData]);
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -109,7 +98,7 @@ const RegisterFormAdd: React.FC = () => {
           setAlertForm("success");
           setTimeout(() => {
             reloadPage();
-          }, 5000);
+          }, 3000);
         } else {
           setAlertForm("danger");
           throw new Error("Failed to update data");
@@ -139,6 +128,7 @@ const RegisterFormAdd: React.FC = () => {
             checkAlertShow={alertForm}
             setCheckAlertShow={setAlertForm}
             checkBody={checkBody}
+            pathBack={"/admin"}
           />
 
           <Card.Header className="d-flex space-between">

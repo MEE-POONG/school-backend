@@ -171,7 +171,7 @@ const NewsSchoolAdd: React.FC = () => {
       </Head>
       <div className='NewsSchool-page'>
         <Card>
-          <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack="/newsSchool" />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               แก้ไขข้อมูล

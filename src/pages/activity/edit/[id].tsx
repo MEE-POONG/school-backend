@@ -29,10 +29,6 @@ const ActivityEdit: React.FC = () => {
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
-  /* const [bankAccount, setBankAccount] = useState<string>("");
-   const [phone, setPhone] = useState<string>("");
-   const [line, setLine] = useState<string>("");
-   const [email, setEmail] = useState<string>("");*/
 
 
   const handleInputChange = (setter: any) => (event: any) => {
@@ -42,58 +38,64 @@ const ActivityEdit: React.FC = () => {
     }
   };
 
-  const [
-    { data: IndexActivityID, loading: IndexActivityIDLoading, error: IndexActivityIDError },
-    executeIndexActivityID,
-  ] = useAxios<{ data: ActivitySchool; success: boolean }, any>({
+  // const [
+  //   { data: IndexActivityID, loading: IndexActivityIDLoading, error: IndexActivityIDError },
+  //   executeIndexActivityID,
+  // ] = useAxios<{ data: ActivitySchool; success: boolean }, any>({
+  //   url: `/api/activity/${id}`,
+  //   method: "GET",
+  // }, { autoCancel: false, manual: true });
+
+
+  const [{ data: ActivitySchoolData }, getactivitySchool] = useAxios({
     url: `/api/activity/${id}`,
     method: "GET",
-  }, { autoCancel: false, manual: true });
+  });
+
+  // useEffect(() => {
+  //   if (id) {
+  //     executeIndexActivityID().then(({ data }) => {
+  //       if (data?.data) {
+  //         setactivityName(data?.data?.activityName || "");
+  //         setactivityTitle(data?.data?.activityTitle || "")
+  //         setactivitySubTitle(data?.data?.activitySubDetail || "")
+  //         setactivitySubDetail(data?.data?.activitySubDetail || "")
+  //         setactivityImg(data?.data?.activityImg || "")
+  //         setactivityDate(data?.data?.activityDate || "")
+  //         setactivityDescription(data?.data?.activityDescription || "")
+  //         // setimg(data?.data?.img || "")
+
+  //       }
+  //     });
+  //   }
+  // }, [id]);
+
+
 
   useEffect(() => {
-    if (id) {
-      executeIndexActivityID().then(({ data }) => {
-        if (data?.data) {
-          setactivityName(data?.data?.activityName || "");
-          setactivityTitle(data?.data?.activityTitle || "")
-          setactivitySubTitle(data?.data?.activitySubDetail || "")
-          setactivitySubDetail(data?.data?.activitySubDetail || "")
-          setactivityImg(data?.data?.activityImg || "")
-          setactivityDate(data?.data?.activityDate || "")
-          setactivityDescription(data?.data?.activityDescription || "")
-          /*  setimg(data?.data?.img || "")
-            setBank(data?.data?.bank || "")
-            setBankAccount(data?.data?.bankAccount || "")
-            setPhone(data?.data?.phone || "")
-            setLine(data?.data?.line || "")
-            setEmail(data?.data?.email || "")*/
-        }
-      });
+    if (ActivitySchoolData) {
+      const {
+        activityName,
+        activityTitle,
+        activitySubTitle,
+        activitySubDetail,
+        // activityImg,
+        activityDate,
+        // ... (ตาม field อื่น ๆ)
+      } = ActivitySchoolData;
+
+      setactivityName(activityName);
+      setactivityTitle(activityTitle);
+      setactivitySubTitle(activitySubTitle);
+      setactivitySubDetail(activitySubDetail);
+      setactivityDate(activityDate);
+
+      // ... (กำหนดค่า state อื่น ๆ)
     }
-  }, [id]);
+  }, [ActivitySchoolData]);
 
   const reloadPage = () => {
-    executeIndexActivityID().then(({ data }) => {
-      if (data?.data) {
-        setactivityName(data?.data?.activityName || "");
-        setactivityTitle(data?.data?.activityTitle || "")
-        setactivitySubTitle(data?.data?.activitySubDetail || "")
-        setactivitySubDetail(data?.data?.activitySubDetail || "")
-        setactivityImg(data?.data?.activityImg || "")
-        setactivityDate(data?.data?.activityDate || "")
-        setactivityDescription(data?.data?.activityDescription || "")
-        /* setimg(data?.data?.img || "")
-        setUsername(data?.data?.username || "");
-         setPassword(data?.data?.password || "")
-         setFirstname(data?.data?.firstname || "")
-         setLastname(data?.data?.lastname || "")
-         setBank(data?.data?.bank || "")
-         setBankAccount(data?.data?.bankAccount || "")
-         setPhone(data?.data?.phone || "")
-         setLine(data?.data?.line || "")
-         setEmail(data?.data?.email || "")*/
-      }
-    });
+    router.reload();
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,7 +154,7 @@ const ActivityEdit: React.FC = () => {
           setAlertForm("success");
           setTimeout(() => {
             reloadPage();
-          }, 5000);
+          }, 3000);
         } else {
           setAlertForm("danger");
           throw new Error('Failed to update data');
@@ -176,7 +178,7 @@ const ActivityEdit: React.FC = () => {
       </Head>
       <div className='IndexActivity-page'>
         <Card>
-          <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack="/activity" />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               แก้ไขข้อมูล
