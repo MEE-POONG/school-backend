@@ -8,6 +8,7 @@ import useAxios from "axios-hooks";
 import Link from "next/link";
 import { NewsSchool } from "@prisma/client";
 import LayOut from "@/components/RootPage/TheLayOut";
+import NewsSchoolPage from '../index';
 
 
 
@@ -92,6 +93,39 @@ const NewsSchoolAdd: React.FC = () => {
   //     }
   //   });
   // };
+
+  const [{ data: NewsSchoolData }, getNewsSchool] = useAxios({
+    url: `/api/news/${id}`,
+    method: "GET",
+  });
+
+  const reloadPage = () => {
+    window.location.reload();
+  };
+
+
+  useEffect(() => {
+    if (NewsSchoolData) {
+      const {
+        newName,
+        newTitle,
+        newSubTitle,
+        newSubDetail,
+        newDate,
+        // ... (ตาม field อื่น ๆ)
+      } = NewsSchoolData;
+
+      setnewName(newName);
+      setnewTitle(newTitle);
+      setnewSubTitle(newSubTitle);
+      setnewSubDetail(newSubDetail);
+      setnewDate(newDate);
+
+
+      // ... (กำหนดค่า state อื่น ๆ)
+    }
+  }, [NewsSchoolData]);
+
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
