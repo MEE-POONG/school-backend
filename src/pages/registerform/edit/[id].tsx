@@ -26,7 +26,6 @@ const RegisterFormAdd: React.FC = () => {
     { loading: updateRegisterFormLoading, error: updateRegisterFormError },
     executeRegisterFormPut,
   ] = useAxios({}, { manual: true });
-  const [regId, setregId] = useState<string>("");
   const [regIdpersonal, setregIdpersonal] = useState<string>("");
   const [regBirth, setregBirth] = useState<string>("");
   const [regPrefix, setregPrefix] = useState<string>("");
@@ -80,7 +79,6 @@ const RegisterFormAdd: React.FC = () => {
     if (id) {
       executeRegisterFormID().then(({ data }) => {
         if (data?.RegisterForm) {
-          setregId(data?.RegisterForm?.regId || "");
           setregIdpersonal(data?.RegisterForm?.regIdpersonal || "");
           setregBirth(data?.RegisterForm?.regBirth || "");
           setregPrefix(data?.RegisterForm?.regPrefix || "");
@@ -120,7 +118,7 @@ const RegisterFormAdd: React.FC = () => {
     event.preventDefault();
     event.stopPropagation();
     let missingFields = [];
-   // if (!regId) missingFields.push("regId");
+
     if (!regIdpersonal) missingFields.push("regIdpersonal");
     if (!regBirth) missingFields.push("regBirth");
     if (!regPrefix) missingFields.push("regPrefix");
@@ -144,7 +142,6 @@ const RegisterFormAdd: React.FC = () => {
         setAlertForm("primary");
 
         const data = {
-          //regId,
           regIdpersonal,
           regBirth,
           regPrefix,
@@ -156,7 +153,6 @@ const RegisterFormAdd: React.FC = () => {
           regElastname,
           regPhone,
           regEmail,
-         // regImg,
         };
 
         // Execute the update
