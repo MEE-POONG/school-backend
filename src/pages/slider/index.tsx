@@ -91,22 +91,22 @@ const SliderPage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="first">No.</th>
-                  <th className="image">รูปภาพ</th>
-                  <th>จัดการ</th>
+                  <th className="w-t-150">No.</th>
+                  <th className="w-t-300">รูปภาพ</th>
+                  <th className="w-t-150">จัดการ</th>
                 </tr>
               </thead>
               <tbody className="text-center">
                 {filteredslidersData?.map((slider: SliderSchool, index: number) => {
                   return (
                     <tr key={slider.id}>
-                      <td className="first">
+                      <td className="">
                         {((params.page * 10) - 10) + index + 1}
                       </td>
 
                       <td className="image">
                         <div className="space-around ">
-                          <img src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${slider?.img1 ? slider?.img1: 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}  width={350} height={120} alt="sliderimage"/>
+                          <img src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${slider?.img1 ? slider?.img1: 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}  width={300} height={100} alt="sliderimage"/>
                         </div>
                       </td>
 
