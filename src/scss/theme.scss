@@ -471,3 +471,35 @@ a.text-primary {
         }
     }
 }
+@media (max-width: 769px) {
+    .card-header{
+        h4{
+            font-size: 14px;
+        }
+        
+        
+    }
+
+    .input-icon {
+        width: auto;
+        position: relative;
+        .input-group-text {
+            height: 100%;
+            position: absolute;
+            background: unset;
+            border: unset;
+        }
+        .form-control {
+            padding-left: 2rem;
+            font-size: 10px;
+            width: 100px;
+        }
+        
+    }
+    
+    button.icon, .btn.icon {
+
+        font-size: 10px;
+
+    }
+}
