@@ -28,7 +28,7 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
           </h3>
         </Link>
         <TheButtonOffcanvas show={show} onToggleShow={onToggleShow} />
-        <TheBreadcrumb />
+        {/* <TheBreadcrumb /> */}
         <div className="navbar-nav align-items-center ms-auto">
           <NavDropdown
             id="nav-dropdown-dark-example"
