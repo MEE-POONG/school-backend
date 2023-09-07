@@ -133,8 +133,8 @@ const RegisterFormPage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="first">No</th>
-                  <th className="w-28">ชื่อผู้ใช้</th>
+                  <th className="w-t-150">No</th>
+                  <th className="w-t-150">ชื่อผู้ใช้</th>
                   <th className="w-t-150">รหัสผ่าน</th>
 
                   <th>จัดการ</th>
@@ -144,10 +144,10 @@ const RegisterFormPage: React.FC = () => {
               <tbody className="text-center">
                 {filteredAdminsData.map((Admin, index) => (
                   <tr key={Admin.id}>
-                    <td className="text-end">{index + 1}</td>
-                    <td className="w-t-450">{Admin.username}</td>
+                    <td className="w-t-150">{index + 1}</td>
+                    <td className="w-t-150">{Admin.username}</td>
                     <td className="w-t-150">{Admin.password}</td>
-                    <td className="w-t-350">
+                    <td className="w-t-150">
                         
                       <Link
                         href={`/admin/edit/${Admin.id}`}
