@@ -67,4 +67,7 @@
     .dropdown-item {
         font-size: 14px;
     }
+    .dropdown-menu{
+        --bs-dropdown-min-width: 0px;
+    }
   }
