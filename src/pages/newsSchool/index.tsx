@@ -148,20 +148,20 @@ const NewsSchoolPage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="no">No</th>
-                  <th className="title">ชื่อข่าว</th>
+                  <th className="w-t-150">No</th>
+                  <th className="w-t-150">ชื่อข่าว</th>
                   {/* <th className="subtitle">วัน/เดือน/ปี เกิด</th> */}
-                  <th>หัวข้อข่าว</th>
-                  <th>หัวข้อย่อยข่าว</th>
+                  <th className="w-t-150">หัวข้อข่าว</th>
+                  <th className="w-t-150">หัวข้อย่อยข่าว</th>
                   {/* <th>สัญชาติ</th> */}
-                  <th>รายละเอียดข่าว</th>
+                  <th className="w-t-150">รายละเอียดข่าว</th>
 
                   {/* <th>ชื่อ ภาษาอังกฤษ</th>
                   <th>นามสกุล ภาษาอังกฤษ</th> */}
                   {/* <th>คำอธิบายข่าว</th> */}
-                  <th>วันที่</th>
-                  <th>รูปภาพ</th>
-                  <th>จัดการ</th>
+                  <th className="w-t-150">วันที่</th>
+                  <th className="w-t-150">รูปภาพ</th>
+                  <th className="w-t-150">จัดการ</th>
                 </tr>
               </thead>
 

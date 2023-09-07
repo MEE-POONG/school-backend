@@ -16,6 +16,12 @@
     transition: margin-left 0.5s ease-in-out 0s, width 0.5s ease-in-out 0s;
     padding: 1rem 1rem 0 1rem;
     height: calc(100vh - 55px);
+    .card{
+        .card-body{
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+    }
 }
 button,
 .btn {
@@ -386,7 +392,7 @@ button.bar-slide {
             width: 200px;
         }
         &.bank {
-            width: 150px;
+            width: 190px;
         }
         &:nth-last-child(1) {
             width: 200px;
