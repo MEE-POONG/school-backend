@@ -138,16 +138,16 @@ const RegisterFormPage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="no">No</th>
-                  <th className="title">รหัสบัตรประชาชน</th>
-                  <th>คำนำหน้า</th>
-                  <th>เพศ</th>
-                  <th>ชื่อ</th>
-                  <th>นามสกุล</th>
-                  <th>เบอร์โทร</th>
-                  <th>E-mail</th>
-                  <th>โปรไฟล์</th>
-                  <th>จัดการ</th>
+                  <th className="w-t-150">No</th>
+                  <th className="w-t-150">รหัสบัตรประชาชน</th>
+                  <th className="w-t-150">คำนำหน้า</th>
+                  <th className="w-t-150">เพศ</th>
+                  <th className="w-t-150">ชื่อ</th>
+                  <th className="w-t-150">นามสกุล</th>
+                  <th className="w-t-150">เบอร์โทร</th>
+                  <th className="w-t-150">E-mail</th>
+                  <th className="w-t-150">โปรไฟล์</th>
+                  <th className="w-t-150">จัดการ</th>
                 </tr>
               </thead>
 
