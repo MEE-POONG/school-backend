@@ -45,7 +45,7 @@ export default function ViewDetail(props: { data: any }) {
                                 <h4 className="">ชื่อข่าว : {props?.data?.activityName} </h4>
                                 <h4 className="my-2">หัวข้อข่าว : {props?.data?.activityTitle} </h4>
                                 <Row className="my-2">
-                                    <Col><img className="my-2" src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${props?.data?.activityImg}/500`} alt="newImg" /></Col>
+                                    <img className="my-2" src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${props?.data?.activityImg}/500`} alt="newImg" />
                                 </Row>
                                 <h4>หัวข้อย่อยข่าว : {props?.data?.activitySubTitle} </h4>
                                 <h4 className="my-2">รายละเอียดข่าว :</h4>

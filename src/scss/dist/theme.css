@@ -493,6 +493,14 @@ a.text-primary:hover {
     width: 180px;
   }
 }
+.modal-body .row .col img {
+  width: 180px;
+}
+
+.modal-body img {
+  width: 500px;
+}
+
 .center {
   display: block;
   margin-left: auto;

@@ -521,8 +521,22 @@ a.text-primary {
 
 }
 
+.modal-body{
+    .row{
+        .col{
+            img{
+                width: 180px;
+            }
+        }
 
+    }
+}
 
+.modal-body{
+    img{
+        width: 500px;
+    }
+}
 
 .center{
     display: block;
