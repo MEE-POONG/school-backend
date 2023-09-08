@@ -70,7 +70,7 @@ export default function Login() {
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
-                  {/* <img src="https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/2663e300-1089-4f86-d2bb-77a993ed4700/250" className="" alt="" /> */}
+                  <img src="https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/8b288351-ccbd-491b-d92d-ca4842ec5800/public" className="center" alt="" />
                   <h2 className="fw-bold mb-2 text-uppercase text-center ">วิทยาลัยเทคโนโลยีพนมวันท์</h2>
                   <p className=" mb-3">Please enter your username and password</p>
                   <div className="mb-3">
