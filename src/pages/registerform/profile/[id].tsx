@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Modal, Row,  } from 'react-bootstrap';
 import { FaUserNinja } from "react-icons/fa";
 import { RegisterForm } from "@prisma/client";
 import { useReactToPrint } from 'react-to-print';
@@ -42,7 +42,7 @@ export default function ProfileDetailModal(props: { data: any }) {
           <div className="container">
          <div className="p-4">
           <Row>
-            <Col><img className="md:justify-center"src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${props?.data?.regImg}/500`} alt=""width={200} height={250} /></Col>
+            <Col><img className="h-auto"src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${props?.data?.regImg}/500`} alt=""width={200} height={250} /></Col>
           </Row>
           <h3 className="py-2">รายละเอียดข้อมูล</h3>
             <h4>ข้อมูลผู้สมัคร</h4>
