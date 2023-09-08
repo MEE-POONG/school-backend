@@ -35,7 +35,7 @@ export default function ProfileDetailModal(props: { data: any }) {
             รายละเอียด คุณ : {props?.data?.regName + " " + props?.data?.regLastname}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className=" overflow-x-scroll">
         <div ref={conponentPDF} style={{ width:'595px',height:'842px'}}>
           
 
@@ -77,28 +77,7 @@ export default function ProfileDetailModal(props: { data: any }) {
             </div>
             </div>
       </div>
-            {/* <p >คำนำหน้าชื่อ: {props?.data?.regPrefix}</p>
-            <p>ชื่อ: {props?.data?.regName}</p>
-            <p>นามสกุล: {props?.data?.regLastname}</p>
-            <p>Name: {props?.data?.regEname}</p>
-            <p>Surname: {props?.data?.regElastname}</p>
-            <p>บัตรประจำตัวประชาชน: {props?.data?.regIdpersonal}</p>
-            <p>วัน/เดือน/ปีเกิด: {props?.data?.regBirth}</p>
-            <p>เพศ: {props?.data?.regSex}</p>
-            <p>สัญชาติ: {props?.data?.regNation}</p>
-            <p>เบอร์โทรศัพท์ติดต่อ: {props?.data?.regPhone}</p>
-            <p>Email: {props?.data?.regEmail}</p> */}
-
-           
-            {/* <h4>ประวัติการศึกษา</h4>
-            <p>สถาบันการศึกษา: {props?.data?.regSchool}</p>
-            <p>สำเร็จการศึกษาระดับ: {props?.data?.regDegree}</p>
-            <p>เกรดเฉลี่ย: {props?.data?.regGpa}</p> */}
-
-            {/* <h4>คณะ/สาขา</h4>
-            <p>หลักสูตร: {props?.data?.regProgram}</p>
-            <p>คณะ: {props?.data?.regFaculty}</p>
-            <p>สาขา: {props?.data?.regMajor}</p> */}
+        
              <div className="d-grid d-md-flex justify-content-md-end mb-3">
                             <button className="btn btn-success" onClick={generatePDF}>สั่งพิมพ์</button>
                         </div>
