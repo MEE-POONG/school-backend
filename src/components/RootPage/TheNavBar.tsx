@@ -19,9 +19,11 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
   };
   return (
     <Navbar className="navbar-expand navbar-head sticky-top px-4 py-0">
-
-      <Container fluid>
+<div className=''>
       <TheButtonOffcanvas show={show} onToggleShow={onToggleShow} />
+      </div>
+      <Container fluid>
+        
         <Link href="/" className="navbar-brand me-4">
           <h3 className="text-primary">
             <FaUserEdit className="fa me-2" />
