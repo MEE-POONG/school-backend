@@ -21,13 +21,14 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
     <Navbar className="navbar-expand navbar-head sticky-top px-4 py-0">
 
       <Container fluid>
+      <TheButtonOffcanvas show={show} onToggleShow={onToggleShow} />
         <Link href="/" className="navbar-brand me-4">
           <h3 className="text-primary">
             <FaUserEdit className="fa me-2" />
             Phanomwan College
           </h3>
         </Link>
-        <TheButtonOffcanvas show={show} onToggleShow={onToggleShow} />
+        
         {/* <TheBreadcrumb /> */}
         <div className="navbar-nav align-items-center ms-auto">
           <NavDropdown
