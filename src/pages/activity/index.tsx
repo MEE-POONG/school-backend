@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
 import {
   Badge,
   Card,
@@ -15,7 +14,7 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 // import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { ActivitySchool } from '@prisma/client';
+// import { ActivitySchool } from '@prisma/client';
 import LayOut from "@/components/RootPage/TheLayOut";
 import ViewDetail from "@/pages/activity/viewdetail/[id]";
 
@@ -43,24 +42,24 @@ const ActivitySchoolPage: React.FC = () => {
     executeactivitySchoolDelete,
   ] = useAxios({}, { manual: true });
 
-  const [filteredactivitySchoolsData, setFilteredactivitySchoolsData] = useState<
-    ActivitySchool[]
-  >([]);
+  // const [filteredactivitySchoolsData, setFilteredactivitySchoolsData] = useState<
+  //   ActivitySchool[]
+  // >([]);
 
-  useEffect(() => {
-    setFilteredactivitySchoolsData(activitySchoolData?.activitySchool ?? []);
-  }, [activitySchoolData]);
+  // useEffect(() => {
+  //   setFilteredactivitySchoolsData(activitySchoolData?.activitySchool ?? []);
+  // }, [activitySchoolData]);
 
-  const deleteactivitySchool = (id: string): Promise<any> => {
-    return executeactivitySchoolDelete({
-      url: "/api/activity/" + id,
-      method: "DELETE",
-    }).then(() => {
-      setFilteredactivitySchoolsData((prevactivitySchools) =>
-        prevactivitySchools.filter((activitySchool) => activitySchool.id !== id)
-      );
-    });
-  };
+  // const deleteactivitySchool = (id: string): Promise<any> => {
+  //   return executeactivitySchoolDelete({
+  //     url: "/api/activity/" + id,
+  //     method: "DELETE",
+  //   }).then(() => {
+  //     setFilteredactivitySchoolsData((prevactivitySchools) =>
+  //       prevactivitySchools.filter((activitySchool) => activitySchool.id !== id)
+  //     );
+  //   });
+  // };
 
   const handleChangePage = (page: number) => {
     setParams((prevParams) => ({
@@ -85,29 +84,24 @@ const ActivitySchoolPage: React.FC = () => {
   };
 
 
-  useEffect(() => {
-    if (activitySchoolData?.activitySchool) {
-      // Filter the registerForm data based on searchKey
-      const filteredData = activitySchoolData.activitySchool.filter((activitySchool: any) =>
-        // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
-        activitySchool.activityName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        activitySchool.activityTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        activitySchool.activitySubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        activitySchool.activitySubDetail.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        activitySchool.activityDate.toLowerCase().includes(params.searchKey.toLowerCase())
-      );
+  // useEffect(() => {
+  //   if (activitySchoolData?.activitySchool) {
+  //     // Filter the registerForm data based on searchKey
+  //     const filteredData = activitySchoolData.activitySchool.filter((activitySchool: any) =>
+  //       // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
+  //       activitySchool.activityName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+  //       activitySchool.activityTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+  //       activitySchool.activitySubTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+  //       activitySchool.activitySubDetail.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+  //       activitySchool.activityDate.toLowerCase().includes(params.searchKey.toLowerCase())
+  //     );
 
-      setFilteredactivitySchoolsData(filteredData);
-    }
-  }, [activitySchoolData, params.searchKey]);
+  //     setFilteredactivitySchoolsData(filteredData);
+  //   }
+  // }, [activitySchoolData, params.searchKey]);
 
   return (
     <LayOut>
-      <Head>
-        <title>Phanomwan Backend</title>
-        <meta name="description" content="T ACTIVE" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <div className="partner-page h-100">
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
@@ -155,7 +149,7 @@ const ActivitySchoolPage: React.FC = () => {
               </thead>
 
               <tbody className="text-center">
-                {filteredactivitySchoolsData.map((activitySchool, index) => (
+                {/* {filteredactivitySchoolsData.map((activitySchool, index) => (
                   <tr key={activitySchool.id}>
                     <td>{index + 1}</td>
                     <td>{activitySchool.activityName}</td>
@@ -169,7 +163,6 @@ const ActivitySchoolPage: React.FC = () => {
                       )
                     ) : null}</td>
                     <td>{activitySchool.activityDate}</td>
-                    {/* <td>{activitySchool.activityDescription}</td> */}
                     <td>
                       <Image
                         src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${activitySchool.activityImg}/public`}
@@ -178,14 +171,8 @@ const ActivitySchoolPage: React.FC = () => {
                       />
                     </td>
 
-                    {/* <img src={activitySchool.img} alt="activitySchool" /> */}
 
                     <td>
-                      {/* <BasicDocument/> */}
-                      {/* <activitySchoolAddactivitySchoolModal data={activitySchool} /> */}
-
-
-                      {/* <EditactivitySchoolModal data={activitySchool} apiEdit={() => editactivitySchool(editList)} /> */}
                       <ViewDetail data={activitySchool}/>
                       
                       <Link
@@ -201,7 +188,7 @@ const ActivitySchoolPage: React.FC = () => {
                       />
                     </td>
                   </tr>
-                ))}
+                ))} */}
               </tbody>
             </Table>
           </Card.Body>

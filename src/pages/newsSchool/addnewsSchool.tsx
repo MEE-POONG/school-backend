@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Head from 'next/head';
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
-import Link from "next/link";
 import axios from "axios";
 import LayOut from "@/components/RootPage/TheLayOut";
 
@@ -121,14 +119,7 @@ const NewsSchoolAdd: React.FC = () => {
 
   return (
     <LayOut>
-      <Head>
-        <title>Phanomwan Backend</title>
-        <meta
-          name="description"
-          content="T ACTIVE"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+
       <div className='NewsSchool-page'>
         <Card>
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/newsSchool"} />
@@ -204,9 +195,6 @@ const NewsSchoolAdd: React.FC = () => {
                     placeholder="NewsImg" />
                 </FloatingLabel>
               </Col>
-
-
-
             </Row>
 
             <Col md={8}>
@@ -224,11 +212,6 @@ const NewsSchoolAdd: React.FC = () => {
                 />
               </FloatingLabel>
             </Col>
-
-
-
-
-
           </Card.Body>
           <Card.Footer className="text-end">
             <Button variant="success mx-2" onClick={handleSubmit}>
@@ -237,9 +220,7 @@ const NewsSchoolAdd: React.FC = () => {
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}
-            <Link href="/newsSchool" className="btn btn-danger mx-2">
-              ย้อนกลับ
-            </Link>
+            
           </Card.Footer>
         </Card>
       </div>

@@ -10,92 +10,143 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//ตัวอย่างschema
-// model Welfare  {
-//   id    Int     @id @default(autoincrement())
-//   email String  @unique
-//   name  String?
-//   posts Post[]
-// }
+model HeadPage {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  title      String?
+  subTitle   String? // หัวข้อย่่อ 
+  pageCheck  String?
+  pathBtn    String?
+  detail     String?
+  imgOne     String?
+  imgTwo     String?
+  imgThree   String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+}
 
-// ล็อคอินแอดมิน
+model Gallery {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  img        String?
+  SetColumns String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+  News       News?     @relation(fields: [newsId], references: [id])
+  newsId     String?   @db.ObjectId
+}
+
+model News {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  title      String? // ชื่อกิจกรรม
+  subTitle   String? // หัวข้อย่่อ 
+  type       String?
+  detail     String? // รายละเอียด
+  img        String? // รูปกิจกรรม
+  promoteImg String? // รูปกิจกรรม
+  date       String? // วันที่
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+  gallery    Gallery[]
+}
+
+model CourseGroup {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  nameTH     String?
+  nameEN     String?
+  img        String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+}
+
+model CourseList {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  FieldStudy      String?
+  TermFeesGroupID String?
+  kysOne          String?
+  kysTwo          String?
+  kysThree        String?
+  First           String?
+  Second          String?
+  Sum             String?
+  createdAt       DateTime? @default(now())
+  updatedAt       DateTime? @updatedAt
+  deleted_at      DateTime? @map("deleted_at")
+}
+
+model ContactUS {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  addressOne   String?
+  addressTwo   String?
+  addressThree String?
+  subDistrict  String?
+  district     String?
+  province     String?
+  zipcode      String?
+  tel          String?
+  fax          String?
+  email        String?
+  facebook     String?
+  createdAt    DateTime? @default(now())
+  updatedAt    DateTime? @updatedAt
+  deleted_at   DateTime? @map("deleted_at")
+}
+
+model welfare {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  img        String?
+  title      String?
+  detail     String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+}
+
+// // NO 
 model AdminUser {
-  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   username String?
   password String?
 
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
 }
 
-// หมวดหมู่หน้า INDEX
-// รูปสไลด์แรก
-model SliderSchool {
-  id   String  @id @default(auto()) @map("_id") @db.ObjectId
-  img1 String?
-}
-
-model NewsSchool {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  newName      String? // ชื่อกิจกรรม
-  newTitle     String? // // หัวข้อหลัก
-  newSubTitle  String? // หัวข้อย่่อ 
-  newSubDetail String? // รายละเอียด
-  newImg       String? // รูปกิจกรรม
-  newDate      String? // วันที่
-
-}
-
-
-
-
-//กิจกรรมในหน้า index
-model ActivitySchool  { 
-  id  String  @id @default(auto()) @map("_id") @db.ObjectId
-  activityName String? // ชื่อกิจกรรม
-  activityTitle String? // // หัวข้อหลัก
-  activitySubTitle String? // หัวข้อย่่อ 
-  activitySubDetail String? // รายละเอียด
-  activityImg String? // รูปกิจกรรม
-  activityDate String? // วันที่
-
-  activityDescription String? // รายละเอียดขอมูลกิจกรรม
-}
-
-
-
-//ฟอร์มสมัคร 
-model RegisterForm  { 
-  id  String  @id @default(auto()) @map("_id") @db.ObjectId
-  //ข้อมูลผู้สมัคร
-  regId String? //รหัสนักศึกษา
-  regIdpersonal String? //รหัหสบัตรประชาชน
-  regBirth String? //วันเกิด
-  regPrefix String? // คำนำหน้า
-  regSex String? // เพศ
-  regNation String? // ประเทศ
-  regName String?  //ชื่อ
-  regLastname String? //นามสกุล
-  regEname String? //ชื่ออิง
-  regElastname String? // นามสกุลอิง
-  regPhone String? //เบอร์
-  regEmail String? //เมล
-  regImg String? //รูป
-
+model RegisterForm {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  studentId  String? //รหัสนักศึกษา
+  Idpersonal String? //รหัหสบัตรประชาชน
+  Birth      String? //วันเกิด
+  Prefix     String? // คำนำหน้า
+  Sex        String? // เพศ
+  Nation     String? // ประเทศ
+  Name       String? //ชื่อ
+  Lastname   String? //นามสกุล
+  Ename      String? //ชื่ออิง
+  Elastname  String? // นามสกุลอิง
+  Phone      String? //เบอร์
+  Email      String? //เมล
+  Img        String? //รูป
   //ประวัติการศึกษา
-  regSchool String?
-  regDegree String?
-  regGpa String?
-
+  School     String?
+  Degree     String?
+  Gpa        String?
   //ข้างล่างเป็นเกี่ยวกับคณะและหลักสูตร
-  regProgram String?//หลักสูตร
-  regFaculty String?
-  regMajor String?
-
+  Program    String? //หลักสูตร
+  Faculty    String?
+  Major      String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
 }
 
 model IPAddress {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  ipAddress String?
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  ipAddress  String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
 }
-
-
-
