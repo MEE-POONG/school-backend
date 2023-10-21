@@ -33,7 +33,7 @@ const ActivitySchoolPage: React.FC = () => {
   });
 
   const [{ data: activitySchoolData }, getactivitySchool] = useAxios({
-    url: `/api/activity?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchKey}`,
+    url: `/api/activity?page=${params.page}&pageSize=${params.pageSize}&searchTeam=${params.searchKey}`,
     method: "GET",
   });
 
