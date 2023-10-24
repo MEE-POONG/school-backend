@@ -39,13 +39,13 @@ model Gallery {
 model News {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   title      String? // ชื่อกิจกรรม
-  subTitle   String? // หัวข้อย่่อ 
   type       String?
-  detail     String? // รายละเอียด
-  img        String? // รูปกิจกรรม
-  promoteImg String? // รูปกิจกรรม
   startDate  DateTime? // วันที่
   endDate    DateTime? // วันที่
+  img        String? // รูปกิจกรรม
+  promoteImg String? // รูปกิจกรรม
+  subTitle   String? // หัวข้อย่่อ 
+  detail     String? // รายละเอียด
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
