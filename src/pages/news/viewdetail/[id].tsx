@@ -21,7 +21,7 @@ export default function ViewDetail(props: { data: any }) {
         <>
             <Button
                 bsPrefix="create"
-                className={`btn icon ${showCheck ? "active" : " "} `}
+                className={`btn icon mx-1 ${showCheck ? "active" : " "} `}
                 onClick={handleShow}
             >
                 <FaNewspaper />

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import {
-  Badge,
   Card,
-  Button,
   Image,
   Form,
   InputGroup,
@@ -13,11 +11,11 @@ import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-// import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
 import LayOut from "@/components/RootPage/TheLayOut";
 import ViewDetail from "./viewdetail/[id]";
 import { News } from "@prisma/client";
+import { ReFormatDate } from "@/components/ReFormatDate";
 
 
 interface Params {
@@ -26,7 +24,7 @@ interface Params {
   searchKey: string;
   totalPages: number;
 }
-const NewsSchoolPage: React.FC = () => {
+const NewsPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -49,7 +47,11 @@ const NewsSchoolPage: React.FC = () => {
   >([]);
 
   useEffect(() => {
-    setFilteredNewsData(newsData?.newsSchool ?? []);
+    if (newsData?.success) {
+      setFilteredNewsData(newsData?.data ?? []);
+    }
+    console.log("newsData : ",newsData);
+    
   }, [newsData]);
 
   const deleteNews = (id: string): Promise<any> => {
@@ -57,8 +59,8 @@ const NewsSchoolPage: React.FC = () => {
       url: "/api/news/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredNewsData((prevnewsSchools) =>
-        prevnewsSchools.filter((newsSchool) => newsSchool.id !== id)
+      setFilteredNewsData((selectID) =>
+        selectID.filter((newsArray) => newsArray.id !== id)
       );
     });
   };
@@ -88,7 +90,6 @@ const NewsSchoolPage: React.FC = () => {
 
   useEffect(() => {
     if (newsData?.news) {
-      // Filter the registerForm data based on searchKey
       const filteredData = newsData.news?.filter((news: any) =>
         // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
         news?.title.toLowerCase().includes(params.searchKey.toLowerCase()) ||
@@ -118,7 +119,7 @@ const NewsSchoolPage: React.FC = () => {
               <Form.Control
                 onChange={e => handleChangesearchKey(e.target.value)}
                 placeholder="ค้นหาข่าว"
-                aria-label="newsSchool"
+                aria-label="news"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
@@ -130,30 +131,48 @@ const NewsSchoolPage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="w-3">No</th>
-                  <th className="w-t-150">หัวข้อข่าว</th>
-                  <th className="w-t-150">วันที่</th>
-                  <th className="w-t-150">รูปภาพ</th>
-                  <th className="w-t-150">จัดการ</th>
+                  <th className="w-r-3">No</th>
+                  <th className="">รูปภาพ</th>
+                  <th className="">หัวข้อข่าว</th>
+                  <th className="">ประเภท</th>
+                  <th className="">วันกิจกรรม</th>
+                  <th className="">จัดการ</th>
                 </tr>
               </thead>
               <tbody className="text-center">
                 {filteredNewssData?.map((news, index) => (
                   <tr key={news.id}>
-                    <td>{index + 1}</td>
-                    <td>{news.title}</td>
-                    <td>{news.date}</td>
-                    <td>{news.type}</td>
-                    <td>
+                    <td className="w-r-3">{index + 1}</td>
+                    <td className="">
                       <Image
                         src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${news.img}/public`}
-                        alt="newsSchool imge"
+                        className="size-img"
+                        alt="news imge"
                         thumbnail
                       />
                     </td>
-                    <td>
+                    <td className="">{news.title}</td>
+                    <td className="">{news.type}</td>
+                    <td className="">
+                      {news.startDate ? (
+                        <>
+                          {ReFormatDate(news.startDate)} {/* Format start date */}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      <br />
+                      {news.endDate ? (
+                        <>
+                          {ReFormatDate(news.endDate)} {/* Format end date */}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </td>
+                    <td className="">
                       <ViewDetail data={news} />
-                      <Link href={`/newsSchool/edit/${news.id}`} className="mx-1 btn info icon icon-primary" >
+                      <Link href={`/news/edit/${news.id}`} className="mx-1 btn info icon icon-primary" >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
@@ -168,16 +187,18 @@ const NewsSchoolPage: React.FC = () => {
             </Table>
           </Card.Body>
           <Card.Footer>
-            <PageSelect
+            {/* <PageSelect
               page={params.page}
               totalPages={newsData?.pagination?.total}
               onChangePage={handleChangePage}
               onChangePageSize={handleChangePageSize}
-            />
+            /> */}
+            <PageSelect page={params.page} totalPages={newsData?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
+
           </Card.Footer>
         </Card>
       </div>
     </LayOut>
   );
 };
-export default NewsSchoolPage;
+export default NewsPage;

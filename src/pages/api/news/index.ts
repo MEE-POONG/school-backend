@@ -18,8 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
 
                 const totalnews = await prisma.news.count();
-                const totalPage: number = Math.ceil(totalnews / pageSize);
-                res.status(200).json({ news, totalPage });
+                const totalPages: number = Math.ceil(totalnews / pageSize);
+
+                res.status(200).json({ success: true, news, pagination: { total: totalPages, page: page, pageSize: pageSize } });
+
             } catch (error) {
                 res.status(500).json({ error: "An error occurred while fetching the news" });
             }

@@ -398,13 +398,16 @@ button.bar-slide {
         &.bank {
             width: 190px;
         }
-        &:nth-last-child(1) {
-            width: 200px;
-        }
+     
     }
 }
 .h-90 {
     height: 70%;
+}
+.size-img{
+    object-fit: cover;
+    width: 300px;
+    height: 200px;
 }
 // table.scroll th,
 // table td {

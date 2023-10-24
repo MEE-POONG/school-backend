@@ -7,122 +7,13 @@ import LayOut from "@/components/RootPage/TheLayOut";
 
 
 const NewsSchoolAdd: React.FC = () => {
-  const [{ error: errorMessage, loading: NewsSchoolLoading }, executeNewsSchool] = useAxios({ url: '/api/news', method: 'POST' }, { manual: true });
-  const [newName, setnewName] = useState<string>("");
-  const [newTitle, setnewTitle] = useState<string>("");
-  const [newSubTitle, setnewSubTitle] = useState<string>("");
-  const [newSubDetail, setnewSubDetail] = useState<string>("");
-  const [newImg, setnewImg] = useState<File | null>(null);
-  const [newDate, setnewDate] = useState<string>("");
-  const [alertForm, setAlertForm] = useState<string>("not");
-  const [inputForm, setInputForm] = useState<boolean>(false);
-  const [checkBody, setCheckBody] = useState<string>("");
-
-
-  const handleInputChange = (setter: any) => (event: any) => {
-    const newValue = event.target.value;
-    if (!isNaN(newValue) && !newValue.includes('.')) {
-      setter(newValue);
-    }
-  };
-  const reloadPage = () => {
-    clear();
-  };
-
-  const clear = () => {
-    setnewName("");
-    setnewTitle("");
-    setnewSubTitle("");
-    setnewSubDetail("");
-    setnewImg(null);
-    setnewDate("");
-
-    setAlertForm("not");
-    setInputForm(false);
-    setCheckBody("");
-  }
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      setnewImg(file); // Store the File object
-    }
-  };
-
-  const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    let missingFields = [];
-    // Check for missing fields here...
-    if (!newName) missingFields.push("newsName");
-    if (!newTitle) missingFields.push("newsTitle");
-    if (!newSubTitle) missingFields.push("newsSubTitle");
-    if (!newSubDetail) missingFields.push("newsSubDetail");
-    if (!newImg) missingFields.push("newsImg");
-    if (!newDate) missingFields.push("newsDate");
-
-
-    if (missingFields.length > 0) {
-      // Handle missing fields...
-      setAlertForm("warning");
-      setInputForm(true);
-      setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
-    } else {
-      try {
-        setAlertForm("primary"); // set to loading
-
-        // Upload the image
-        if (newImg) {
-          const formData = new FormData();
-          formData.append("file", newImg); // Assuming 'newImg' is a File object
-          const uploadResponse = await axios.post(
-            "https://upload-image.me-prompt-technology.com/",
-            formData
-          );
-
-          if (uploadResponse.status === 200) {
-            const responseData = uploadResponse.data;
-            const imageId = responseData.result.id;
-
-            // Prepare the data to send
-            const data = {
-              newName,
-              newTitle,
-              newSubTitle,
-              newSubDetail,
-              newImg: imageId, // Use the uploaded image ID
-              newDate,
-            };
-
-            const response = await executeNewsSchool({ data });
-            if (response && response.status === 201) {
-              setAlertForm("success");
-              setTimeout(() => {
-                clear();
-              }, 3000);
-            } else {
-              setAlertForm("danger");
-              throw new Error('Failed to send data');
-            }
-          } else {
-            setAlertForm("danger");
-            throw new Error('Image upload failed');
-          }
-        }
-      } catch (error) {
-        setAlertForm("danger");
-      }
-    }
-  };
-
-
 
   return (
     <LayOut>
 
       <div className='NewsSchool-page'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/newsSchool"} />
+          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/newsSchool"} /> */}
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               เพิ่มข่าว
@@ -130,7 +21,7 @@ const NewsSchoolAdd: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <Row>
-              <Col md={4}>
+              {/* <Col md={4}>
                 <FloatingLabel controlId="NewsName" label="ชื่อข่าว * จำกัด 50 ตัวอักษร" className="mb-3" style={{ color: 'red' }}>
                   <Form.Control
                     isValid={inputForm && newName !== ""}
@@ -146,20 +37,53 @@ const NewsSchoolAdd: React.FC = () => {
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
-              </Col>
+              </Col> */}
               <Col md={4}>
-                <FloatingLabel controlId="NewsTitle" label="หัวข้อข่าว" className="mb-3">
+                <FloatingLabel controlId="title" label="หัวข้อ" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && newTitle !== ""}
-                    isInvalid={inputForm && newTitle === ""}
-                    type="title2"
-                    value={newTitle}
-                    onChange={e => setnewTitle(e.target.value)}
-                    placeholder="title2"
+                    // isValid={inputForm && newTitle !== ""}
+                    // isInvalid={inputForm && newTitle === ""}
+                    type="text"
+                  // value={newTitle}
+                  // onChange={e => setnewTitle(e.target.value)}
                   />
                 </FloatingLabel>
               </Col>
               <Col md={4}>
+                <FloatingLabel controlId="subTitle" label="บทความย่อ" className="mb-3">
+                  <Form.Control
+                    // isValid={inputForm && newTitle !== ""}
+                    // isInvalid={inputForm && newTitle === ""}
+                    type="text"
+                  // value={newTitle}
+                  // onChange={e => setnewTitle(e.target.value)}
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="type" label="ประเภทข่าว" className="mb-3">
+                  <Form.Control
+                    // isValid={inputForm && newTitle !== ""}
+                    // isInvalid={inputForm && newTitle === ""}
+                    type="text"
+                  // value={newTitle}
+                  // onChange={e => setnewTitle(e.target.value)}
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="img" label="รูปภาพ" className="mb-3">
+                  <Form.Control
+                    // isValid={inputForm && newImg !== null}
+                    // isInvalid={inputForm && newImg === null}
+                    type="file"
+                    // defaultValue={newImg}
+                    // onChange={handleFileUpload}
+                    // placeholder="NewsImg"
+                  />
+                </FloatingLabel>
+              </Col>
+              {/* <Col md={4}>
                 <FloatingLabel controlId="NewsSubTitle" label="หัวข้อย่อย" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newSubTitle !== ""}
@@ -170,9 +94,9 @@ const NewsSchoolAdd: React.FC = () => {
                     placeholder="NewsSubTitle"
                   />
                 </FloatingLabel>
-              </Col>
+              </Col> */}
 
-              <Col md={4}>
+              {/* <Col md={4}>
                 <FloatingLabel controlId="NewsDate" label="วันที่ " className="mb-3">
                   <Form.Control
                     isValid={inputForm && newDate !== ""}
@@ -183,8 +107,8 @@ const NewsSchoolAdd: React.FC = () => {
                     placeholder="NewsDate"
                   />
                 </FloatingLabel>
-              </Col>
-              <Col md={4}>
+              </Col> */}
+              {/* <Col md={4}>
                 <FloatingLabel controlId="NewsImg" label="รูปภาพ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && newImg !== null}
@@ -194,33 +118,31 @@ const NewsSchoolAdd: React.FC = () => {
                     onChange={handleFileUpload}
                     placeholder="NewsImg" />
                 </FloatingLabel>
-              </Col>
+              </Col> */}
             </Row>
 
-            <Col md={8}>
+            {/* <Col md={8}>
               <FloatingLabel controlId="NewsSubDetail" label="รายละเอียดข่าว" className="mb-3">
                 <Form.Control
                   as="textarea"
                   isValid={inputForm && newSubDetail !== ""}
                   isInvalid={inputForm && newSubDetail === ""}
-                  // type="text"
                   value={newSubDetail}
                   onChange={e => setnewSubDetail(e.target.value)}
                   placeholder="NewsSubDetail"
-                  style={{ width: "100%", height: "200px" }} // Adjust the height as needed
-
+                  style={{ width: "100%", height: "200px" }}
                 />
               </FloatingLabel>
-            </Col>
+            </Col> */}
           </Card.Body>
           <Card.Footer className="text-end">
-            <Button variant="success mx-2" onClick={handleSubmit}>
+            {/* <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
-            </Button>
+            </Button> */}
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}
-            
+
           </Card.Footer>
         </Card>
       </div>
