@@ -1,10 +1,11 @@
 export const navbarArray = [
-    {img:"f618e504-6903-4bdd-ef75-15852ebebb00",},
-    {img:"85997e27-c93a-45eb-7797-25928ff5e900",},
-    {img:"3d216cd0-13ab-4e08-b537-2c3adf293b00",},
-    {img:"b645ca95-58db-4e95-4389-523e4ad37200",},
-    {img:"1d174a6a-61da-4545-f4b3-207fb5873300",},
-    {img:"712a21d4-f4d3-486d-5c95-d410b354a600",},
-    {img:"69140945-a252-412c-20be-542d27dd6200",},
-    {img:"2929c333-8507-4535-2134-912661c47000",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/cd89c759-82b9-44af-5d4b-86b6397f0400",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/5f91ec15-c470-48b3-3746-319ae9de3e00",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/e102bf13-b3cf-4b9f-0da5-6bb682211900",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/1d896f1f-c0aa-4bfb-5eb6-e83463d59700",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/f3eb9110-7b09-44dd-5be8-0c77a536f100",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/ed6a9fe7-f2b0-4ca4-060e-85be99e6fe00",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/783b6933-6b9b-4304-8cbd-d7c9570a6900",},
+    {img:"QZ6TuL-3r02W7wQjQrv5DA/9ebe411c-19df-45e8-093c-91dfb35b9300",},
+
 ];

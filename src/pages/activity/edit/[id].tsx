@@ -6,7 +6,6 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { ActivitySchool } from "@prisma/client";
 import LayOut from "@/components/RootPage/TheLayOut";
 
 

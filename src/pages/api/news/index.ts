@@ -27,13 +27,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             break;
 
-        case 'POST':
-            try {
-                const newnews = await prisma.news.create({
-                    data: req.body,
-                });
-
-                res.status(201).json(newnews);
+            case 'POST':
+                try {
+                    // Parse the request body to get news data
+                    const { title, type, startDate, endDate, img, promoteImg, subTitle, detail } = req.body;
+    
+                    // Create a new news entry in the database
+                    const newNews = await prisma.news.create({
+                        data: {
+                            title,
+                            type,
+                            startDate,
+                            endDate,
+                            img,
+                            promoteImg,
+                            subTitle,
+                            detail,
+                        },
+                    });
+    
+                    res.status(201).json(newNews);
             } catch (error) {
                 res.status(500).json({ error: "An error occurred while creating the news" });
             }
