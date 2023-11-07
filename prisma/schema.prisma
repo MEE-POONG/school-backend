@@ -116,31 +116,29 @@ model AdminUser {
 }
 
 model RegisterForm {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  studentId  String? //รหัสนักศึกษา
-  Idpersonal String? //รหัหสบัตรประชาชน
-  Birth      String? //วันเกิด
-  Prefix     String? // คำนำหน้า
-  Sex        String? // เพศ
-  Nation     String? // ประเทศ
-  Name       String? //ชื่อ
-  Lastname   String? //นามสกุล
-  Ename      String? //ชื่ออิง
-  Elastname  String? // นามสกุลอิง
-  Phone      String? //เบอร์
-  Email      String? //เมล
-  Img        String? //รูป
-  //ประวัติการศึกษา
-  School     String?
-  Degree     String?
-  Gpa        String?
-  //ข้างล่างเป็นเกี่ยวกับคณะและหลักสูตร
-  Program    String? //หลักสูตร
-  Faculty    String?
-  Major      String?
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
-  deleted_at DateTime? @map("deleted_at")
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  studentId   String? //รหัสนักศึกษา
+  personalID  String? //รหัหสบัตรประชาชน
+  birth       String?
+  prefix      String?
+  sex         String?
+  nation      String?
+  nameTh      String?
+  lastnameTh  String?
+  nameEng     String?
+  lastnameEng String?
+  email       String?
+  phone       String?
+  img         String?
+  oldSchool   String?
+  degree      String?
+  gpa         String?
+  program     String?
+  faculty     String?
+  major       String?
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  deleted_at  DateTime? @map("deleted_at")
 }
 
 model IPAddress {

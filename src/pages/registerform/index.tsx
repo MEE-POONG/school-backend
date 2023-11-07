@@ -90,13 +90,13 @@ const RegisterFormPage: React.FC = () => {
       // Filter the registerForm data based on searchKey
       const filteredData = registerFormData.registerForm.filter((registerForm:any) =>
         // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
-        registerForm.regIdpersonal.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.regPrefix.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.regSex.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.regName.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.regLastname.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.regPhone.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.regEmail.toLowerCase().includes(params.searchKey.toLowerCase())
+        registerForm.personalID.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.prefix.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.sex.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.nameTh.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.lastnameTh.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.phone.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        registerForm.email.toLowerCase().includes(params.searchKey.toLowerCase())
       );
 
       setFilteredregisterFormsData(filteredData);
@@ -155,16 +155,16 @@ const RegisterFormPage: React.FC = () => {
                 {filteredregisterFormsData.map((registerForm, index) => (
                   <tr key={registerForm.id}>
                     <td>{index + 1}</td>
-                    <td>{registerForm.regIdpersonal}</td>
-                    <td>{registerForm.regPrefix}</td>
-                    <td>{registerForm.regSex}</td>
-                    <td>{registerForm.regName}</td>
-                    <td>{registerForm.regLastname}</td>
-                    <td>{registerForm.regPhone}</td>
-                    <td>{registerForm.regEmail}</td>
+                    <td>{registerForm.personalID}</td>
+                    <td>{registerForm.prefix}</td>
+                    <td>{registerForm.sex}</td>
+                    <td>{registerForm.nameTh}</td>
+                    <td>{registerForm.lastnameTh}</td>
+                    <td>{registerForm.phone}</td>
+                    <td>{registerForm.email}</td>
                     <td>
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${registerForm.regImg ? registerForm.regImg : 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${registerForm.img ? registerForm.img : 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}
                         alt="registerForm imge"
                         thumbnail
                       />
