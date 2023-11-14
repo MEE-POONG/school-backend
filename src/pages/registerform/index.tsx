@@ -2,23 +2,19 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import LayOut from "@/components/RootPage/TheLayOut";
 import {
-  Badge,
   Card,
-  Button,
   Image,
   Form,
   InputGroup,
   Table,
 } from "react-bootstrap";
-import { FaPen, FaSearch, FaUserNinja } from "react-icons/fa";
+import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-// import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { RegisterForm } from "@prisma/client";
-// import DetailsRegisterAddDetailsRegisterModal from "@/container/RegisterForm/DetailsRegister";
-import ProfileDetailModal from "@/pages/registerform/profile/[id]";
+import ProfileDetailModal from "@/pages/registerform/[id]";
 
 interface Params {
   page: number;
@@ -35,7 +31,7 @@ const RegisterFormPage: React.FC = () => {
   });
 
   const [{ data: registerFormData }, getregisterForm] = useAxios({
-    url: `/api/registerForm?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
+    url: `/api/RegisterForm?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
     method: "GET",
   });
 
@@ -49,12 +45,14 @@ const RegisterFormPage: React.FC = () => {
   >([]);
 
   useEffect(() => {
-    setFilteredregisterFormsData(registerFormData?.registerForm ?? []);
+    console.log(registerFormData);
+    
+    setFilteredregisterFormsData(registerFormData?.data ?? []);
   }, [registerFormData]);
 
   const deleteregisterForm = (id: string): Promise<any> => {
     return executeregisterFormDelete({
-      url: "/api/registerForm/" + id,
+      url: "/api/RegisterForm/" + id,
       method: "DELETE",
     }).then(() => {
       setFilteredregisterFormsData((prevregisterForms) =>
@@ -88,7 +86,7 @@ const RegisterFormPage: React.FC = () => {
   useEffect(() => {
     if (registerFormData?.registerForm) {
       // Filter the registerForm data based on searchKey
-      const filteredData = registerFormData.registerForm.filter((registerForm:any) =>
+      const filteredData = registerFormData.registerForm.filter((registerForm: any) =>
         // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
         registerForm.personalID.toLowerCase().includes(params.searchKey.toLowerCase()) ||
         registerForm.prefix.toLowerCase().includes(params.searchKey.toLowerCase()) ||
@@ -102,7 +100,7 @@ const RegisterFormPage: React.FC = () => {
       setFilteredregisterFormsData(filteredData);
     }
   }, [registerFormData, params.searchKey]);
-  
+
   return (
     <LayOut>
       <Head>
@@ -123,38 +121,32 @@ const RegisterFormPage: React.FC = () => {
               <Form.Control
                 onChange={e => handleChangesearchKey(e.target.value)}
                 placeholder="ผู้สนใจสมัคร"
-                aria-label="registerForm"
+                aria-label="RegisterForm"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            {/* <AddListName /> */}
-
-            {/* <Link href="/registerForm/addregisterForm" className="ms-2 btn icon icofn-primary">
-              เพิ่มโปรโมชั่น
-            </Link> */}
-            
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="w-t-150">No</th>
-                  <th className="w-t-150">รหัสบัตรประชาชน</th>
-                  <th className="w-t-150">คำนำหน้า</th>
-                  <th className="w-t-150">เพศ</th>
-                  <th className="w-t-150">ชื่อ</th>
-                  <th className="w-t-150">นามสกุล</th>
-                  <th className="w-t-150">เบอร์โทร</th>
-                  <th className="w-t-150">E-mail</th>
-                  <th className="w-t-150">โปรไฟล์</th>
-                  <th className="w-t-150">จัดการ</th>
+                  <th className="">No</th>
+                  <th className="">รหัสบัตรประชาชน</th>
+                  <th className="">คำนำหน้า</th>
+                  <th className="">เพศ</th>
+                  <th className="">ชื่อ</th>
+                  <th className="">นามสกุล</th>
+                  <th className="">เบอร์โทร</th>
+                  <th className="">E-mail</th>
+                  {/* <th className="">โปรไฟล์</th> */}
+                  <th className="">จัดการ</th>
                 </tr>
               </thead>
 
               <tbody className="text-center">
                 {filteredregisterFormsData.map((registerForm, index) => (
                   <tr key={registerForm.id}>
-                    <td>{index + 1}</td>
+                    <td >{index + 1}</td>
                     <td>{registerForm.personalID}</td>
                     <td>{registerForm.prefix}</td>
                     <td>{registerForm.sex}</td>
@@ -162,22 +154,15 @@ const RegisterFormPage: React.FC = () => {
                     <td>{registerForm.lastnameTh}</td>
                     <td>{registerForm.phone}</td>
                     <td>{registerForm.email}</td>
-                    <td>
+                    {/* <td>
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${registerForm.img ? registerForm.img : 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${registerForm.img ? registerForm.img : 'f701ce08-7ebe-4af2-c4ec-2b3967392900'}/public`}
                         alt="registerForm imge"
                         thumbnail
                       />
-                    </td>
+                    </td> */}
                     <td>
-                        <ProfileDetailModal  data={registerForm}/>
-                      <Link
-                        href={`/registerform/edit/${registerForm.id}`}
-                        className="mx-1 btn info icon icon-primary"
-                      >
-                        <FaPen />
-                        <span className="h-tooltiptext">แก้ไขข้อมูล</span>
-                      </Link>
+                      <ProfileDetailModal data={registerForm} />
                       <DeleteModal
                         data={registerForm}
                         apiDelete={() => deleteregisterForm(registerForm.id)}

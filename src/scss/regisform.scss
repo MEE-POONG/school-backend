@@ -1,0 +1,26 @@
+.regisform{
+    *{
+        margin: 0;
+        padding: 5px 15px;
+    }
+    .title{
+        font-size: 22px;
+    }
+    .logo-pmc{
+        width: 100px;
+    }
+    .detail{
+        font-size: 16px;
+        font-weight: 200;
+    }
+
+    @media only screen and (max-width: 425px)  {
+        .detail{
+            font-size: 14px;
+            font-weight: 200;
+        }
+        .title{
+            font-size: 16px;
+        }
+    }
+}
