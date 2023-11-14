@@ -24,7 +24,7 @@ interface Params {
   searchKey: string;
   totalPages: number;
 }
-const NewsPage: React.FC = () => {
+const NewsPage: React.FC = (props) => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,

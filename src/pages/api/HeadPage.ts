@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const prisma = new PrismaClient();
 
 export default async function handler(
-  req: NextApiRequest, 
+  req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { method } = req;
@@ -30,7 +30,7 @@ export default async function handler(
 
 async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const headPages = await prisma.headPage.findMany();
+    const headPages = await prisma.headPage.findFirst();
     res.status(200).json(headPages);
   } catch (error) {
     res.status(500).json({ message: "Error fetching HeadPages" });
