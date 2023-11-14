@@ -55,7 +55,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                     </Link>
 
 
-                    <Link href="/homepage" className={asPath === "/homepage" || asPath === "/slider/add"  ? "nav-link active" : "nav-link"}>
+                    <Link href="/headpage" className={asPath === "/headpage" || asPath === "/headpage/add"  ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
