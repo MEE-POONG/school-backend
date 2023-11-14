@@ -6,7 +6,7 @@ import { AiFillEdit, AiOutlineFileSearch } from "react-icons/ai";
 
 
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC = (props) => {
 
   return (
     <LayOut>
