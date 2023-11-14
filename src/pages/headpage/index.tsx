@@ -4,15 +4,10 @@ import LayOut from "@/components/RootPage/TheLayOut";
 import {
   Card,
   Image,
-  Form,
-  InputGroup,
   Table,
 } from "react-bootstrap";
-import { FaPen, FaSearch, FaUserNinja } from "react-icons/fa";
-import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-import DeleteModal from "@/components/modal/DeleteModal";
 import { HeadPage } from "@prisma/client";
 
 interface Params {
@@ -44,7 +39,7 @@ const HomePageEdit: React.FC = () => {
   >([]);
 
   useEffect(() => {
-    setFilteredheadPageData(headPageData?.registerForm ?? []);
+    setFilteredheadPageData(headPageData?.headPage ?? []);
   }, [headPageData]);
 
 //   const deleteregisterForm = (id: string): Promise<any> => {
@@ -81,17 +76,16 @@ const HomePageEdit: React.FC = () => {
   };
 
   useEffect(() => {
-    if (headPageData?.registerForm) {
+    if (headPageData?.headPage) {
       // Filter the registerForm data based on searchKey
-      const filteredData = headPageData.registerForm.filter((registerForm:any) =>
+      const filteredData = headPageData.headPage.filter((headPage:any) =>
         // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
-        registerForm.personalID.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.prefix.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.sex.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.nameTh.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.lastnameTh.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.phone.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        registerForm.email.toLowerCase().includes(params.searchKey.toLowerCase())
+        headPage.title.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        headPage.subTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        headPage.detail.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        headPage.imgOne.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        headPage.imgTwo.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+        headPage.imgThree.toLowerCase().includes(params.searchKey.toLowerCase())
       );
 
       setFilteredheadPageData(filteredData);
@@ -109,25 +103,6 @@ const HomePageEdit: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">แก้ไขข้อมูลหน้าหลัก</h4>
-
-            {/* ค้นหาข้อมูล */}
-            <InputGroup className="w-auto" bsPrefix="input-icon">
-              <InputGroup.Text id="basic-addon1">
-                <FaSearch />
-              </InputGroup.Text>
-              <Form.Control
-                onChange={e => handleChangesearchKey(e.target.value)}
-                placeholder="ผู้สนใจสมัคร"
-                aria-label="registerForm"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-            {/* <AddListName /> */}
-
-            {/* <Link href="/registerForm/addregisterForm" className="ms-2 btn icon icofn-primary">
-              เพิ่มโปรโมชั่น
-            </Link> */}
-            
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
@@ -170,20 +145,7 @@ const HomePageEdit: React.FC = () => {
                         thumbnail
                       />
                     </td>
-                    <td>
-                        <ProfileDetailModal  data={headPage}/>
-                      <Link
-                        href={`/headpage/edit/${headPage.id}`}
-                        className="mx-1 btn info icon icon-primary"
-                      >
-                        <FaPen />
-                        <span className="h-tooltiptext">แก้ไขข้อมูล</span>
-                      </Link>
-                      {/* <DeleteModal
-                        data={headPage}
-                        apiDelete={() => deleteheadPage(headPage.id)}
-                      /> */}
-                    </td>
+                    
                   </tr>
                 ))}
               </tbody>

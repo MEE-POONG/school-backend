@@ -14,13 +14,13 @@ export default async function handler(
       try {
         const id = req.query.id;
 
-        const data = await prisma.headPage.findUnique({
+        const headPageData = await prisma.headPage.findUnique({
           where: {
             id: id as string
           }
         });
 
-        res.status(200).json(data);
+        res.status(200).json(headPageData);
       } catch (error) {
         res
           .status(500)
@@ -32,14 +32,14 @@ export default async function handler(
       try {
         const id = req.query.id;
 
-        const data = await prisma.registerForm.update({
+        const headPageData = await prisma.headPage.update({
           where: {
             id: id as string
           },
           data: req.body
         });
 
-        res.status(200).json(data);
+        res.status(200).json(headPageData);
       } catch (error) {
         res
           .status(500)
@@ -51,7 +51,7 @@ export default async function handler(
       try {
         const id = req.query.id;
 
-        const data = await prisma.registerForm.delete({
+        const data = await prisma.headPage.delete({
           where: {
             id: id as string
           }
