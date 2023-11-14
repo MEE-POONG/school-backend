@@ -64,28 +64,30 @@ model NewsType {
 }
 
 model CourseGroup {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
   nameTH     String?
   nameEN     String?
   img        String?
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
-  deleted_at DateTime? @map("deleted_at")
+  createdAt  DateTime?    @default(now())
+  updatedAt  DateTime?    @updatedAt
+  deleted_at DateTime?    @map("deleted_at")
+  CourseList CourseList[]
 }
 
 model CourseList {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
   FieldStudy      String?
-  TermFeesGroupID String?
-  kysOne          String?
-  kysTwo          String?
-  kysThree        String?
   First           String?
   Second          String?
   Sum             String?
-  createdAt       DateTime? @default(now())
-  updatedAt       DateTime? @updatedAt
-  deleted_at      DateTime? @map("deleted_at")
+  associateFirst  String?
+  associateSecond String?
+  associateSum    String?
+  createdAt       DateTime?    @default(now())
+  updatedAt       DateTime?    @updatedAt
+  deleted_at      DateTime?    @map("deleted_at")
+  CourseGroup     CourseGroup? @relation(fields: [courseGroupId], references: [id])
+  courseGroupId   String?      @db.ObjectId
 }
 
 model ContactUS {
@@ -164,12 +166,13 @@ model IPAddress {
 
 model About {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  title         String
-  subTitle      String
-  img           String
-  detail        String
-  detailTo      String
-  StudyingCount Int
+  title         String?
+  subTitle      String?
+  img           String?
+  personChart   String?
+  detail        String?
+  detailTo      String?
+  StudyingCount Int?
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   deleted_at    DateTime? @map("deleted_at")
