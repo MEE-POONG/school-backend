@@ -16,6 +16,7 @@ model HeadPage {
   subTitle   String? // หัวข้อย่่อ 
   pageCheck  String?
   pathBtn    String?
+  btnTitle   String?
   detail     String?
   imgOne     String?
   imgTwo     String?
@@ -39,17 +40,27 @@ model Gallery {
 model News {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   title      String? // ชื่อกิจกรรม
-  type       String?
-  startDate  DateTime? // วันที่
-  endDate    DateTime? // วันที่
-  img        String? // รูปกิจกรรม
-  promoteImg String? // รูปกิจกรรม
   subTitle   String? // หัวข้อย่่อ 
   detail     String? // รายละเอียด
+  img        String? // รูปกิจกรรม
+  promoteImg String? // รูปกิจกรรม
+  date       String? // วันที่
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
   gallery    Gallery[]
+  NewsType   NewsType? @relation(fields: [newsTypeId], references: [id])
+  newsTypeId String?   @db.ObjectId
+}
+
+model NewsType {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  nameTH     String
+  nameEN     String
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+  News       News[]
 }
 
 model CourseGroup {
@@ -110,6 +121,8 @@ model AdminUser {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   username   String?
   password   String?
+  firstname  String?
+  lastname   String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
@@ -147,4 +160,17 @@ model IPAddress {
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
+}
+
+model About {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  subTitle      String
+  img           String
+  detail        String
+  detailTo      String
+  StudyingCount Int
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  deleted_at    DateTime? @map("deleted_at")
 }
