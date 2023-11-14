@@ -4,7 +4,7 @@ import { Alert, Button, Card, Col, Row } from "react-bootstrap";
 import { FaRegEye } from "react-icons/fa";
 
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC = (props) => {
 
   return (
     <LayOut>
@@ -15,8 +15,6 @@ const HomePage: React.FC = () => {
             <h2 className="display-6 text-center">Welcome</h2>
           </Card.Header>
         </Card>
-     
-
       </div>
     </LayOut>
   );
