@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import LayOut from "@/components/RootPage/TheLayOut";
 import {
-  Badge,
   Card,
-  Button,
   Image,
   Form,
   InputGroup,
@@ -14,11 +12,8 @@ import { FaPen, FaSearch, FaUserNinja } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-// import { bankMap } from "@/test";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { RegisterForm } from "@prisma/client";
-// import DetailsRegisterAddDetailsRegisterModal from "@/container/RegisterForm/DetailsRegister";
-import ProfileDetailModal from "@/pages/registerform/profile/[id]";
+import { HeadPage } from "@prisma/client";
 
 interface Params {
   page: number;
@@ -26,7 +21,7 @@ interface Params {
   searchKey: string;
   totalPages: number;
 }
-const RegisterFormPage: React.FC = () => {
+const HomePageEdit: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -34,34 +29,34 @@ const RegisterFormPage: React.FC = () => {
     totalPages: 1,
   });
 
-  const [{ data: registerFormData }, getregisterForm] = useAxios({
-    url: `/api/registerForm?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
+  const [{ data: headPageData }, getheadPage] = useAxios({
+    url: `/api/headpage?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
     method: "GET",
   });
 
   const [
-    { loading: deleteregisterFormLoading, error: deleteregisterFormError },
-    executeregisterFormDelete,
+    { loading: deleteheadPageLoading, error: deleteheadPageError },
+    executeheadPageDelete,
   ] = useAxios({}, { manual: true });
 
-  const [filteredregisterFormsData, setFilteredregisterFormsData] = useState<
-    RegisterForm[]
+  const [filteredheadPageData, setFilteredheadPageData] = useState<
+  HeadPage[]
   >([]);
 
   useEffect(() => {
-    setFilteredregisterFormsData(registerFormData?.registerForm ?? []);
-  }, [registerFormData]);
+    setFilteredheadPageData(headPageData?.registerForm ?? []);
+  }, [headPageData]);
 
-  const deleteregisterForm = (id: string): Promise<any> => {
-    return executeregisterFormDelete({
-      url: "/api/registerForm/" + id,
-      method: "DELETE",
-    }).then(() => {
-      setFilteredregisterFormsData((prevregisterForms) =>
-        prevregisterForms.filter((registerForm) => registerForm.id !== id)
-      );
-    });
-  };
+//   const deleteregisterForm = (id: string): Promise<any> => {
+//     return executeHeadPageDelete({
+//       url: "/api/headpage/" + id,
+//       method: "DELETE",
+//     }).then(() => {
+//       setFilteredheadPageData((prevheadPage) =>
+//         prevheadPage.filter((registerForm) => registerForm.id !== id)
+//       );
+//     });
+//   };
 
   const handleChangePage = (page: number) => {
     setParams((prevParams) => ({
@@ -86,9 +81,9 @@ const RegisterFormPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (registerFormData?.registerForm) {
+    if (headPageData?.registerForm) {
       // Filter the registerForm data based on searchKey
-      const filteredData = registerFormData.registerForm.filter((registerForm:any) =>
+      const filteredData = headPageData.registerForm.filter((registerForm:any) =>
         // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
         registerForm.personalID.toLowerCase().includes(params.searchKey.toLowerCase()) ||
         registerForm.prefix.toLowerCase().includes(params.searchKey.toLowerCase()) ||
@@ -99,9 +94,9 @@ const RegisterFormPage: React.FC = () => {
         registerForm.email.toLowerCase().includes(params.searchKey.toLowerCase())
       );
 
-      setFilteredregisterFormsData(filteredData);
+      setFilteredheadPageData(filteredData);
     }
-  }, [registerFormData, params.searchKey]);
+  }, [headPageData, params.searchKey]);
   
   return (
     <LayOut>
@@ -113,7 +108,7 @@ const RegisterFormPage: React.FC = () => {
       <div className="partner-page h-100">
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
-            <h4 className="mb-0 py-1">รายชื่อนักศึกษาที่สนใจเข้าเรียน</h4>
+            <h4 className="mb-0 py-1">แก้ไขข้อมูลหน้าหลัก</h4>
 
             {/* ค้นหาข้อมูล */}
             <InputGroup className="w-auto" bsPrefix="input-icon">
@@ -138,50 +133,56 @@ const RegisterFormPage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="w-t-150">No</th>
-                  <th className="w-t-150">รหัสบัตรประชาชน</th>
-                  <th className="w-t-150">คำนำหน้า</th>
-                  <th className="w-t-150">เพศ</th>
-                  <th className="w-t-150">ชื่อ</th>
-                  <th className="w-t-150">นามสกุล</th>
-                  <th className="w-t-150">เบอร์โทร</th>
-                  <th className="w-t-150">E-mail</th>
-                  <th className="w-t-150">โปรไฟล์</th>
-                  <th className="w-t-150">จัดการ</th>
+                  <th className="w-t-150">ชื่อวิทยาลัย</th>
+                  <th className="w-t-150">หัวข้อย่อย 1</th>
+                  <th className="w-t-150">รูปที่ 1(รูปใหญ่)</th>
+                  <th className="w-t-150">รูปที่ 2</th>
+                  <th className="w-t-150">รูปที่ 3</th>
                 </tr>
               </thead>
 
               <tbody className="text-center">
-                {filteredregisterFormsData.map((registerForm, index) => (
-                  <tr key={registerForm.id}>
+                {filteredheadPageData.map((headPage, index) => (
+                  <tr key={headPage.id}>
                     <td>{index + 1}</td>
-                    <td>{registerForm.personalID}</td>
-                    <td>{registerForm.prefix}</td>
-                    <td>{registerForm.sex}</td>
-                    <td>{registerForm.nameTh}</td>
-                    <td>{registerForm.lastnameTh}</td>
-                    <td>{registerForm.phone}</td>
-                    <td>{registerForm.email}</td>
+                    <td>{headPage.title}</td>
+                    <td>{headPage.subTitle}</td>
+                    <td>{headPage.pageCheck}</td>
+                    <td>{headPage.detail}</td>
                     <td>
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${registerForm.img ? registerForm.img : 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}
-                        alt="registerForm imge"
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${headPage.imgOne ? headPage.imgOne : 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}
+                        alt="headPage imge"
                         thumbnail
                       />
                     </td>
                     <td>
-                        <ProfileDetailModal  data={registerForm}/>
+                      <Image
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${headPage.imgTwo ? headPage.imgTwo : 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}
+                        alt="headPage imge"
+                        thumbnail
+                      />
+                    </td>
+                    <td>
+                      <Image
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${headPage.imgThree ? headPage.imgThree : 'f701ce08-7ebe-4af2-c4ec-2b3967392900' }/public`}
+                        alt="headPage imge"
+                        thumbnail
+                      />
+                    </td>
+                    <td>
+                        <ProfileDetailModal  data={headPage}/>
                       <Link
-                        href={`/registerform/edit/${registerForm.id}`}
+                        href={`/headpage/edit/${headPage.id}`}
                         className="mx-1 btn info icon icon-primary"
                       >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
-                      <DeleteModal
-                        data={registerForm}
-                        apiDelete={() => deleteregisterForm(registerForm.id)}
-                      />
+                      {/* <DeleteModal
+                        data={headPage}
+                        apiDelete={() => deleteheadPage(headPage.id)}
+                      /> */}
                     </td>
                   </tr>
                 ))}
@@ -191,7 +192,7 @@ const RegisterFormPage: React.FC = () => {
           <Card.Footer>
             <PageSelect
               page={params.page}
-              totalPages={registerFormData?.pagination?.total}
+              totalPages={headPageData?.pagination?.total}
               onChangePage={handleChangePage}
               onChangePageSize={handleChangePageSize}
             />
@@ -201,4 +202,4 @@ const RegisterFormPage: React.FC = () => {
     </LayOut>
   );
 };
-export default RegisterFormPage;
+export default HomePageEdit;

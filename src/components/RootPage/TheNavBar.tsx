@@ -25,10 +25,10 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
       <Container fluid>
         
         <Link href="/" className="navbar-brand me-4">
-          <h3 className="text-primary">
+          <h4 className="text-primary">
             <FaUserEdit className="fa me-2" />
             Phanomwan College
-          </h3>
+          </h4>
         </Link>
         
         {/* <TheBreadcrumb /> */}

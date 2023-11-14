@@ -55,11 +55,11 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                     </Link>
 
 
-                    <Link href="/slider" className={asPath === "/slider" || asPath === "/slider/add"  ? "nav-link active" : "nav-link"}>
+                    <Link href="/homepage" className={asPath === "/homepage" || asPath === "/slider/add"  ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
-                        <span className="ms-2">รูปภาพหน้าแรก</span>
+                        <span className="ms-2">แก้ไขหน้าหลัก</span>
                     </Link>
 
                     <Link href="/news" className={asPath === "/news" || asPath === "/news/add" || asPath.startsWith("/news/edit/")  ? "nav-link active" : "nav-link"}>
