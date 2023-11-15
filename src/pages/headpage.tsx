@@ -12,23 +12,26 @@ import axios from 'axios';
 const UpdateHeadPage: React.FC = (props) => {
     const [{ data: headPageData, loading, error }, refetch] = useAxios('/api/HeadPage');
     const [formData, setFormData] = useState<HeadPage | null>(null);
+    const [imgOne, setImgOne] = useState<string | null>(null);
+    const [imgTwo, setImgTwo] = useState<string | null>(null);
+    const [imgThree, setImgThree] = useState<string | null>(null);
+
     const [alertForm, setAlertForm] = useState<string>("not");
     const [inputForm, setInputForm] = useState<boolean>(false);
     const [checkBody, setCheckBody] = useState<string>("");
 
-    // const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = event.target.files && event.target.files[0];
-    //     if (file) {
-    //       const reader = new FileReader();
-    //       reader.onloadend = () => {
-    //         const base64String = reader.result as string;
-    //         const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-    //         setnewImg(splittedString);
-    //       };
-    //       reader.readAsDataURL(file);
-    //     }
-    //   };
-
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<string | null>>) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result as string;
+                const splittedString = base64String.split(",")[1];
+                setImage(splittedString); // Update the state with the base64 image data
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     // Initialize formData once headPageData is loaded
     useEffect(() => {
@@ -37,7 +40,7 @@ const UpdateHeadPage: React.FC = (props) => {
             setFormData(headPageData);
         }
     }, [headPageData]);
-    
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData!, // Non-null assertion
@@ -142,40 +145,46 @@ const UpdateHeadPage: React.FC = (props) => {
                                     </h5>
                                 </Col>
                                 <Col md={4}>
-                                    <FloatingLabel controlId="imgOne" label="ระบุหัวข้อข่าว" className="mb-3" >
+                                    <FloatingLabel controlId="imgOne" label="รูปภาพ" className="mb-3">
                                         <Form.Control
-                                            isValid={inputForm && formData?.imgOne !== ""}
-                                            isInvalid={inputForm && formData?.imgOne === ""}
-                                            type="text"
-                                            value={formData?.imgOne || ""}
-                                            onChange={handleInputChange}
-                                            placeholder="ระบุหัวข้อ"
+                                            type="file"
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne)}
                                         />
                                     </FloatingLabel>
+                                    <img
+                                        src={imgOne ? `data:image/jpeg;base64,${imgOne}` : formData?.imgOne ? formData.imgOne : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                        alt="Image One Preview"
+                                        className="w-100"
+                                        loading="lazy"
+                                    />
                                 </Col>
                                 <Col md={4}>
-                                    <FloatingLabel controlId="imgTwo" label="ระบุหัวข้อข่าว" className="mb-3" >
+                                    <FloatingLabel controlId="imgTwo" label="รูปภาพ" className="mb-3">
                                         <Form.Control
-                                            isValid={inputForm && formData?.imgTwo !== ""}
-                                            isInvalid={inputForm && formData?.imgTwo === ""}
-                                            type="text"
-                                            value={formData?.imgTwo || ""}
-                                            onChange={handleInputChange}
-                                            placeholder="ระบุหัวข้อ"
+                                            type="file"
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgTwo)}
                                         />
                                     </FloatingLabel>
+                                    <img
+                                        src={imgTwo ? `data:image/jpeg;base64,${imgTwo}` : formData?.imgTwo ? formData.imgTwo : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                        alt="Image Two Preview"
+                                        className="w-100"
+                                        loading="lazy"
+                                    />
                                 </Col>
                                 <Col md={4}>
-                                    <FloatingLabel controlId="imgThree" label="ระบุหัวข้อข่าว" className="mb-3" >
+                                    <FloatingLabel controlId="imgThree" label="รูปภาพ" className="mb-3">
                                         <Form.Control
-                                            isValid={inputForm && formData?.imgThree !== ""}
-                                            isInvalid={inputForm && formData?.imgThree === ""}
-                                            type="text"
-                                            value={formData?.imgThree || ""}
-                                            onChange={handleInputChange}
-                                            placeholder="ระบุหัวข้อ"
+                                            type="file"
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgThree)}
                                         />
                                     </FloatingLabel>
+                                    <img
+                                        src={imgThree ? `data:image/jpeg;base64,${imgThree}` : formData?.imgThree ? formData.imgThree : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                        alt="Image imgThree Preview"
+                                        className="w-100"
+                                        loading="lazy"
+                                    />
                                 </Col>
                             </Row>
                         </Card.Body>
