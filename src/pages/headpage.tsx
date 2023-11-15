@@ -16,6 +16,10 @@ const UpdateHeadPage: React.FC = (props) => {
     const [imgTwo, setImgTwo] = useState<File | null>(null);
     const [imgThree, setImgThree] = useState<File | null>(null);
 
+    const [imgOnePreview, setImgOnePreview] = useState<string | null>(null);
+    const [imgTwoPreview, setImgTwoPreview] = useState<string | null>(null);
+    const [imgThreePreview, setImgThreePreview] = useState<string | null>(null);
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [alertForm, setAlertForm] = useState<string>("not");
     const [inputForm, setInputForm] = useState<boolean>(false);
@@ -27,7 +31,7 @@ const UpdateHeadPage: React.FC = (props) => {
             setFormData(headPageData);
         }
     }, [headPageData]);
-    
+
     useEffect(() => {
         console.log(imgOne);
     }, [imgOne]);
@@ -39,10 +43,17 @@ const UpdateHeadPage: React.FC = (props) => {
         });
     };
 
-    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<File | null>>) => {
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<File | null>>, setPreview: React.Dispatch<React.SetStateAction<string | null>>) => {
         const file = event.target.files && event.target.files[0];
         if (file) {
             setImage(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result as string;
+                const splittedString = base64String.split(",")[1];
+                setPreview(splittedString); // Update the state with the base64 image data
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -155,48 +166,48 @@ const UpdateHeadPage: React.FC = (props) => {
                                 <FloatingLabel controlId="imgOne" label="รูปภาพ" className="mb-3">
                                     <Form.Control
                                         type="file"
-                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne)}
+                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne, setImgOnePreview)}
                                     />
                                 </FloatingLabel>
                                 <div className='ratio ratio-16x9 bg-dark'>
-                                    {/* <img
-                                            src={imgOne || `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
-                                            alt="Image One Preview"
-                                            className="w-100 object-fit-contain"
-                                            loading="lazy"
-                                        /> */}
+                                    <img
+                                        src={imgOnePreview ? `data:image/jpeg;base64,${imgOnePreview}` : formData?.imgOne ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgOne}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                        alt="Image Two Preview"
+                                        className="w-100 object-fit-contain"
+                                        loading="lazy"
+                                    />
                                 </div>
                             </Col>
                             <Col md={4}>
-                                <FloatingLabel controlId="imgOne" label="รูปภาพ" className="mb-3">
+                                <FloatingLabel controlId="imgTwo" label="รูปภาพ" className="mb-3">
                                     <Form.Control
                                         type="file"
-                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgTwo)}
+                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgTwo, setImgTwoPreview)}
                                     />
                                 </FloatingLabel>
                                 <div className='ratio ratio-16x9 bg-dark'>
-                                    {/* <img
-                                            src={imgTwo || `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
-                                            alt="Image One Preview"
-                                            className="w-100 object-fit-contain"
-                                            loading="lazy"
-                                        /> */}
+                                    <img
+                                        src={imgTwoPreview ? `data:image/jpeg;base64,${imgTwoPreview}` : formData?.imgTwo ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgTwo}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                        alt="Image Two Preview"
+                                        className="w-100 object-fit-contain"
+                                        loading="lazy"
+                                    />
                                 </div>
                             </Col>
                             <Col md={4}>
-                                <FloatingLabel controlId="imgOne" label="รูปภาพ" className="mb-3">
+                                <FloatingLabel controlId="imgThree" label="รูปภาพ" className="mb-3">
                                     <Form.Control
                                         type="file"
-                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgThree)}
+                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgThree, setImgThreePreview)}
                                     />
                                 </FloatingLabel>
                                 <div className='ratio ratio-16x9 bg-dark'>
-                                    {/* <img
-                                            src={imgThree || `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
-                                            alt="Image One Preview"
-                                            className="w-100 object-fit-contain"
-                                            loading="lazy"
-                                        /> */}
+                                    <img
+                                        src={imgThreePreview ? `data:image/jpeg;base64,${imgThreePreview}` : formData?.imgThree ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgThree}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                        alt="Image Two Preview"
+                                        className="w-100 object-fit-contain"
+                                        loading="lazy"
+                                    />
                                 </div>
                             </Col>
                         </Row>
