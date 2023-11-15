@@ -151,12 +151,14 @@ const UpdateHeadPage: React.FC = (props) => {
                                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne)}
                                         />
                                     </FloatingLabel>
-                                    <img
-                                        src={imgOne ? `data:image/jpeg;base64,${imgOne}` : formData?.imgOne ? formData.imgOne : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
-                                        alt="Image One Preview"
-                                        className="w-100"
-                                        loading="lazy"
-                                    />
+                                    <div className='ratio ratio-16x9 bg-dark'>
+                                        <img
+                                            src={imgOne ? `data:image/jpeg;base64,${imgOne}` : formData?.imgOne ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgOne}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                            alt="Image One Preview"
+                                            className="w-100"
+                                            loading="lazy"
+                                        />
+                                    </div>
                                 </Col>
                                 <Col md={4}>
                                     <FloatingLabel controlId="imgTwo" label="รูปภาพ" className="mb-3">
@@ -165,12 +167,14 @@ const UpdateHeadPage: React.FC = (props) => {
                                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgTwo)}
                                         />
                                     </FloatingLabel>
-                                    <img
-                                        src={imgTwo ? `data:image/jpeg;base64,${imgTwo}` : formData?.imgTwo ? formData.imgTwo : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
-                                        alt="Image Two Preview"
-                                        className="w-100"
-                                        loading="lazy"
-                                    />
+                                    <div className='ratio ratio-16x9 bg-dark'>
+                                        <img
+                                            src={imgTwo ? `data:image/jpeg;base64,${imgTwo}` : formData?.imgTwo ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgTwo}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                            alt="Image Two Preview"
+                                            className="w-100"
+                                            loading="lazy"
+                                        />
+                                    </div>
                                 </Col>
                                 <Col md={4}>
                                     <FloatingLabel controlId="imgThree" label="รูปภาพ" className="mb-3">
@@ -179,12 +183,14 @@ const UpdateHeadPage: React.FC = (props) => {
                                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgThree)}
                                         />
                                     </FloatingLabel>
-                                    <img
-                                        src={imgThree ? `data:image/jpeg;base64,${imgThree}` : formData?.imgThree ? formData.imgThree : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
-                                        alt="Image imgThree Preview"
-                                        className="w-100"
-                                        loading="lazy"
-                                    />
+                                    <div className='ratio ratio-16x9 bg-dark'>
+                                        <img
+                                            src={imgThree ? `data:image/jpeg;base64,${imgThree}` : formData?.imgThree ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgThree}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                                            alt="Image imgThree Preview"
+                                            className="w-100"
+                                            loading="lazy"
+                                        />
+                                    </div>
                                 </Col>
                             </Row>
                         </Card.Body>

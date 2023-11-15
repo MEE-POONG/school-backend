@@ -7,7 +7,7 @@ import axios from "axios";
 import Link from "next/link";
 import LayOut from "@/components/RootPage/TheLayOut";
 
-const ActivityAdd: React.FC = () => {
+const ActivityAdd: React.FC = (props) => {
   const [{ error: errorMessage, loading: ActivityLoading }, executeActivity] = useAxios({ url: '/api/activity', method: 'POST' }, { manual: true });
   const [activityName, setactivityName] = useState<string>("");
   const [activityTitle, setactivityTitle] = useState<string>("");
