@@ -7,8 +7,6 @@ import LayOut from '@/components/RootPage/TheLayOut';
 import Link from 'next/link';
 import axios from 'axios';
 
-
-
 const UpdateHeadPage: React.FC = (props) => {
     const [{ data: headPageData, loading, error }, refetch] = useAxios('/api/HeadPage');
     const [formData, setFormData] = useState<HeadPage | null>(null);
@@ -32,14 +30,11 @@ const UpdateHeadPage: React.FC = (props) => {
         }
     }, [headPageData]);
 
-    useEffect(() => {
-        console.log(imgOne);
-    }, [imgOne]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData!, // Non-null assertion
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.defaultValue,
         });
     };
 
@@ -59,24 +54,95 @@ const UpdateHeadPage: React.FC = (props) => {
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
+        let imageIdOne = null;
+        let imageIdTwo = null;
+        let imageIdThree = null;
 
-        const images = [imgOne, imgTwo, imgThree];
-        images.forEach(async (image) => {
-            if (image) {
-                const formData = new FormData();
-                formData.append("file", image);
+        if (imgOne) {
+            const uploadFormData = new FormData();
+            uploadFormData.append("file", imgOne);
+
+            try {
                 const uploadResponse = await axios.post(
                     "https://upload-image.me-prompt-technology.com/",
-                    formData
+                    uploadFormData
                 );
-                if (uploadResponse.status === 200) {
-                    console.log("Upload status: ", uploadResponse.status);
+
+                if (uploadResponse?.status === 200) {
+                    imageIdOne = uploadResponse?.data?.result?.id;
+                    setFormData({
+                        ...formData!, // Non-null assertion
+                        imgOne: imageIdOne,
+                    });
                 }
+            } catch (error) {
+                console.error("Upload failed: ", error);
             }
-        });
+        }
+        if (imgTwo) {
+            const uploadFormData = new FormData();
+            uploadFormData.append("file", imgTwo);
+
+            try {
+                const uploadResponse = await axios.post(
+                    "https://upload-image.me-prompt-technology.com/",
+                    uploadFormData
+                );
+
+                if (uploadResponse?.status === 200) {
+                    imageIdTwo = uploadResponse?.data?.result?.id;
+                    setFormData({
+                        ...formData!, // Non-null assertion
+                        imgTwo: imageIdTwo,
+                    });
+                }
+            } catch (error) {
+                console.error("Upload failed: ", error);
+            }
+        }
+        if (imgThree) {
+            const uploadFormData = new FormData();
+            uploadFormData.append("file", imgThree);
+
+            try {
+                const uploadResponse = await axios.post(
+                    "https://upload-image.me-prompt-technology.com/",
+                    uploadFormData
+                );
+
+                if (uploadResponse?.status === 200) {
+                    imageIdThree = uploadResponse?.data?.result?.id;
+                    setFormData({
+                        ...formData!, // Non-null assertion
+                        imgThree: imageIdThree,
+                    });
+                }
+            } catch (error) {
+                console.error("Upload failed: ", error);
+            }
+        }
+
+        submitFormData();
+
+
     };
 
-
+    const submitFormData = async () => {
+        console.log(131);
+        
+        try {
+            const response = await axios.put('/api/HeadPage', formData, {
+                headers: {
+                    'Content-Type': 'application/json' // or 'multipart/form-data' if sending files
+                }
+            });
+            console.log('Form data submitted successfully:', response.data);
+            // Additional logic on successful submission
+        } catch (error) {
+            console.error('Failed to submit form data:', error);
+            // Error handling
+        }
+    };
     // if (isLoading || loading) return <div>Loading...</div>;
     // if (error) return <div>Error: {error.message}</div>;
 
@@ -97,7 +163,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         isValid={inputForm && formData?.title !== ""}
                                         isInvalid={inputForm && formData?.title === ""}
                                         type="text"
-                                        value={formData?.title || ""}
+                                        defaultValue={formData?.title || ""}
                                         onChange={handleInputChange}
                                         placeholder="ระบุหัวข้อ"
                                     />
@@ -109,7 +175,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         isValid={inputForm && formData?.subTitle !== ""}
                                         isInvalid={inputForm && formData?.subTitle === ""}
                                         type="text"
-                                        value={formData?.subTitle || ""}
+                                        defaultValue={formData?.subTitle || ""}
                                         onChange={handleInputChange}
                                         placeholder="ระบุหัวข้อ"
                                     />
@@ -121,7 +187,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         isValid={inputForm && formData?.detail !== ""}
                                         isInvalid={inputForm && formData?.detail === ""}
                                         as="textarea"
-                                        value={formData?.detail || ""}
+                                        defaultValue={formData?.detail || ""}
                                         style={{ height: '100px' }}
                                         onChange={handleInputChange}
                                         placeholder="ระบุหัวข้อ"
@@ -139,7 +205,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         isValid={inputForm && formData?.pathBtn !== ""}
                                         isInvalid={inputForm && formData?.pathBtn === ""}
                                         type="text"
-                                        value={formData?.pathBtn || ""}
+                                        defaultValue={formData?.pathBtn || ""}
                                         onChange={handleInputChange}
                                         placeholder="ระบุหัวข้อ"
                                     />
@@ -151,7 +217,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         isValid={inputForm && formData?.btnTitle !== ""}
                                         isInvalid={inputForm && formData?.btnTitle === ""}
                                         type="text"
-                                        value={formData?.btnTitle || ""}
+                                        defaultValue={formData?.btnTitle || ""}
                                         onChange={handleInputChange}
                                         placeholder="ระบุหัวข้อ"
                                     />

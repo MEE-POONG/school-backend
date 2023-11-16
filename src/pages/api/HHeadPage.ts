@@ -51,6 +51,8 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
 async function handlePUT(req: NextApiRequest, res: NextApiResponse) {
   try {
     const id = req.query.id as string;
+    console.log(54,req.body);
+    
     const updatedHeadPage = await prisma.headPage.update({
       where: { id },
       data: req.body
