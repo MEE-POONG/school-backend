@@ -16,12 +16,6 @@ export default async function handler(
     case "POST":
       await handlePOST(req, res);
       break;
-    case "PUT":
-      await handlePUT(req, res);
-      break;
-    case "DELETE":
-      await handleDELETE(req, res);
-      break;
     default:
       res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
@@ -45,32 +39,5 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse) {
     res.status(201).json(newHeadPage);
   } catch (error) {
     res.status(500).json({ message: "Error creating HeadPage" });
-  }
-}
-
-async function handlePUT(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const id = req.query.id as string;
-    console.log(54,req.body);
-    
-    const updatedHeadPage = await prisma.headPage.update({
-      where: { id },
-      data: req.body
-    });
-    res.status(200).json(updatedHeadPage);
-  } catch (error) {
-    res.status(500).json({ message: "Error updating HeadPage" });
-  }
-}
-
-async function handleDELETE(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const id = req.query.id as string;
-    await prisma.headPage.delete({
-      where: { id }
-    });
-    res.status(200).json({ message: "HeadPage deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Error deleting HeadPage" });
   }
 }
