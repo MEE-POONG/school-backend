@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from 'axios-hooks';
 import { HeadPage } from '@prisma/client';
-import { Button, Card, Col, FloatingLabel, Form, Row, Spinner } from 'react-bootstrap';
+import { Button, Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import LayOut from '@/components/RootPage/TheLayOut';
-import Link from 'next/link';
 import axios from 'axios';
 import LoadModal from '@/components/modal/LoadModal';
 
@@ -121,7 +120,7 @@ const UpdateHeadPage: React.FC = (props) => {
 
     return (
         <LayOut>
-            {/* <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} /> */}
+            <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} />
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">
