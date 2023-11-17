@@ -6,13 +6,12 @@ import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "re
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { NewsSchool } from "@prisma/client";
 import LayOut from "@/components/RootPage/TheLayOut";
 import NewsSchoolPage from '../index';
 
 
 
-const NewsSchoolAdd: React.FC = () => {
+const NewsSchoolAdd: React.FC = (props) => {
   const router = useRouter();
   const { id } = router.query;
   const [

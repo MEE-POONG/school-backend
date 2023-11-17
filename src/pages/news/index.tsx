@@ -50,8 +50,8 @@ const NewsPage: React.FC = (props) => {
     if (newsData?.success) {
       setFilteredNewsData(newsData?.data ?? []);
     }
-    console.log("newsData : ",newsData);
-    
+    console.log("newsData : ", newsData);
+
   }, [newsData]);
 
   const deleteNews = (id: string): Promise<any> => {
@@ -152,11 +152,13 @@ const NewsPage: React.FC = (props) => {
                       />
                     </td>
                     <td className="">{news.title}</td>
-                    <td className="">{news.type}</td>
                     <td className="">
-                      {news.startDate ? (
+                      {/* {news.type} */}
+                    </td>
+                    <td className="">
+                      {/* {news.startDate ? (
                         <>
-                          {ReFormatDate(news.startDate)} {/* Format start date */}
+                          {ReFormatDate(news.startDate)} 
                         </>
                       ) : (
                         ""
@@ -164,11 +166,11 @@ const NewsPage: React.FC = (props) => {
                       <br />
                       {news.endDate ? (
                         <>
-                          {ReFormatDate(news.endDate)} {/* Format end date */}
+                          {ReFormatDate(news.endDate)}
                         </>
                       ) : (
                         ""
-                      )}
+                      )} */}
                     </td>
                     <td className="">
                       <ViewDetail data={news} />

@@ -52,7 +52,7 @@ const UpdateHeadPage: React.FC = (props) => {
         }
     };
 
-    const uploadImage = async (title: string, image: any) => {
+    const uploadImage = async (img: any, image: any) => {
         const uploadFormData = new FormData();
         uploadFormData.append("file", image);
 
@@ -63,10 +63,18 @@ const UpdateHeadPage: React.FC = (props) => {
             );
 
             if (uploadResponse?.status === 200) {
-                setFormData((prev: any) => ({
-                    ...prev,
-                    [title]: uploadResponse?.data?.result?.id
-                }));
+                try {
+                    const deleteResponse = await axios.post(
+                        `https://upload-image.me-prompt-technology.com/${img}`
+                    );
+
+                    if (deleteResponse?.status === 200) {
+
+                        return deleteResponse?.data?.result?.id;
+                    }
+                } catch (error) {
+                    console.error("Upload failed: ", error);
+                }
                 return uploadResponse?.data?.result?.id;
             }
         } catch (error) {
@@ -85,21 +93,12 @@ const UpdateHeadPage: React.FC = (props) => {
         setIsLoading(true);
 
         const imageIDs = await Promise.all([
-            imgOne ? uploadImage("imgOne", imgOne) : null,
-            imgTwo ? uploadImage("imgTwo", imgTwo) : null,
-            imgThree ? uploadImage("imgThree", imgThree) : null
+            imgOne ? uploadImage(formData?.imgOne, imgOne) : null,
+            imgTwo ? uploadImage(formData?.imgTwo, imgTwo) : null,
+            imgThree ? uploadImage(formData?.imgThree, imgThree) : null
         ]);
-        // Update the state with the new image IDs
-        // const imageUpdates = [
-        //     { key: "imgOne", value: imageIDs[0] },
-        //     { key: "imgTwo", value: imageIDs[1] },
-        //     { key: "imgThree", value: imageIDs[2] }
-        // ];
+        console.log("imageIDs : ", imageIDs);
 
-        // Sequentially update the state
-        // imageUpdates.forEach(update => {
-        //     handleInputChange(update.key, update.value);
-        // });
         try {
             const response = await refetch({
                 url: `/api/HeadPage/${formData?.id}`,
@@ -127,12 +126,11 @@ const UpdateHeadPage: React.FC = (props) => {
 
     };
 
-    // if (isLoading || loading) return <LayOut>Loading...</LayOut>;
     // if (error) return <div>Error: {error.message}</div>;
 
     return (
         <LayOut>
-            <LoadModal checkLoad={isLoading} checkBody={checkBody} />
+            <LoadModal checkLoad={isLoading || loading} checkBody={checkBody} />
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">

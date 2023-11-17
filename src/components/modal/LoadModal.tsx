@@ -12,7 +12,6 @@ interface LoadModalProps {
 
 const LoadModal: React.FC<LoadModalProps> = ({ checkLoad }) => {
     const router = useRouter();
-console.log("checkLoad : ",checkLoad);
 
     let variant;
     let heading;
