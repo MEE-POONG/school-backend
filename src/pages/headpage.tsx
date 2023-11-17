@@ -50,30 +50,25 @@ const UpdateHeadPage: React.FC = (props) => {
             reader.readAsDataURL(file);
         }
     };
-
-    const uploadImage = async (img: any, image: any) => {
-        // const uploadFormData = new FormData();
-        // uploadFormData.append("file", image);
-        // try {
-        //     const uploadResponse = await axios.post(
-        //         "https://upload-image.me-prompt-technology.com/",
-        //         uploadFormData
-        //     );
-
-        //     if (uploadResponse?.status === 200) {
-        //         return uploadResponse?.data?.result?.id;
-        //     }
-        // } catch (error) {
-        //     console.error("Upload failed: ", error);
-        // }
+    const deleteImage = async (imageId: string) => {
         try {
-            const deleteResponse = await axios.delete(
-                `https://upload-image.me-prompt-technology.com/${img}`,
-
+            await axios.delete(`https://upload-image.me-prompt-technology.com/?name=${imageId}`);
+        } catch (error) {
+            console.error("Delete failed: ", error);
+        }
+    };
+    const uploadImage = async (img: any, image: any) => {
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", image);
+        try {
+            const uploadResponse = await axios.post(
+                "https://upload-image.me-prompt-technology.com/",
+                uploadFormData
             );
 
-            if (deleteResponse?.status === 200) {
-                return img;
+            if (uploadResponse?.status === 200) {
+                deleteImage(img);
+                return uploadResponse?.data?.result?.id;
             }
         } catch (error) {
             console.error("Upload failed: ", error);
@@ -94,8 +89,6 @@ const UpdateHeadPage: React.FC = (props) => {
             imgTwo ? uploadImage(formData?.imgTwo, imgTwo) : null,
             imgThree ? uploadImage(formData?.imgThree, imgThree) : null
         ]);
-        console.log("imageIDs : ", imageIDs);
-
         try {
             const response = await refetch({
                 url: `/api/HeadPage/${formData?.id}`,
@@ -128,7 +121,7 @@ const UpdateHeadPage: React.FC = (props) => {
 
     return (
         <LayOut>
-            <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} />
+            {/* <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} /> */}
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">
