@@ -1,29 +1,31 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Spinner } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 
 interface LoadModalProps {
     checkLoad: boolean;
-    checkBody: string;
-
+    title: string;
+    detail: string;
 }
 
-const LoadModal: React.FC<LoadModalProps> = ({ checkLoad }) => {
+const LoadModal: React.FC<LoadModalProps> = ({ checkLoad, title, detail }) => {
     const router = useRouter();
 
     let variant;
-    let heading;
-    let boding;
 
+    const [show, setShow] = useState(false);
 
+    useEffect(() => {
+        setShow(checkLoad);
+    }, [checkLoad]);
     return (
         <>
-            <Modal show={checkLoad} centered>
-                <Alert variant={variant} className='m-0' dismissible>
-                    <Alert.Heading className='m-0'>{heading}</Alert.Heading>
-                    <p className='m-0'>{boding}</p>
+            <Modal show={show} centered>
+                <Alert variant={variant} className='m-0 text-center' dismissible>
+                    <Alert.Heading className='m-0'>{title}</Alert.Heading>
+                    <p className='m-0'>{detail}</p>
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>

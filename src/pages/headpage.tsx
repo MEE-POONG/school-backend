@@ -24,7 +24,6 @@ const UpdateHeadPage: React.FC = (props) => {
     const [inputForm, setInputForm] = useState<boolean>(false);
     const [checkBody, setCheckBody] = useState<string>("");
 
-    // Initialize formData once headPageData is loaded
     useEffect(() => {
         if (headPageData && !formData) {
             setFormData(headPageData);
@@ -53,34 +52,32 @@ const UpdateHeadPage: React.FC = (props) => {
     };
 
     const uploadImage = async (img: any, image: any) => {
-        const uploadFormData = new FormData();
-        uploadFormData.append("file", image);
+        // const uploadFormData = new FormData();
+        // uploadFormData.append("file", image);
+        // try {
+        //     const uploadResponse = await axios.post(
+        //         "https://upload-image.me-prompt-technology.com/",
+        //         uploadFormData
+        //     );
 
+        //     if (uploadResponse?.status === 200) {
+        //         return uploadResponse?.data?.result?.id;
+        //     }
+        // } catch (error) {
+        //     console.error("Upload failed: ", error);
+        // }
         try {
-            const uploadResponse = await axios.post(
-                "https://upload-image.me-prompt-technology.com/",
-                uploadFormData
+            const deleteResponse = await axios.delete(
+                `https://upload-image.me-prompt-technology.com/${img}`,
+
             );
 
-            if (uploadResponse?.status === 200) {
-                try {
-                    const deleteResponse = await axios.post(
-                        `https://upload-image.me-prompt-technology.com/${img}`
-                    );
-
-                    if (deleteResponse?.status === 200) {
-
-                        return deleteResponse?.data?.result?.id;
-                    }
-                } catch (error) {
-                    console.error("Upload failed: ", error);
-                }
-                return uploadResponse?.data?.result?.id;
+            if (deleteResponse?.status === 200) {
+                return img;
             }
         } catch (error) {
             console.error("Upload failed: ", error);
         }
-
         return null;
     };
 
@@ -122,6 +119,7 @@ const UpdateHeadPage: React.FC = (props) => {
             }
         } catch (error) {
             console.error('Failed to submit form data:', error);
+            setIsLoading(false);
         }
 
     };
@@ -130,7 +128,7 @@ const UpdateHeadPage: React.FC = (props) => {
 
     return (
         <LayOut>
-            <LoadModal checkLoad={isLoading || loading} checkBody={checkBody} />
+            <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} />
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">
