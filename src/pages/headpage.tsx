@@ -19,9 +19,7 @@ const UpdateHeadPage: React.FC = (props) => {
     const [imgThreePreview, setImgThreePreview] = useState<string | null>(null);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [alertForm, setAlertForm] = useState<string>("not");
     const [inputForm, setInputForm] = useState<boolean>(false);
-    const [checkBody, setCheckBody] = useState<string>("");
 
     useEffect(() => {
         if (headPageData && !formData) {
@@ -82,7 +80,7 @@ const UpdateHeadPage: React.FC = (props) => {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         setIsLoading(true);
-
+        setInputForm(true);
         const imageIDs = await Promise.all([
             imgOne ? uploadImage(formData?.imgOne, imgOne) : null,
             imgTwo ? uploadImage(formData?.imgTwo, imgTwo) : null,
