@@ -105,7 +105,6 @@ const UpdateHeadPage: React.FC = (props) => {
             if (response?.data?.success) {
                 setFormData(response?.data?.data);
                 setIsLoading(false);
-
             }
         } catch (error) {
             console.error('Failed to submit form data:', error);
@@ -114,7 +113,6 @@ const UpdateHeadPage: React.FC = (props) => {
 
     };
 
-    // if (error) return <div>Error: {error.message}</div>;
 
     return (
         <LayOut>
@@ -123,7 +121,7 @@ const UpdateHeadPage: React.FC = (props) => {
                 <Card>
                     <Card.Header className="d-flex space-between">
                         <h4 className="mb-0 py-1">
-                            แก้ไขข้อมูล
+                            แก้ไขข้อมูล Header
                         </h4>
                     </Card.Header>
                     <Card.Body className="overflow-hidden">
