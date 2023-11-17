@@ -26,6 +26,21 @@ model HeadPage {
   deleted_at DateTime? @map("deleted_at")
 }
 
+model About {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  title         String?
+  subTitle      String?
+  img           String?
+  logo          String?
+  personChart   String?
+  detail        String?
+  detailTo      String?
+  StudyingCount Int?
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  deleted_at    DateTime? @map("deleted_at")
+}
+
 model Gallery {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   img        String?
@@ -162,18 +177,4 @@ model IPAddress {
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
-}
-
-model About {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  title         String?
-  subTitle      String?
-  img           String?
-  personChart   String?
-  detail        String?
-  detailTo      String?
-  StudyingCount Int?
-  createdAt     DateTime? @default(now())
-  updatedAt     DateTime? @updatedAt
-  deleted_at    DateTime? @map("deleted_at")
 }
