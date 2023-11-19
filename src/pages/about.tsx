@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from 'axios-hooks';
 import { About } from '@prisma/client';
-import { Button, Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, FloatingLabel, Form, FormLabel, Row } from 'react-bootstrap';
 import LayOut from '@/components/RootPage/TheLayOut';
 import axios from 'axios';
 import LoadModal from '@/components/modal/LoadModal';
@@ -79,39 +79,38 @@ const UpdateHeadPage: React.FC = (props) => {
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        // setIsLoading(true);
-        // setInputForm(true);
+        setIsLoading(true);
+        setInputForm(true);
         const imageIDs = await Promise.all([
             imgOne ? uploadImage(formData?.img, imgOne) : null,
             imgTwo ? uploadImage(formData?.logo, imgTwo) : null,
             imgThree ? uploadImage(formData?.personChart, imgThree) : null
         ]);
-        console.log(imageIDs);
-        
-        // try {
-        //     const response = await refetch({
-        //         url: `/api/About/${formData?.id}`,
-        //         method: "PUT",
-        //         data: {
-        //             id: formData?.id,
-        //             title: formData?.title,
-        //             subTitle: formData?.subTitle,
-        //             detail: formData?.detail,
-        //             detailTo: formData?.detailTo,
-        //             StudyingCount: formData?.StudyingCount,
-        //             img: imageIDs[0] !== null ? imageIDs[0] : formData?.img,
-        //             logo: imageIDs[1] !== null ? imageIDs[1] : formData?.logo,
-        //             personChart: imageIDs[2] !== null ? imageIDs[2] : formData?.personChart,
-        //         }
-        //     });
-        //     if (response?.data?.success) {
-        //         setFormData(response?.data?.data);
-        //         setIsLoading(false);
-        //     }
-        // } catch (error) {
-        //     console.error('Failed to submit form data:', error);
-        //     setIsLoading(false);
-        // }
+
+        try {
+            const response = await refetch({
+                url: `/api/About/${formData?.id}`,
+                method: "PUT",
+                data: {
+                    id: formData?.id,
+                    title: formData?.title,
+                    subTitle: formData?.subTitle,
+                    detail: formData?.detail,
+                    detailTo: formData?.detailTo,
+                    StudyingCount: formData?.StudyingCount,
+                    img: imageIDs[0] !== null ? imageIDs[0] : formData?.img,
+                    logo: imageIDs[1] !== null ? imageIDs[1] : formData?.logo,
+                    personChart: imageIDs[2] !== null ? imageIDs[2] : formData?.personChart,
+                }
+            });
+            if (response?.data?.success) {
+                setFormData(response?.data?.data);
+                setIsLoading(false);
+            }
+        } catch (error) {
+            console.error('Failed to submit form data:', error);
+            setIsLoading(false);
+        }
 
     };
 
@@ -195,6 +194,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                 </h5>
                             </Col>
                             <Col md={4}>
+                                <FormLabel>รูปภาพเกี่ยวกัวเรา</FormLabel>
                                 <FloatingLabel controlId="img" label="รูปภาพเกี่ยวกัวเรา" className="mb-3">
                                     <Form.Control
                                         type="file"
@@ -211,6 +211,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                 </div>
                             </Col>
                             <Col md={4}>
+                                <FormLabel>โลโก้</FormLabel>
                                 <FloatingLabel controlId="imgTwo" label="โลโก้" className="mb-3">
                                     <Form.Control
                                         type="file"
@@ -227,6 +228,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                 </div>
                             </Col>
                             <Col md={4}>
+                                <FormLabel>ผังบุคคลกร</FormLabel>
                                 <FloatingLabel controlId="imgThree" label="ผังบุคคลกร" className="mb-3">
                                     <Form.Control
                                         type="file"

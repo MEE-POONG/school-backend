@@ -55,41 +55,49 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                     </Link>
 
 
-                    <Link href="/headpage" className={asPath === "/headpage" || asPath === "/headpage/add"  ? "nav-link active" : "nav-link"}>
+                    <Link href="/headpage" className={asPath === "/headpage" ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
-                        <span className="ms-2">แก้ไขหน้าหลัก</span>
+                        <span className="ms-2">หัวข้อหน้าหลัก</span>
+                    </Link>
+                    
+                    <Link href="/about" className={asPath === "/about" ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">เกี่ยวกับเรา</span>
                     </Link>
 
-                    <Link href="/news" className={asPath === "/news" || asPath === "/news/add" || asPath.startsWith("/news/edit/")  ? "nav-link active" : "nav-link"}>
+
+                    <Link href="/news" className={asPath === "/news" || asPath === "/news/add" || asPath.startsWith("/news/edit/") ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
                         <span className="ms-2">ข่าว</span>
                     </Link>
 
-                    <Link href="/activity" className={asPath === "/activity" || asPath === "/activity/addActivity" || asPath.startsWith("/activity/edit")  ? "nav-link active" : "nav-link"}>
+                    <Link href="/activity" className={asPath === "/activity" || asPath === "/activity/addActivity" || asPath.startsWith("/activity/edit") ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
                         <span className="ms-2">กิจกรรม</span>
                     </Link>
 
-                    <Link href="/registerform" className={asPath === "/registerform" || asPath.startsWith("/registerform/edit")  ? "nav-link active" : "nav-link"}>
+                    <Link href="/registerform" className={asPath === "/registerform" || asPath.startsWith("/registerform/edit") ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
                         <span className="ms-2">ผู้สนใจสมัคร</span>
                     </Link>
 
-                    <Link href="/admin" className={asPath === "/admin" || asPath === "/admin/add" || asPath.startsWith("/admin/edit")  ? "nav-link active" : "nav-link"}>
+                    <Link href="/admin" className={asPath === "/admin" || asPath === "/admin/add" || asPath.startsWith("/admin/edit") ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
                         <span className="ms-2">แอดมิน</span>
                     </Link>
-                    
+
                 </Offcanvas.Body>
             </Offcanvas>
 
