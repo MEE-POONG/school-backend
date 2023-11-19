@@ -61,12 +61,19 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </i>
                         <span className="ms-2">หัวข้อหน้าหลัก</span>
                     </Link>
-                    
+
                     <Link href="/about" className={asPath === "/about" ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
                         </i>
                         <span className="ms-2">เกี่ยวกับเรา</span>
+                    </Link>
+
+                    <Link href="/contact" className={asPath === "/contact" ? "nav-link active" : "nav-link"}>
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">ติดต่อเรา</span>
                     </Link>
 
 

@@ -20,9 +20,6 @@ const UpdateContact: React.FC = (props) => {
             setFormData(contactData);
         }
     }, [contactData]);
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
 
     const handleInputChange = (title: string, value: any) => {
         setFormData((prev: any) => ({
