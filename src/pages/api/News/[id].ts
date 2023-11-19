@@ -10,63 +10,64 @@ export default async function handler(
   const { method } = req;
 
   switch (method) {
-    case "GET":
-      try {
-        const id = req.query.id;
-
-        const data = await prisma.news.findUnique({
-          where: {
-            id: id as string
-          }
-        });
-
-        res.status(200).json(data);
-      } catch (error) {
-        res
-          .status(500)
-          .json({ error: "An error occurred while fetching the data" });
-      }
-      break;
-
+    // case "GET":
+    //   await handleGET(req, res);
+    //   break;
     case "PUT":
-      try {
-        const id = req.query.id;
-
-        const data = await prisma.news.update({
-          where: {
-            id: id as string
-          },
-          data: req.body
-        });
-
-        res.status(200).json(data);
-      } catch (error) {
-        res
-          .status(500)
-          .json({ error: "An error occurred while updating the data" });
-      }
+      await handlePUT(req, res);
       break;
-
     case "DELETE":
-      try {
-        const id = req.query.id;
-
-        const data = await prisma.news.delete({
-          where: {
-            id: id as string
-          }
-        });
-
-        res.status(200).json(data);
-      } catch (error) {
-        res
-          .status(500)
-          .json({ error: "An error occurred while deleting the data" });
-      }
+      await handleDELETE(req, res);
       break;
-
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
+  }
+}
+
+async function handlePUT(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const id = req.query.id as string;
+    const { title, subTitle, detail, img, promoteImg, startDate, endDate, } = req.body;
+
+    if (!id) {
+      res.status(400).json({ success: false, message: 'Invalid or missing ID' });
+      return;
+    }
+
+    const updatedNews = await prisma.news.update({
+      where: { id },
+      data: {
+        title,
+        subTitle,
+        detail,
+        img,
+        promoteImg,
+        startDate,
+        endDate,
+      },
+    });
+    res.status(200).json({ success: true, data: updatedNews });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'An error occurred while updating the News', error: error.message });
+  }
+}
+
+async function handleDELETE(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const id = req.query.id as string;
+    if (!id) {
+      res.status(400).json({ success: false, message: 'Invalid or missing ID' });
+      return;
+    }
+
+    await prisma.news.delete({
+      where: { id }
+    });
+    res.status(200).json({ message: "News deleted successfully" });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting News" });
   }
 }
