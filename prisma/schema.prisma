@@ -127,6 +127,7 @@ model welfare {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   img        String?
   title      String?
+  subDetail     String?
   detail     String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
