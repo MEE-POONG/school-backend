@@ -1,14 +1,62 @@
-import React, { useState } from "react";
-import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
 import useAxios from "axios-hooks";
-import axios from "axios";
 import LayOut from "@/components/RootPage/TheLayOut";
+import { Button, Card, Col, Dropdown, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
 import { CKEditor } from "ckeditor4-react";
 import ImageUploadAlbum from "@/container/ImageUploadAlbum";
-import { News } from "@prisma/client";
+// import { News } from "@prisma/client";
 
+interface NewsType extends PrismaNewsType {
+}
+interface News extends PrismaNews {
+  NewsType: NewsType;
+}
 
 const NewsAdd: React.FC = (props) => {
+
+  const [formData, setFormData] = useState<News | null>();
+  const [imgOne, setImgOne] = useState<File | null>(null);
+  const [imgTwo, setImgTwo] = useState<File | null>(null);
+
+  const [imgOnePreview, setImgOnePreview] = useState<string | null>(null);
+  const [imgTwoPreview, setImgTwoPreview] = useState<string | null>(null);
+
+  const [type, setType] = useState<NewsType[]>([]);
+  const [{ data: newsType, loading: loadingType, error: errorType }, getNewsType] = useAxios({
+    url: `/api/NewsType`,
+    method: "GET",
+  });
+
+  useEffect(() => {
+    setType(newsType?.data);
+  }, [newsType]);
+
+  const handleInputChange = (title: string, value: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [title]: value
+    }));
+  }
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<File | null>>, setPreview: React.Dispatch<React.SetStateAction<string | null>>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const splittedString = base64String.split(",")[1];
+        setPreview(splittedString); // Update the state with the base64 image data
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
   // const [title, setTitle] = useState<string>("");
   // const [type, setType] = useState<string>("");
   // const [startDate, setStartDate] = useState<string>("");
@@ -54,17 +102,77 @@ const NewsAdd: React.FC = (props) => {
           </Card.Header>
           <Card.Body className="overflow-x-hidden">
             <Row>
-              <Col md={6}>
-                {/* <Form.Floating className="mb-3">
+              <Col md={4}>
+                <FloatingLabel controlId="title" label="ระบุหัวข้อข่าว" className="mb-3" >
                   <Form.Control
-                    id="title"
+                    // isValid={inputForm && formData?.title !== ""}
+                    // isInvalid={inputForm && formData?.title === ""}
                     type="text"
-                    placeholder="name@example.com"
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
+                    defaultValue={formData?.title || ""}
+                    onChange={(e) => handleInputChange("title", e.target.value)}
+                    placeholder="ระบุหัวข้อ"
                   />
-                  <label htmlFor="floatingInputCustom">หัวข้อข่าว</label>
-                </Form.Floating> */}
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="subTitle" label="ระบุหัวข้อข่าว" className="mb-3" >
+                  <Form.Control
+                    // isValid={inputForm && formData?.subTitle !== ""}
+                    // isInvalid={inputForm && formData?.subTitle === ""}
+                    type="text"
+                    defaultValue={formData?.subTitle || ""}
+                    onChange={(e) => handleInputChange("subTitle", e.target.value)}
+                    placeholder="ระบุหัวข้อ"
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={4}>
+                <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร">
+                  <Form.Select aria-label="Floating label select example"
+                    onChange={(e) => handleInputChange("newsTypeId", e.target.value)}
+                  >
+                    {type?.map((list, index) => (
+                      <option key={index} value={list?.id}>{list?.nameTH}</option>
+                    ))}
+
+                  </Form.Select>
+                </FloatingLabel>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={5}>
+                <FormLabel>รูปปก</FormLabel>
+                <FloatingLabel controlId="img" label="รูปภาพเกี่ยวกัวเรา" className="mb-3">
+                  <Form.Control
+                    type="file"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne, setImgOnePreview)}
+                  />
+                </FloatingLabel>
+                <div className='ratio img-preview ratio-16x9 bg-dark'>
+                  <img
+                    src={imgOnePreview ? `data:image/jpeg;base64,${imgOnePreview}` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                    alt="Image Two Preview"
+                    className="w-100 object-fit-contain"
+                    loading="lazy"
+                  />
+                </div>
+              </Col>
+              <Col md={7}>
+                <FormLabel>รูปโปรโมท</FormLabel>
+                <FloatingLabel controlId="imgTwo" label="โลโก้" className="mb-3">
+                  <Form.Control
+                    type="file"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgTwo, setImgTwoPreview)}
+                  />
+                </FloatingLabel>
+                <div className='ratio img-preview ratio-21x9 bg-dark'>
+                  <img
+                    src={imgTwoPreview ? `data:image/jpeg;base64,${imgTwoPreview}` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                    alt="Image Two Preview"
+                    className="w-100 object-fit-contain"
+                    loading="lazy"
+                  />
+                </div>
               </Col>
               {/* <Col md={6}>
                 <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร">
