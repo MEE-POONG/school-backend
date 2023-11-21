@@ -22,7 +22,7 @@ interface Params {
   searchKey: string;
   totalPages: number;
 }
-const RegisterFormPage: React.FC = () => {
+const RegisterFormPage: React.FC = (props) => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -108,11 +108,10 @@ const RegisterFormPage: React.FC = () => {
         <meta name="description" content="T ACTIVE" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="partner-page h-100">
+      <div className="partner-page">
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อนักศึกษาที่สนใจเข้าเรียน</h4>
-
             {/* ค้นหาข้อมูล */}
             <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
@@ -126,7 +125,7 @@ const RegisterFormPage: React.FC = () => {
               />
             </InputGroup>
           </Card.Header>
-          <Card.Body className="p-0">
+          <Card.Body className="p-0 overflow-x-hidden">
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>

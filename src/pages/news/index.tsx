@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import {
   Card,
-  Image,
   Form,
+  Image,
   InputGroup,
   Table,
 } from "react-bootstrap";
@@ -14,56 +14,80 @@ import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import LayOut from "@/components/RootPage/TheLayOut";
 import ViewDetail from "./viewdetail/[id]";
-import { News } from "@prisma/client";
 import { ReFormatDate } from "@/components/ReFormatDate";
+import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
 
+interface NewsType extends PrismaNewsType {
+
+}
+
+interface News extends PrismaNews {
+  NewsType: NewsType;
+}
 
 interface Params {
   page: number;
   pageSize: number;
-  searchKey: string;
+  search: string;
+  type: string;
   totalPages: number;
 }
 const NewsPage: React.FC = (props) => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchKey: "",
+    search: "",
+    type: "",
     totalPages: 1,
   });
 
-  const [{ data: newsData }, getNews] = useAxios({
-    url: `/api/news?page=${params.page}&pageSize=${params.pageSize}&searchTeam=${params.searchKey}`,
+  const [{ data: newsData, loading, error }, getNews] = useAxios({
+    url: `/api/News/search?page=${params?.page}&pageSize=${params?.pageSize}&search=${params?.search}&type=${params?.type}`,
     method: "GET",
   });
 
-  const [
-    { loading: deleteNewsLoading, error: deleteNewsError },
-    executeNewsDelete,
-  ] = useAxios({}, { manual: true });
-
-  const [filteredNewssData, setFilteredNewsData] = useState<
-    News[]
-  >([]);
+  const [filteredData, setFilteredData] = useState<News[]>([]);
 
   useEffect(() => {
-    if (newsData?.success) {
-      setFilteredNewsData(newsData?.data ?? []);
-    }
-    console.log("newsData : ", newsData);
-
+    setFilteredData(newsData?.data);
+    setParams((prevParams) => ({
+      ...prevParams,
+      totalPages: newsData?.pagination.totalPages,
+    }));
   }, [newsData]);
 
-  const deleteNews = (id: string): Promise<any> => {
-    return executeNewsDelete({
-      url: "/api/news/" + id,
-      method: "DELETE",
-    }).then(() => {
-      setFilteredNewsData((selectID) =>
-        selectID.filter((newsArray) => newsArray.id !== id)
-      );
-    });
-  };
+  useEffect(() => {
+    console.log(params);
+  }, [params]);
+
+  useEffect(() => {
+    console.log(filteredData);
+  }, [filteredData]);
+
+  // const [
+  //   { loading: deleteNewsLoading, error: deleteNewsError },
+  //   executeNewsDelete,
+  // ] = useAxios({}, { manual: true });
+
+
+  // useEffect(() => {
+  //   if (newsData?.success) {
+  //     setFilteredNewsData(newsData?.data ?? []);
+  //   }
+  //   console.log("newsData : ", newsData);
+
+  // }, [newsData]);
+
+  // const deleteNews = (id: string): Promise<any> => {
+  //   return executeNewsDelete({
+  //     url: "/api/news/" + id,
+  //     method: "DELETE",
+  //   }).then(() => {
+  //     setFilteredNewsData((selectID) =>
+  //       selectID.filter((newsArray) => newsArray.id !== id)
+  //     );
+  //   });
+  // };
 
   const handleChangePage = (page: number) => {
     setParams((prevParams) => ({
@@ -83,23 +107,23 @@ const NewsPage: React.FC = (props) => {
   const handleChangesearchKey = (search: string) => {
     setParams(prevParams => ({
       ...prevParams,
-      searchKey: search,
+      search: search,
     }));
   };
 
 
-  useEffect(() => {
-    if (newsData?.news) {
-      const filteredData = newsData.news?.filter((news: any) =>
-        // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
-        news?.title.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        news?.subTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-        news?.Date.toLowerCase().includes(params.searchKey.toLowerCase())
-      );
+  // useEffect(() => {
+  //   if (newsData?.news) {
+  //     const filteredData = newsData.news?.filter((news: any) =>
+  //       // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
+  //       news?.title.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+  //       news?.subTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
+  //       news?.Date.toLowerCase().includes(params.searchKey.toLowerCase())
+  //     );
 
-      setFilteredNewsData(filteredData);
-    }
-  }, [newsData, params.searchKey]);
+  //     setFilteredNewsData(filteredData);
+  //   }
+  // }, [newsData, params.searchKey]);
 
   return (
     <LayOut>
@@ -108,7 +132,7 @@ const NewsPage: React.FC = (props) => {
         <meta name="description" content="T ACTIVE" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="partner-page h-100">
+      <div className="partner-page">
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อข่าว</h4>
@@ -116,8 +140,7 @@ const NewsPage: React.FC = (props) => {
               <InputGroup.Text id="basic-addon1">
                 <FaSearch />
               </InputGroup.Text>
-              <Form.Control
-                onChange={e => handleChangesearchKey(e.target.value)}
+              <Form.Control onChange={e => handleChangesearchKey(e.target.value)}
                 placeholder="ค้นหาข่าว"
                 aria-label="news"
                 aria-describedby="basic-addon1"
@@ -127,7 +150,7 @@ const NewsPage: React.FC = (props) => {
               เพิ่มข่าว
             </Link>
           </Card.Header>
-          <Card.Body className="p-0">
+          <Card.Body className="p-0 overflow-x-hidden">
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
@@ -140,48 +163,34 @@ const NewsPage: React.FC = (props) => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {filteredNewssData?.map((news, index) => (
-                  <tr key={news.id}>
+                {filteredData?.map((list, index) => (
+                  <tr key={list.id}>
                     <td className="w-r-3">{index + 1}</td>
                     <td className="">
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${news.img}/public`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${list.img}/public`}
                         className="size-img"
                         alt="news imge"
                         thumbnail
                       />
                     </td>
-                    <td className="">{news.title}</td>
+                    <td className="">{list.title}</td>
                     <td className="">
-                      {/* {news.type} */}
+                      {list?.NewsType?.nameTH}
                     </td>
                     <td className="">
-                      {/* {news.startDate ? (
-                        <>
-                          {ReFormatDate(news.startDate)} 
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      <br />
-                      {news.endDate ? (
-                        <>
-                          {ReFormatDate(news.endDate)}
-                        </>
-                      ) : (
-                        ""
-                      )} */}
+
                     </td>
                     <td className="">
-                      <ViewDetail data={news} />
-                      <Link href={`/news/edit/${news.id}`} className="mx-1 btn info icon icon-primary" >
+                      {/* <ViewDetail data={news} /> */}
+                      {/* <Link href={`/news/edit/${list.id}`} className="mx-1 btn info icon icon-primary" >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
-                      </Link>
-                      <DeleteModal
+                      </Link> */}
+                      {/* <DeleteModal
                         data={news}
-                        apiDelete={() => deleteNews(news.id)}
-                      />
+                        apiDelete={() => deleteNews(list.id)}
+                      /> */}
                     </td>
                   </tr>
                 ))}
@@ -189,14 +198,7 @@ const NewsPage: React.FC = (props) => {
             </Table>
           </Card.Body>
           <Card.Footer>
-            {/* <PageSelect
-              page={params.page}
-              totalPages={newsData?.pagination?.total}
-              onChangePage={handleChangePage}
-              onChangePageSize={handleChangePageSize}
-            /> */}
-            <PageSelect page={params.page} totalPages={newsData?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
-
+            <PageSelect page={params?.page} totalPages={params?.totalPages} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
           </Card.Footer>
         </Card>
       </div>

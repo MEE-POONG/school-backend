@@ -21,7 +21,7 @@ const LayOut: React.FC<LayoutProps> = ({ children }) => {
     <main >
       <TheOffcanvas show={show} onToggleShow={handleToggleShow} />
       <TheNavBar onToggleShow={handleToggleShow} show={show} />
-      <div className='bg-whilt paper' style={mainStyle} >
+      <div className='paper' style={mainStyle} >
         {children}
         <TheFooter />
       </div>

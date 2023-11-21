@@ -1,0 +1,87 @@
+import { Prisma, PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from "next";
+
+const prisma = new PrismaClient();
+
+// Define a type for your query parameters
+interface QueryParams {
+  page?: string;
+  pageSize?: string;
+  search?: string;
+  type?: string;
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { method } = req;
+
+  switch (method) {
+    case "GET":
+      await handleGET(req, res);
+      break;
+    default:
+      res.setHeader("Allow", ["GET", "POST"]);
+      res.status(405).end(`Method ${method} Not Allowed`);
+  }
+}
+
+async function handleGET(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    // Extract and type-cast query parameters
+    const { page = '1', pageSize = '10', search, type } = req.query as QueryParams;
+
+    // Convert pagination parameters to numbers
+    const pageNum = parseInt(page, 10) || 1;
+    const pageSizeNum = parseInt(pageSize, 10) || 10;
+
+    // Calculate skip and take values for pagination
+    const skip = (pageNum - 1) * pageSizeNum;
+    const take = pageSizeNum;
+    const searchCondition = search && search.length >= 3 ? {
+      title: { contains: search, mode: 'insensitive' as Prisma.QueryMode }
+    } : null;
+
+    const andConditions: Prisma.NewsWhereInput[] = [];
+
+    if (search && search.length >= 3) {
+      andConditions.push({ title: { contains: search, mode: 'insensitive' as Prisma.QueryMode } });
+    }
+
+    if (type) {
+      andConditions.push({ NewsType: { nameTH: { contains: type, mode: 'insensitive' as Prisma.QueryMode } } });
+    }
+    const whereClause: Prisma.NewsWhereInput = {
+      AND: andConditions
+    };
+
+    // Fetch paginated and filtered news items
+    const newsItems = await prisma.news.findMany({
+      where: whereClause,
+      skip,
+      take,
+      include: {
+        NewsType: true,
+      },
+    });
+
+    // Fetch total count of filtered news items for pagination info
+    const totalNewsCount = await prisma.news.count({ where: whereClause });
+    const totalPages = Math.ceil(totalNewsCount / pageSizeNum);
+
+    // Send the response with paginated and filtered news items and pagination info
+    res.status(200).json({
+      success: true,
+      data: newsItems,
+      pagination: {
+        total: totalNewsCount,
+        totalPages,
+        page: pageNum,
+        pageSize: pageSizeNum
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching news information" });
+  }
+}
