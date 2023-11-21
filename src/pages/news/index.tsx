@@ -15,14 +15,13 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import LayOut from "@/components/RootPage/TheLayOut";
-import ViewDetail from "./viewdetail/[id]";
+import ViewDetail from "./[id]";
 import { ReFormatDate } from "@/components/ReFormatDate";
 import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
+import moment from "moment";
 
 interface NewsType extends PrismaNewsType {
-
 }
-
 interface News extends PrismaNews {
   NewsType: NewsType;
 }
@@ -56,12 +55,13 @@ const NewsPage: React.FC = (props) => {
     method: "GET",
   });
 
+  const [{ loading: deleteNewsLoading, error: deleteNewsError }, executeNewsDelete,] = useAxios({}, { manual: true });
+
   useEffect(() => {
     setType(newsType?.data);
   }, [newsType]);
 
   useEffect(() => {
-    console.log(newsData);
     setFilteredData(newsData?.data);
     setParams((prevParams) => ({
       ...prevParams,
@@ -69,30 +69,19 @@ const NewsPage: React.FC = (props) => {
     }));
   }, [newsData]);
 
-  // const [
-  //   { loading: deleteNewsLoading, error: deleteNewsError },
-  //   executeNewsDelete,
-  // ] = useAxios({}, { manual: true });
-
-
-  // useEffect(() => {
-  //   if (newsData?.success) {
-  //     setFilteredNewsData(newsData?.data ?? []);
-  //   }
-  //   console.log("newsData : ", newsData);
-
-  // }, [newsData]);
-
-  // const deleteNews = (id: string): Promise<any> => {
-  //   return executeNewsDelete({
-  //     url: "/api/news/" + id,
-  //     method: "DELETE",
-  //   }).then(() => {
-  //     setFilteredNewsData((selectID) =>
-  //       selectID.filter((newsArray) => newsArray.id !== id)
-  //     );
-  //   });
-  // };
+  const deleteNews = (id: string): Promise<any> => {
+    return executeNewsDelete({
+      url: "/api/News/" + id,
+      method: "DELETE",
+    }).then(() => {
+      if (params?.page === params?.totalPages) {
+        setFilteredData((selectID) =>
+          selectID.filter((newsArray) => newsArray.id !== id));
+      } else {
+        getNews();
+      }
+    });
+  };
 
   const handleChangePage = (page: number) => {
     setParams((prevParams) => ({
@@ -199,18 +188,24 @@ const NewsPage: React.FC = (props) => {
                       {list?.NewsType?.nameTH}
                     </td>
                     <td className="">
-
+                      {list?.startDate !== null ? ` เริ่ม ${moment(list?.startDate).format('DD-MM-YYYY')}` : ''}
+                      <br />
+                      {list?.endDate !== null ? `สิ้นสุด ${moment(list?.endDate).format('DD-MM-YYYY')}` : ''}
                     </td>
                     <td className="">
-                      {/* <ViewDetail data={news} /> */}
-                      {/* <Link href={`/news/edit/${list?.id}`} className="mx-1 btn info icon icon-primary" >
+                      {/* <ViewDetail props={list} /> */}
+                      {/* <Link href={`/news/${list?.id}`} className="mx-1 btn info icon icon-primary" >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link> */}
-                      {/* <DeleteModal
-                        data={news}
+                      <Link href={`/news/edit/${list?.id}`} className="mx-1 btn info icon icon-primary" >
+                        <FaPen />
+                        <span className="h-tooltiptext">แก้ไขข้อมูล</span>
+                      </Link>
+                      <DeleteModal
+                        data={list}
                         apiDelete={() => deleteNews(list?.id)}
-                      /> */}
+                      />
                     </td>
                   </tr>
                 ))}

@@ -8,39 +8,39 @@ import ImageUploadAlbum from "@/container/ImageUploadAlbum";
 import { News } from "@prisma/client";
 
 
-const NewsAdd: React.FC = () => {
-  const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
-  const [img, setImg] = useState<string | null>(null);
-  const [promoteImg, setPromoteImg] = useState<string | null>(null);
-  const [subTitle, setSubTitle] = useState<string>("");
-  const [detail, setDetail] = useState<string>("");
+const NewsAdd: React.FC = (props) => {
+  // const [title, setTitle] = useState<string>("");
+  // const [type, setType] = useState<string>("");
+  // const [startDate, setStartDate] = useState<string>("");
+  // const [endDate, setEndDate] = useState<string>("");
+  // const [img, setImg] = useState<string | null>(null);
+  // const [promoteImg, setPromoteImg] = useState<string | null>(null);
+  // const [subTitle, setSubTitle] = useState<string>("");
+  // const [detail, setDetail] = useState<string>("");
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<string | null>>) => {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        const splittedString = base64String.split(",")[1];
-        setImage(splittedString); // Update the state with the base64 image data
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<string | null>>) => {
+  //   const file = event.target.files && event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const base64String = reader.result as string;
+  //       const splittedString = base64String.split(",")[1];
+  //       setImage(splittedString); // Update the state with the base64 image data
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const handleEditorChange = (e: any) => {
-    const newContent = e.editor.getData();
-    setDetail(newContent);
-  };
+  // const handleEditorChange = (e: any) => {
+  //   const newContent = e.editor.getData();
+  //   setDetail(newContent);
+  // };
 
-  const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
+  // const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+  //   event.preventDefault();
+  //   event.stopPropagation();
 
-  };
+  // };
   return (
     <LayOut>
 
@@ -55,7 +55,7 @@ const NewsAdd: React.FC = () => {
           <Card.Body className="overflow-x-hidden">
             <Row>
               <Col md={6}>
-                <Form.Floating className="mb-3">
+                {/* <Form.Floating className="mb-3">
                   <Form.Control
                     id="title"
                     type="text"
@@ -64,9 +64,9 @@ const NewsAdd: React.FC = () => {
                     onChange={e => setTitle(e.target.value)}
                   />
                   <label htmlFor="floatingInputCustom">หัวข้อข่าว</label>
-                </Form.Floating>
+                </Form.Floating> */}
               </Col>
-              <Col md={6}>
+              {/* <Col md={6}>
                 <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร">
                   <Form.Select aria-label="Floating label select example"
                     value={type}
@@ -158,13 +158,13 @@ const NewsAdd: React.FC = () => {
                   <h2>CKEditor Content</h2>
                   <div dangerouslySetInnerHTML={{ __html: detail }} />
                 </div>
-              </Col>
+              </Col> */}
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">
-            <Button variant="success mx-2" onClick={handleSubmit}>
+            {/* <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
-            </Button>
+            </Button> */}
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}

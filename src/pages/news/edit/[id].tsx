@@ -1,312 +1,191 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Head from 'next/head';
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
-// import BankSelect from "@/components/Input/Bankselect";
-import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
-import Link from "next/link";
+import axios from "axios";
 import LayOut from "@/components/RootPage/TheLayOut";
-import NewsSchoolPage from '../index';
+import { CKEditor } from "ckeditor4-react";
+import ImageUploadAlbum from "@/container/ImageUploadAlbum";
 
+import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
 
+interface NewsType extends PrismaNewsType {
+}
+interface News extends PrismaNews {
+  NewsType: NewsType;
+}
 
-const NewsSchoolAdd: React.FC = (props) => {
+const NewsEdit: React.FC = (props) => {
   const router = useRouter();
   const { id } = router.query;
+  
+  const [{ data: headPageData, loading, error }, refetch] = useAxios(`/api/About${id}`);
+  const [formData, setFormData] = useState<News | null>(null);
+
+  const [title, setTitle] = useState<string>("");
+  const [type, setType] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [img, setImg] = useState<string | null>(null);
+  const [promoteImg, setPromoteImg] = useState<string | null>(null);
+  const [subTitle, setSubTitle] = useState<string>("");
+  const [detail, setDetail] = useState<string>("");
+
+
   const [
-    { loading: updateNewsSchoolLoading, error: updateNewsSchoolError },
-    executeNewsSchoolPut,
+    { loading: updateNewsLoading, error: updateNewsError },
+    executeNewsPut,
   ] = useAxios({}, { manual: true });
-  const [newName, setnewName] = useState<string>("");
-  const [newTitle, setnewTitle] = useState<string>("");
-  const [newSubTitle, setnewSubTitle] = useState<string>("");
-  const [newSubDetail, setnewSubDetail] = useState<string>("");
-  const [newImg, setnewImg] = useState<string>("");
-  const [newDate, setnewDate] = useState<string>("");
-  /* const [img, setimg] = useState<string>("");*/
-  const [alertForm, setAlertForm] = useState<string>("not");
-  const [inputForm, setInputForm] = useState<boolean>(false);
-  const [checkBody, setCheckBody] = useState<string>("");
-  /* const [bankAccount, setBankAccount] = useState<string>("");
-   const [phone, setPhone] = useState<string>("");
-   const [line, setLine] = useState<string>("");
-   const [email, setEmail] = useState<string>("");*/
-
-
-  const handleInputChange = (setter: any) => (event: any) => {
-    const newValue = event.target.value;
-    if (!isNaN(newValue) && !newValue.includes('.')) {
-      setter(newValue);
-    }
-  };
-
-  // const [
-  //   { data: NewsSchoolID, loading: NewsSchoolIDLoading, error: NewsSchoolIDError },
-  //   executeNewsSchoolID,
-  // ] = useAxios<{ data: NewsSchool; success: boolean }, any>({
-  //   url: `/api/news/${id}`,
-  //   method: "GET",
-  // }, { autoCancel: false, manual: true });
-
-  // useEffect(() => {
-  //   if (id) {
-  //     executeNewsSchoolID().then(({ data }) => {
-  //       if (data?.data) {
-  //         setnewName(data?.data?.newName || "");
-  //         setnewTitle(data?.data?.newTitle || "")
-  //         setnewSubTitle(data?.data?.newSubDetail || "")
-  //         setnewSubDetail(data?.data?.newSubDetail || "")
-  //         setnewImg(data?.data?.newImg || "")
-  //         setnewDate(data?.data?.newDate || "")
-  //       /*  setimg(data?.data?.img || "")
-  //         setBank(data?.data?.bank || "")
-  //         setBankAccount(data?.data?.bankAccount || "")
-  //         setPhone(data?.data?.phone || "")
-  //         setLine(data?.data?.line || "")
-  //         setEmail(data?.data?.email || "")*/
-  //       }
-  //     });
-  //   }
-  // }, [id]);
-
-  // const reloadPage = () => {
-  //   executeNewsSchoolID().then(({ data }) => {
-  //     if (data?.data) {
-  //       setnewName(data?.data?.newName || "");
-  //         setnewTitle(data?.data?.newTitle || "")
-  //         setnewSubTitle(data?.data?.newSubDetail || "")
-  //         setnewSubDetail(data?.data?.newSubDetail || "")
-  //         setnewImg(data?.data?.newImg || "")
-  //         setnewDate(data?.data?.newDate || "")
-  //      /* setimg(data?.data?.img || "")
-  //      setUsername(data?.data?.username || "");
-  //       setPassword(data?.data?.password || "")
-  //       setFirstname(data?.data?.firstname || "")
-  //       setLastname(data?.data?.lastname || "")
-  //       setBank(data?.data?.bank || "")
-  //       setBankAccount(data?.data?.bankAccount || "")
-  //       setPhone(data?.data?.phone || "")
-  //       setLine(data?.data?.line || "")
-  //       setEmail(data?.data?.email || "")*/
-  //     }
-  //   });
-  // };
-
-  const [{ data: NewsSchoolData }, getNewsSchool] = useAxios({
-    url: `/api/news/${id}`,
-    method: "GET",
-  });
-
-  const reloadPage = () => {
-    window.location.reload();
-  };
-
 
   useEffect(() => {
-    if (NewsSchoolData) {
-      const {
-        newName,
-        newTitle,
-        newSubTitle,
-        newSubDetail,
-        newDate,
-        // ... (ตาม field อื่น ๆ)
-      } = NewsSchoolData;
-
-      setnewName(newName);
-      setnewTitle(newTitle);
-      setnewSubTitle(newSubTitle);
-      setnewSubDetail(newSubDetail);
-      setnewDate(newDate);
-
-
-      // ... (กำหนดค่า state อื่น ๆ)
+    if (headPageData && !formData) {
+        setFormData(headPageData);
     }
-  }, [NewsSchoolData]);
+}, [headPageData]);
 
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<string | null>>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result as string;
-        const splittedString = base64String.split(",")[1]; // ตัดส่วน "data:image/png;base64," ออก
-        setnewImg(splittedString);
+        const splittedString = base64String.split(",")[1];
+        setImage(splittedString); // Update the state with the base64 image data
       };
       reader.readAsDataURL(file);
     }
   };
 
+  const handleEditorChange = (e: any) => {
+    const newContent = e.editor.getData();
+    setDetail(newContent);
+  };
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    let missingFields = [];
-    if (!newName) missingFields.push("NewsName");
-    if (!newTitle) missingFields.push("NewsTitle");
-    if (!newSubTitle) missingFields.push("NewsSubTitle");
-    if (!newSubDetail) missingFields.push("NewsSubDetail");
-    // if (!newImg) missingFields.push("NewsImg");
-    if (!newDate) missingFields.push("NewsDate");
 
-    if (missingFields.length > 0) {
-      setAlertForm("warning");
-      setInputForm(true);
-      setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
-    } else {
-      try {
-        setAlertForm("primary");
-
-        const data = {
-          newName,
-          newTitle,
-          newSubTitle,
-          newSubDetail,
-          // newImg,
-          newDate,
-          /*img,*/
-        };
-
-
-        // Execute the update
-        const response = await executeNewsSchoolPut({
-          url: "/api/news/" + id,
-          method: "PUT",
-          data
-        });
-        if (response && response.status === 200) {
-          setAlertForm("success");
-          setTimeout(() => {
-            // reloadPage();
-          }, 5000);
-        } else {
-          setAlertForm("danger");
-          throw new Error('Failed to update data');
-        }
-      } catch (error) {
-        setAlertForm("danger");
-      }
-    }
   };
-
-
   return (
     <LayOut>
-      <Head>
-        <title>Phanomwan Backend</title>
-        <meta
-          name="description"
-          content="T ACTIVE"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className='NewsSchool-page'>
+
+      <div className='News-page'>
         <Card>
-          <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack="/newsSchool" />
+          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/news"} /> */}
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              แก้ไขข้อมูล
+              เพิ่มข่าว / กิจกรรม
             </h4>
           </Card.Header>
-          <Card.Body>
+          <Card.Body className="overflow-x-hidden">
             <Row>
-              <Col md={4}>
-                <FloatingLabel controlId="NewsName" label="ชื่อข่าว * จำกัด 50 ตัวอักษร" className="mb-3" style={{ color: 'red' }}>
+              <Col md={6}>
+                <Form.Floating className="mb-3">
                   <Form.Control
-                    isValid={inputForm && newName !== ""}
-                    isInvalid={inputForm && newName === ""}
+                    id="title"
                     type="text"
-                    value={newName}
-                    onChange={e => {
-                      const newValue = e.target.value;
-                      if (newValue.length <= 50) {
-                        setnewName(newValue);
-                      }
-                    }}
                     placeholder="name@example.com"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
                   />
+                  <label htmlFor="floatingInputCustom">หัวข้อข่าว</label>
+                </Form.Floating>
+              </Col>
+              <Col md={6}>
+                <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร">
+                  <Form.Select aria-label="Floating label select example"
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
+                  >
+                    <option value="News">ข่าว</option>
+                    <option value="Relations">ประชาสัมพันธ์</option>
+                    <option value="Activity">กิจกรรม</option>
+                    <option value="Interested">สนใจเข้าศึกษา</option>
+                    <option value="Current">นักศึกษาปัจจุบัน</option>
+                    <option value="AlumniServices">บริการศิษย์เก่า</option>
+                    <option value="WorkWithUs">ร่วมงานกับเรา</option>
+                  </Form.Select>
                 </FloatingLabel>
               </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="NewsTitle" label="หัวข้อข่าว" className="mb-3">
+              <Col md={6}>
+                <FloatingLabel controlId="startDate" label="วันเริ่มกิจกรรม" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && newTitle !== ""}
-                    isInvalid={inputForm && newTitle === ""}
-                    type="title2"
-                    value={newTitle}
-                    onChange={e => setnewTitle(e.target.value)}
-                    placeholder="title2"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="NewsSubTitle" label="หัวข้อย่อยข่าว" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && newSubTitle !== ""}
-                    isInvalid={inputForm && newSubTitle === ""}
-                    type="text"
-                    value={newSubTitle}
-                    onChange={e => setnewSubTitle(e.target.value)}
-                    placeholder="NewsSubTitle"
-                  />
-                </FloatingLabel>
-              </Col>
-
-              <Col md={4}>
-                <FloatingLabel controlId="NewsDate" label="วันที่ " className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && newDate !== ""}
-                    isInvalid={inputForm && newDate === ""}
                     type="date"
-                    value={newDate}
-                    onChange={e => setnewDate(e.target.value)}
-                    placeholder="NewsDate"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)} // Set value for startDate
                   />
                 </FloatingLabel>
               </Col>
-
-              {/* <Col md={4}>
-                <FloatingLabel controlId="NewsImg" label="NewsImg / รูปภาพ" className="mb-3">
+              <Col md={6}>
+                <FloatingLabel controlId="endDate" label="วันเสิ้นสุดกิจกรรม" className="mb-3">
                   <Form.Control
-                    isValid={inputForm && newImg !== ""}
-                    isInvalid={inputForm && newImg === ""}
-                    type="file"
-                    defaultValue={newImg}
-                    onChange={handleFileUpload}
-                    placeholder="NewsImg"/> 
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)} // Set value for startDate
+                  />
                 </FloatingLabel>
-              </Col> */}
-
-
-
-
-            </Row>
-
-
-            <Col md={8}>
-              <FloatingLabel controlId="NewsSubDetail" label="รายละเอียดข่าว" className="mb-3">
-                <Form.Control
-                  as="textarea"
-                  isValid={inputForm && newSubDetail !== ""}
-                  isInvalid={inputForm && newSubDetail === ""}
-                  // type="text"
-                  value={newSubDetail}
-                  onChange={e => setnewSubDetail(e.target.value)}
-                  placeholder="NewsSubDetail"
-                  style={{ width: "100%", height: "200px" }} // Adjust the height as needed
-
+              </Col>
+              <Col md={6}>
+                <FloatingLabel controlId="img" label="รูปภาพ" className="mb-3">
+                  <Form.Control
+                    type="file"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImg)}
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={6}>
+                <FloatingLabel controlId="promoteImg" label="รูปภาพสไลด์" className="mb-3">
+                  <Form.Control
+                    type="file"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setPromoteImg)}
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={6}>
+                {img && (
+                  <div className="text-center mb-5">
+                    <h4>รูปภาพ</h4>
+                    <img src={`data:image/png;base64,${img}`} width={350} height={350} className="object-fit-cover" alt="Uploaded" />
+                  </div>
+                )}
+              </Col>
+              <Col md={6}>
+                {promoteImg && (
+                  <div className="text-center mb-5">
+                    <h4>รูปภาพสไลด์</h4>
+                    <img src={`data:image/png;base64,${promoteImg}`} width={"100%"} height={350} className="object-fit-cover" alt="Uploaded" />
+                  </div>
+                )}
+              </Col>
+              <Col md={6}>
+                <FloatingLabel controlId="subTitle" label="บทความย่อ" className="mb-3">
+                  <Form.Control
+                    as="textarea"
+                    style={{ height: '300px' }}
+                    value={subTitle}
+                    onChange={e => setSubTitle(e.target.value)}
+                  />
+                </FloatingLabel>
+              </Col>
+              <Col md={6}>
+                <CKEditor
+                  data={detail} // Set the initial content
+                  onChange={handleEditorChange} // Handle content changes
+                  config={{
+                    uiColor: '#ddc173',
+                    language: 'th',
+                    extraPlugins: 'easyimage,autogrow,emoji',
+                  }}
                 />
-              </FloatingLabel>
-            </Col>
-
-
-
-
-
-
-
+              </Col>
+              <Col lg={12}>
+                <div>
+                  <h2>CKEditor Content</h2>
+                  <div dangerouslySetInnerHTML={{ __html: detail }} />
+                </div>
+              </Col>
+            </Row>
           </Card.Body>
           <Card.Footer className="text-end">
             <Button variant="success mx-2" onClick={handleSubmit}>
@@ -315,25 +194,11 @@ const NewsSchoolAdd: React.FC = (props) => {
             {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button> */}
-            <Link href="/newsSchool" className="btn btn-danger mx-2">
-              ย้อนกลับ
-            </Link>
+
           </Card.Footer>
         </Card>
       </div>
     </LayOut >
   );
 }
-export default NewsSchoolAdd;
-
-function setAlertForm(arg0: string) {
-  throw new Error("Function not implemented.");
-}
-function setInputForm(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
-
-function setCheckBody(arg0: string) {
-  throw new Error("Function not implemented.");
-}
-
+export default NewsEdit;

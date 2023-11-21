@@ -5,8 +5,8 @@ import { FaNewspaper } from "react-icons/fa";
 import { RegisterForm } from "@prisma/client";
 import { useReactToPrint } from 'react-to-print';
 
+const ViewDetail: React.FC = (props) => {
 
-export default function ViewDetail(props: { data: any }) {
     const conponentPDF = useRef<HTMLDivElement>(null);
     const [showCheck, setShowCheck] = useState(false);
     const handleShow = () => setShowCheck(true);
@@ -32,15 +32,13 @@ export default function ViewDetail(props: { data: any }) {
             <Modal show={showCheck} onHide={handleClose} centered size="xl">
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        รายละเอียดข่าว : {props?.data?.newName}
+                        {/* รายละเอียดข่าว : {props?.data?.newName} */}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-
-
                         <div className="container">
-                            <div className="my-2">
+                            {/* <div className="my-2">
                                 <h4 className="">ชื่อข่าว : {props?.data?.newName} </h4>
                                 <h4 className="my-2">หัวข้อข่าว : {props?.data?.newTitle} </h4>
                                 <Row className="my-2">
@@ -52,22 +50,13 @@ export default function ViewDetail(props: { data: any }) {
                                 <p>
                                     {props?.data?.newSubDetail}
                                 </p>
-
-
-
-                            </div>
+                            </div> */}
                         </div>
                     </div>
-
-                    {/* <div className="d-grid d-md-flex justify-content-md-end mb-3">
-                        <button className="btn btn-success" onClick={generatePDF}>สั่งพิมพ์</button>
-                    </div> */}
-
-
-
                 </Modal.Body>
             </Modal>
 
         </>
     )
 }
+export default ViewDetail;
