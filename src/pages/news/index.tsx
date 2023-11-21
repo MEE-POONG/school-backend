@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import {
   Card,
+  Dropdown,
+  DropdownButton,
   Form,
   Image,
   InputGroup,
@@ -41,28 +43,31 @@ const NewsPage: React.FC = (props) => {
     totalPages: 1,
   });
 
+  const [type, setType] = useState<NewsType[]>([]);
+  const [filteredData, setFilteredData] = useState<News[]>([]);
+
+  const [{ data: newsType, loading: loadingType, error: errorType }, getNewsType] = useAxios({
+    url: `/api/NewsType`,
+    method: "GET",
+  });
+
   const [{ data: newsData, loading, error }, getNews] = useAxios({
     url: `/api/News/search?page=${params?.page}&pageSize=${params?.pageSize}&search=${params?.search}&type=${params?.type}`,
     method: "GET",
   });
 
-  const [filteredData, setFilteredData] = useState<News[]>([]);
+  useEffect(() => {
+    setType(newsType?.data);
+  }, [newsType]);
 
   useEffect(() => {
+    console.log(newsData);
     setFilteredData(newsData?.data);
     setParams((prevParams) => ({
       ...prevParams,
       totalPages: newsData?.pagination.totalPages,
     }));
   }, [newsData]);
-
-  useEffect(() => {
-    console.log(params);
-  }, [params]);
-
-  useEffect(() => {
-    console.log(filteredData);
-  }, [filteredData]);
 
   // const [
   //   { loading: deleteNewsLoading, error: deleteNewsError },
@@ -104,10 +109,17 @@ const NewsPage: React.FC = (props) => {
     }));
   };
 
-  const handleChangesearchKey = (search: string) => {
+  const handleChangeSearch = (search: string) => {
     setParams(prevParams => ({
       ...prevParams,
       search: search,
+    }));
+  };
+
+  const handleChangeType = (type: string) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      type: type,
     }));
   };
 
@@ -136,16 +148,24 @@ const NewsPage: React.FC = (props) => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อข่าว</h4>
-            <InputGroup className="w-auto" bsPrefix="input-icon">
+            <InputGroup className="w-auto">
+              <DropdownButton
+                variant="outline-secondary"
+                title={params?.type?.length === 0 ? "ทั้งหมด" : params.type}
+                id="input-group-dropdown-1"
+              >
+                <Dropdown.Item onClick={() => handleChangeType("")} className="text-center">ทั้งหมด</Dropdown.Item>
+                {type?.map((list, index) => (
+                  <Dropdown.Item key={index} onClick={() => handleChangeType(list?.nameTH)} className="text-center">{list?.nameTH}</Dropdown.Item>
+                ))}
+
+              </DropdownButton>
               <InputGroup.Text id="basic-addon1">
                 <FaSearch />
               </InputGroup.Text>
-              <Form.Control onChange={e => handleChangesearchKey(e.target.value)}
-                placeholder="ค้นหาข่าว"
-                aria-label="news"
-                aria-describedby="basic-addon1"
-              />
+              <Form.Control aria-label="Text input with dropdown button" onChange={e => handleChangeSearch(e.target.value)} />
             </InputGroup>
+
             <Link href="/news/add" className="ms-2 btn icon icofn-primary">
               เพิ่มข่าว
             </Link>
@@ -164,17 +184,17 @@ const NewsPage: React.FC = (props) => {
               </thead>
               <tbody className="text-center">
                 {filteredData?.map((list, index) => (
-                  <tr key={list.id}>
+                  <tr key={list?.id}>
                     <td className="w-r-3">{index + 1}</td>
                     <td className="">
                       <Image
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${list.img}/public`}
+                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${list?.img}/public`}
                         className="size-img"
                         alt="news imge"
                         thumbnail
                       />
                     </td>
-                    <td className="">{list.title}</td>
+                    <td className="">{list?.title}</td>
                     <td className="">
                       {list?.NewsType?.nameTH}
                     </td>
@@ -183,13 +203,13 @@ const NewsPage: React.FC = (props) => {
                     </td>
                     <td className="">
                       {/* <ViewDetail data={news} /> */}
-                      {/* <Link href={`/news/edit/${list.id}`} className="mx-1 btn info icon icon-primary" >
+                      {/* <Link href={`/news/edit/${list?.id}`} className="mx-1 btn info icon icon-primary" >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link> */}
                       {/* <DeleteModal
                         data={news}
-                        apiDelete={() => deleteNews(list.id)}
+                        apiDelete={() => deleteNews(list?.id)}
                       /> */}
                     </td>
                   </tr>

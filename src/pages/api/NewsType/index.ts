@@ -7,18 +7,9 @@ type Data = {
   success: boolean;
   message?: string;
   data?: any;
-  pagination?: Pagination;
 };
 
-type Pagination = {
-  page: number;
-  pageSize: number;
-  total: number;
-};
-interface RequestQuery {
-  page?: string;
-  pageSize?: string;
-}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -26,21 +17,19 @@ export default async function handler(
   const { method } = req;
 
   switch (method) {
+
     case "GET":
-      const query: RequestQuery = req.query as unknown as RequestQuery;
-      const page: number = parseInt(query.page || "1", 10);
-      const pageSize: number = parseInt(query.pageSize || "10", 10);
-      const newsTypeData = await prisma.newsType.findMany({
-        skip: (page - 1) * pageSize,
-        take: pageSize
-      });
-      const totalNewsCount: number = await prisma.newsType.count();
-      const totalPages: number = Math.ceil(totalNewsCount / pageSize);
-      res.status(200).json({
-        success: true,
-        data: newsTypeData,
-        pagination: { total: totalPages, page: page, pageSize: pageSize }
-      });
+      try {
+        const newsTypeData = await prisma.newsType.findMany();
+        res.status(200).json({
+          success: true,
+          data: newsTypeData,
+        });
+      } catch (error) {
+        res
+          .status(500)
+          .json({ success: false, message: "An unexpected error News" });
+      }
       break;
     case "POST":
       try {
