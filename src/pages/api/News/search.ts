@@ -29,14 +29,11 @@ export default async function handler(
 
 async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   try {
-    // Extract and type-cast query parameters
     const { page = '1', pageSize = '10', search, type } = req.query as QueryParams;
 
-    // Convert pagination parameters to numbers
     const pageNum = parseInt(page, 10) || 1;
     const pageSizeNum = parseInt(pageSize, 10) || 10;
 
-    // Calculate skip and take values for pagination
     const skip = (pageNum - 1) * pageSizeNum;
     const take = pageSizeNum;
     const searchCondition = search && search.length >= 3 ? {
@@ -56,7 +53,6 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
       AND: andConditions
     };
 
-    // Fetch paginated and filtered news items
     const newsItems = await prisma.news.findMany({
       where: whereClause,
       skip,
@@ -66,11 +62,9 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    // Fetch total count of filtered news items for pagination info
     const totalNewsCount = await prisma.news.count({ where: whereClause });
     const totalPages = Math.ceil(totalNewsCount / pageSizeNum);
 
-    // Send the response with paginated and filtered news items and pagination info
     res.status(200).json({
       success: true,
       data: newsItems,
