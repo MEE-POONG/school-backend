@@ -8,7 +8,7 @@ import axios from 'axios';
 import LoadModal from '@/components/modal/LoadModal';
 
 const UpdateHeadPage: React.FC = (props) => {
-    const [{ data: headPageData, loading, error }, refetch] = useAxios('/api/About');
+    const [{ data: headPageData, loading, error }, aboutApi] = useAxios('/api/About');
     const [formData, setFormData] = useState<About | null>(null);
     const [imgOne, setImgOne] = useState<File | null>(null);
     const [imgTwo, setImgTwo] = useState<File | null>(null);
@@ -89,7 +89,7 @@ const UpdateHeadPage: React.FC = (props) => {
         ]);
 
         try {
-            const response = await refetch({
+            const response = await aboutApi({
                 url: `/api/About/${formData?.id}`,
                 method: "PUT",
                 data: {
@@ -118,7 +118,7 @@ const UpdateHeadPage: React.FC = (props) => {
 
     return (
         <LayOut>
-            <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} />
+            <LoadModal checkLoad={isLoading || loading} status={"update"} detail={""} />
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">
@@ -164,7 +164,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                 </FloatingLabel>
                             </Col>
                             <Col md={12}>
-                                <FloatingLabel controlId="detail" label="ระบุหัวข้อข่าว" className="mb-3" >
+                                <FloatingLabel controlId="detail" label="ระบุเนื้อหา" className="mb-3" >
                                     <Form.Control
                                         isValid={inputForm && formData?.detail !== ""}
                                         isInvalid={inputForm && formData?.detail === ""}

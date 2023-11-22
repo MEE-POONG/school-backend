@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
 import useAxios from "axios-hooks";
+import axios from 'axios';
 import LayOut from "@/components/RootPage/TheLayOut";
-import { Button, Card, Col, Dropdown, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
-import { CKEditor } from "ckeditor4-react";
-import ImageUploadAlbum from "@/container/ImageUploadAlbum";
+import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
+import LoadModal from "@/components/modal/LoadModal";
+import moment from "moment";
+import { useRouter } from "next/router";
 // import { News } from "@prisma/client";
 
 interface NewsType extends PrismaNewsType {
@@ -14,7 +16,8 @@ interface News extends PrismaNews {
 }
 
 const NewsAdd: React.FC = (props) => {
-
+  const router = useRouter();
+  const dateDefault = moment().format('YYYY-MM-DDTHH:mm');
   const [formData, setFormData] = useState<News | null>();
   const [imgOne, setImgOne] = useState<File | null>(null);
   const [imgTwo, setImgTwo] = useState<File | null>(null);
@@ -23,6 +26,11 @@ const NewsAdd: React.FC = (props) => {
   const [imgTwoPreview, setImgTwoPreview] = useState<string | null>(null);
 
   const [type, setType] = useState<NewsType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [inputForm, setInputForm] = useState<boolean>(false);
+
+  const [{ data: headPageData, loading, error }, newsAPI] = useAxios('/api/News');
+
   const [{ data: newsType, loading: loadingType, error: errorType }, getNewsType] = useAxios({
     url: `/api/NewsType`,
     method: "GET",
@@ -30,6 +38,7 @@ const NewsAdd: React.FC = (props) => {
 
   useEffect(() => {
     setType(newsType?.data);
+    handleInputChange("newsTypeId", newsType?.data[0]?.id);
   }, [newsType]);
 
   const handleInputChange = (title: string, value: any) => {
@@ -53,81 +62,112 @@ const NewsAdd: React.FC = (props) => {
     }
   };
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  const uploadImage = async (img: any, image: any) => {
+    const uploadFormData = new FormData();
+    uploadFormData.append("file", image);
+    try {
+      const uploadResponse = await axios.post(
+        "https://upload-image.me-prompt-technology.com/",
+        uploadFormData
+      );
 
-  // const [title, setTitle] = useState<string>("");
-  // const [type, setType] = useState<string>("");
-  // const [startDate, setStartDate] = useState<string>("");
-  // const [endDate, setEndDate] = useState<string>("");
-  // const [img, setImg] = useState<string | null>(null);
-  // const [promoteImg, setPromoteImg] = useState<string | null>(null);
-  // const [subTitle, setSubTitle] = useState<string>("");
-  // const [detail, setDetail] = useState<string>("");
+      if (uploadResponse?.status === 200) {
+        return uploadResponse?.data?.result?.id;
+      }
+    } catch (error) {
+      console.error("Upload failed: ", error);
+    }
+    return null;
+  };
 
-  // const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, setImage: React.Dispatch<React.SetStateAction<string | null>>) => {
-  //   const file = event.target.files && event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const base64String = reader.result as string;
-  //       const splittedString = base64String.split(",")[1];
-  //       setImage(splittedString); // Update the state with the base64 image data
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
+  const reloadPage = () => {
+    window.location.reload();
+  };
 
-  // const handleEditorChange = (e: any) => {
-  //   const newContent = e.editor.getData();
-  //   setDetail(newContent);
-  // };
+  const goBack = () => {
+    window.history.back();
+  };
 
-  // const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-  //   event.preventDefault();
-  //   event.stopPropagation();
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setInputForm(true);
 
-  // };
+    let missingFields = [];
+    if (!formData?.title) missingFields.push("Title");
+    if (!formData?.subTitle) missingFields.push("Subtitle");
+    if (!formData?.detail) missingFields.push("Detail");
+    if (!formData?.newsTypeId) missingFields.push("News Type");
+    if (!imgOne) missingFields.push("รูปปก");
+
+    if (missingFields.length > 0) {
+      setIsLoading(false);
+      alert(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
+      return; // Stop the submission
+    }
+    const imageIDs = await Promise.all([
+      imgOne ? uploadImage(formData?.img, imgOne) : null,
+      imgTwo ? uploadImage(formData?.promoteImg, imgTwo) : null,
+    ]);
+
+    try {
+      const response = await newsAPI({
+        url: `/api/News`,
+        method: "POST",
+        data: {
+          id: formData?.id,
+          title: formData?.title,
+          subTitle: formData?.subTitle,
+          detail: formData?.detail,
+          startDate: formData?.startDate,
+          endDate: formData?.endDate,
+          img: imageIDs[0] !== null ? imageIDs[0] : formData?.img,
+          promoteImg: imageIDs[1] !== null ? imageIDs[1] : formData?.promoteImg,
+          newsTypeId: formData?.newsTypeId,
+        }
+      });
+      console.log(response);
+
+      if (response?.status === 201) {
+        setIsLoading(false);
+        router.push(`/news/edit/${response?.data?.id}`);
+      } else {
+        setIsLoading(false);
+        alert("Failed to add information.");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert("An error occurred during submission.");
+    }
+
+  };
+
   return (
     <LayOut>
 
       <div className='NewsSchool-page'>
         <Card>
-          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} pathBack={"/newsSchool"} /> */}
+          <LoadModal checkLoad={isLoading} status={"add"} detail={""} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               เพิ่มข่าว / กิจกรรม
             </h4>
+            <div>
+              <Button variant="success mx-2" onClick={handleSubmit}>
+                ยืนยัน
+              </Button>
+              <Button variant="primary mx-2" onClick={reloadPage}>
+                ล้าง
+              </Button>
+              <Button variant="danger mx-2" onClick={goBack}>
+                กลับ
+              </Button>
+            </div>
           </Card.Header>
           <Card.Body className="overflow-x-hidden">
             <Row>
-              <Col md={4}>
-                <FloatingLabel controlId="title" label="ระบุหัวข้อข่าว" className="mb-3" >
-                  <Form.Control
-                    // isValid={inputForm && formData?.title !== ""}
-                    // isInvalid={inputForm && formData?.title === ""}
-                    type="text"
-                    defaultValue={formData?.title || ""}
-                    onChange={(e) => handleInputChange("title", e.target.value)}
-                    placeholder="ระบุหัวข้อ"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="subTitle" label="ระบุหัวข้อข่าว" className="mb-3" >
-                  <Form.Control
-                    // isValid={inputForm && formData?.subTitle !== ""}
-                    // isInvalid={inputForm && formData?.subTitle === ""}
-                    type="text"
-                    defaultValue={formData?.subTitle || ""}
-                    onChange={(e) => handleInputChange("subTitle", e.target.value)}
-                    placeholder="ระบุหัวข้อ"
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={4}>
-                <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร">
+              <Col md={2}>
+                <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร" className="mb-3">
                   <Form.Select aria-label="Floating label select example"
                     onChange={(e) => handleInputChange("newsTypeId", e.target.value)}
                   >
@@ -137,7 +177,58 @@ const NewsAdd: React.FC = (props) => {
 
                   </Form.Select>
                 </FloatingLabel>
+                <FloatingLabel controlId="startDate" label="วันเริ่มกิจกรรม" className="mb-3" >
+                  <Form.Control
+                    type="datetime-local"
+                    defaultValue={dateDefault}
+                    onChange={(e) => handleInputChange("startDate", e.target.value)}
+                    placeholder="ระบุหัวข้อ"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="endDate" label="วันสิ้นสุดกิจกรรม" className="mb-3" >
+                  <Form.Control
+                    type="datetime-local"
+                    defaultValue={dateDefault}
+                    onChange={(e) => handleInputChange("endDate", e.target.value)}
+                    placeholder="ระบุหัวข้อ"
+                  />
+                </FloatingLabel>
               </Col>
+
+              <Col md={10}>
+                <FloatingLabel controlId="title" label="ระบุหัวข้อข่าว" className="mb-3" >
+                  <Form.Control
+                    isValid={inputForm && formData?.title !== ""}
+                    isInvalid={inputForm && !formData?.title}
+                    type="text"
+                    defaultValue={formData?.title || ""}
+                    onChange={(e) => handleInputChange("title", e.target.value)}
+                    placeholder="ระบุหัวข้อ"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="subTitle" label="ระบุสคริปหัวข้อ" className="mb-3" >
+                  <Form.Control
+                    isValid={inputForm && formData?.subTitle !== ""}
+                    isInvalid={inputForm && !formData?.subTitle}
+                    type="text"
+                    defaultValue={formData?.subTitle || ""}
+                    onChange={(e) => handleInputChange("subTitle", e.target.value)}
+                    placeholder="ระบุสคริปหัวข้อ"
+                  />
+                </FloatingLabel>
+                <FloatingLabel controlId="detail" label="ระบุเนื้อหา" className="mb-3" >
+                  <Form.Control
+                    isValid={inputForm && formData?.detail !== ""}
+                    isInvalid={inputForm && !formData?.detail}
+                    as="textarea"
+                    defaultValue={formData?.detail || ""}
+                    style={{ height: '200px' }}
+                    onChange={(e) => handleInputChange("detail", e.target.value)}
+                    placeholder="ระบุเนื้อหา"
+                  />
+                </FloatingLabel>
+              </Col>
+
             </Row>
             <Row>
               <Col md={5}>
@@ -149,7 +240,7 @@ const NewsAdd: React.FC = (props) => {
                   />
                 </FloatingLabel>
                 <div className='ratio img-preview ratio-16x9 bg-dark'>
-                  <img
+                  <Image
                     src={imgOnePreview ? `data:image/jpeg;base64,${imgOnePreview}` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                     alt="Image Two Preview"
                     className="w-100 object-fit-contain"
@@ -166,7 +257,7 @@ const NewsAdd: React.FC = (props) => {
                   />
                 </FloatingLabel>
                 <div className='ratio img-preview ratio-21x9 bg-dark'>
-                  <img
+                  <Image
                     src={imgTwoPreview ? `data:image/jpeg;base64,${imgTwoPreview}` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                     alt="Image Two Preview"
                     className="w-100 object-fit-contain"
@@ -174,109 +265,18 @@ const NewsAdd: React.FC = (props) => {
                   />
                 </div>
               </Col>
-              {/* <Col md={6}>
-                <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร">
-                  <Form.Select aria-label="Floating label select example"
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                  >
-                    <option value="News">ข่าว</option>
-                    <option value="Relations">ประชาสัมพันธ์</option>
-                    <option value="Activity">กิจกรรม</option>
-                    <option value="Interested">สนใจเข้าศึกษา</option>
-                    <option value="Current">นักศึกษาปัจจุบัน</option>
-                    <option value="AlumniServices">บริการศิษย์เก่า</option>
-                    <option value="WorkWithUs">ร่วมงานกับเรา</option>
-                  </Form.Select>
-                </FloatingLabel>
-              </Col>
-              <Col md={6}>
-                <FloatingLabel controlId="startDate" label="วันเริ่มกิจกรรม" className="mb-3">
-                  <Form.Control
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)} // Set value for startDate
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={6}>
-                <FloatingLabel controlId="endDate" label="วันเสิ้นสุดกิจกรรม" className="mb-3">
-                  <Form.Control
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)} // Set value for startDate
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={6}>
-                <FloatingLabel controlId="img" label="รูปภาพ" className="mb-3">
-                  <Form.Control
-                    type="file"
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImg)}
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={6}>
-                <FloatingLabel controlId="promoteImg" label="รูปภาพสไลด์" className="mb-3">
-                  <Form.Control
-                    type="file"
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setPromoteImg)}
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={6}>
-                {img && (
-                  <div className="text-center mb-5">
-                    <h4>รูปภาพ</h4>
-                    <img src={`data:image/png;base64,${img}`} width={350} height={350} className="object-fit-cover" alt="Uploaded" />
-                  </div>
-                )}
-              </Col>
-              <Col md={6}>
-                {promoteImg && (
-                  <div className="text-center mb-5">
-                    <h4>รูปภาพสไลด์</h4>
-                    <img src={`data:image/png;base64,${promoteImg}`} width={"100%"} height={350} className="object-fit-cover" alt="Uploaded" />
-                  </div>
-                )}
-              </Col>
-              <Col md={6}>
-                <FloatingLabel controlId="subTitle" label="บทความย่อ" className="mb-3">
-                  <Form.Control
-                    as="textarea"
-                    style={{ height: '300px' }}
-                    value={subTitle}
-                    onChange={e => setSubTitle(e.target.value)}
-                  />
-                </FloatingLabel>
-              </Col>
-              <Col md={6}>
-                <CKEditor
-                  data={detail} // Set the initial content
-                  onChange={handleEditorChange} // Handle content changes
-                  config={{
-                    uiColor: '#ddc173',
-                    language: 'th',
-                    extraPlugins: 'easyimage,autogrow,emoji',
-                  }}
-                />
-              </Col>
-              <Col lg={12}>
-                <div>
-                  <h2>CKEditor Content</h2>
-                  <div dangerouslySetInnerHTML={{ __html: detail }} />
-                </div>
-              </Col> */}
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">
-            {/* <Button variant="success mx-2" onClick={handleSubmit}>
+            <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
-            </Button> */}
-            {/* <Button variant="primary mx-2" onClick={reloadPage}>
+            </Button>
+            <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
-            </Button> */}
-
+            </Button>
+            <Button variant="danger mx-2" onClick={goBack}>
+              กลับ
+            </Button>
           </Card.Footer>
         </Card>
       </div>
