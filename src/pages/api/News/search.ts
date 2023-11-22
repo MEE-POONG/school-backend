@@ -47,7 +47,7 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
     }
 
     if (type) {
-      andConditions.push({ NewsType: { nameTH: { contains: type, mode: 'insensitive' as Prisma.QueryMode } } });
+      andConditions.push({ type: { equals: type, mode: 'insensitive' as Prisma.QueryMode } });
     }
     const whereClause: Prisma.NewsWhereInput = {
       AND: andConditions
@@ -57,9 +57,6 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
       where: whereClause,
       skip,
       take,
-      include: {
-        NewsType: true,
-      },
     });
 
     const totalNewsCount = await prisma.news.count({ where: whereClause });

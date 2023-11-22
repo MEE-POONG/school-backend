@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import {
+  Button,
   Card,
   Dropdown,
   DropdownButton,
@@ -9,7 +10,7 @@ import {
   InputGroup,
   Table,
 } from "react-bootstrap";
-import { FaPen, FaSearch } from "react-icons/fa";
+import { FaPager, FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
@@ -17,14 +18,10 @@ import DeleteModal from "@/components/modal/DeleteModal";
 import LayOut from "@/components/RootPage/TheLayOut";
 import ViewDetail from "./[id]";
 import { ReFormatDate } from "@/components/ReFormatDate";
-import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
 import moment from "moment";
+import { News, NewsType } from "@prisma/client";
+import { useRouter } from "next/router";
 
-interface NewsType extends PrismaNewsType {
-}
-interface News extends PrismaNews {
-  NewsType: NewsType;
-}
 
 interface Params {
   page: number;
@@ -34,6 +31,7 @@ interface Params {
   totalPages: number;
 }
 const NewsPage: React.FC = (props) => {
+  const router = useRouter();
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -112,19 +110,13 @@ const NewsPage: React.FC = (props) => {
     }));
   };
 
+  const handleReadMore = (newsId: string, newsData: News) => {
+    if (newsData) {
+      localStorage.setItem('currentNewsItem', JSON.stringify(newsData));
+    }
 
-  // useEffect(() => {
-  //   if (newsData?.news) {
-  //     const filteredData = newsData.news?.filter((news: any) =>
-  //       // Convert both the searchKey and the relevant data to lowercase for case-insensitive search
-  //       news?.title.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-  //       news?.subTitle.toLowerCase().includes(params.searchKey.toLowerCase()) ||
-  //       news?.Date.toLowerCase().includes(params.searchKey.toLowerCase())
-  //     );
-
-  //     setFilteredNewsData(filteredData);
-  //   }
-  // }, [newsData, params.searchKey]);
+    router.push(`/news/${newsId}`);
+  };
 
   return (
     <LayOut>
@@ -185,7 +177,7 @@ const NewsPage: React.FC = (props) => {
                     </td>
                     <td className="">{list?.title}</td>
                     <td className="">
-                      {list?.NewsType?.nameTH}
+                      {list?.type}
                     </td>
                     <td className="">
                       {list?.startDate !== null ? ` เริ่ม ${moment(list?.startDate).format('DD-MM-YYYY')}` : ''}
@@ -193,12 +185,11 @@ const NewsPage: React.FC = (props) => {
                       {list?.endDate !== null ? `สิ้นสุด ${moment(list?.endDate).format('DD-MM-YYYY')}` : ''}
                     </td>
                     <td className="">
-                      {/* <ViewDetail props={list} /> */}
-                      {/* <Link href={`/news/${list?.id}`} className="mx-1 btn info icon icon-primary" >
-                        <FaPen />
-                        <span className="h-tooltiptext">แก้ไขข้อมูล</span>
-                      </Link> */}
-                      <Link href={`/news/edit/${list?.id}`} className="mx-1 btn info icon icon-primary" >
+                      <Button onClick={() => handleReadMore(list?.id, list)} bsPrefix="mx-1 btn success icon">
+                        <FaPager />
+                        <span className="h-tooltiptext">ดูข้อมูล</span>
+                      </Button>
+                      <Link href={`/news/edit/${list?.id}`} className="mx-1 btn info icon" >
                         <FaPen />
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>

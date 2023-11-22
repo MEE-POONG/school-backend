@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
+import { News, NewsType, News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
 import useAxios from "axios-hooks";
 import axios from 'axios';
 import LayOut from "@/components/RootPage/TheLayOut";
@@ -9,11 +9,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 // import { News } from "@prisma/client";
 
-interface NewsType extends PrismaNewsType {
-}
-interface News extends PrismaNews {
-  NewsType: NewsType;
-}
+
 
 const NewsAdd: React.FC = (props) => {
   const router = useRouter();
@@ -25,21 +21,21 @@ const NewsAdd: React.FC = (props) => {
   const [imgOnePreview, setImgOnePreview] = useState<string | null>(null);
   const [imgTwoPreview, setImgTwoPreview] = useState<string | null>(null);
 
-  const [type, setType] = useState<NewsType[]>([]);
+  const [newsType, setNewsType] = useState<NewsType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputForm, setInputForm] = useState<boolean>(false);
 
   const [{ data: headPageData, loading, error }, newsAPI] = useAxios('/api/News');
 
-  const [{ data: newsType, loading: loadingType, error: errorType }, getNewsType] = useAxios({
+  const [{ data: newsTypeShow, loading: loadingType, error: errorType }, getNewsType] = useAxios({
     url: `/api/NewsType`,
     method: "GET",
   });
 
   useEffect(() => {
-    setType(newsType?.data);
-    handleInputChange("newsTypeId", newsType?.data[0]?.id);
-  }, [newsType]);
+    setNewsType(newsTypeShow?.data);
+    handleInputChange("type", newsTypeShow?.data[0]?.nameTH);
+  }, [newsTypeShow]);
 
   const handleInputChange = (title: string, value: any) => {
     setFormData((prev: any) => ({
@@ -97,7 +93,7 @@ const NewsAdd: React.FC = (props) => {
     if (!formData?.title) missingFields.push("Title");
     if (!formData?.subTitle) missingFields.push("Subtitle");
     if (!formData?.detail) missingFields.push("Detail");
-    if (!formData?.newsTypeId) missingFields.push("News Type");
+    if (!formData?.type) missingFields.push("News Type");
     if (!imgOne) missingFields.push("รูปปก");
 
     if (missingFields.length > 0) {
@@ -123,14 +119,14 @@ const NewsAdd: React.FC = (props) => {
           endDate: formData?.endDate,
           img: imageIDs[0] !== null ? imageIDs[0] : formData?.img,
           promoteImg: imageIDs[1] !== null ? imageIDs[1] : formData?.promoteImg,
-          newsTypeId: formData?.newsTypeId,
+          type: formData?.type,
         }
       });
-      console.log(response);
 
       if (response?.status === 201) {
         setIsLoading(false);
-        router.push(`/news/edit/${response?.data?.id}`);
+        localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
+        router.push(`/news/${response?.data?.id}`);
       } else {
         setIsLoading(false);
         alert("Failed to add information.");
@@ -169,10 +165,10 @@ const NewsAdd: React.FC = (props) => {
               <Col md={2}>
                 <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร" className="mb-3">
                   <Form.Select aria-label="Floating label select example"
-                    onChange={(e) => handleInputChange("newsTypeId", e.target.value)}
+                    onChange={(e) => handleInputChange("type", e.target.value)}
                   >
-                    {type?.map((list, index) => (
-                      <option key={index} value={list?.id}>{list?.nameTH}</option>
+                    {newsType?.map((list, index) => (
+                      <option key={index} value={list?.nameTH}>{list?.nameTH}</option>
                     ))}
 
                   </Form.Select>
