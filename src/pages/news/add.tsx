@@ -176,7 +176,7 @@ const NewsAdd: React.FC = (props) => {
                 <FloatingLabel controlId="startDate" label="วันเริ่มกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={dateDefault}
+                    // defaultValue={dateDefault}
                     onChange={(e) => handleInputChange("startDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />
@@ -184,7 +184,7 @@ const NewsAdd: React.FC = (props) => {
                 <FloatingLabel controlId="endDate" label="วันสิ้นสุดกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={dateDefault}
+                    // defaultValue={dateDefault}
                     onChange={(e) => handleInputChange("endDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />

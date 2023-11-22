@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { News, News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
+import { News } from '@prisma/client';
 import useAxios from "axios-hooks";
 import axios from 'axios';
 import LayOut from "@/components/RootPage/TheLayOut";
-import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
-import LoadModal from "@/components/modal/LoadModal";
-import moment from "moment";
+import { Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
 import { useRouter } from "next/router";
+import { ReFormatDate } from "@/components/ReFormatDate";
+import Link from "next/link";
 // import { News } from "@prisma/client";
 
 
 const NewsView: React.FC = (props) => {
-
     const router = useRouter();
     const { id } = router.query;
-
     const [formData, setFormData] = useState<News | null>();
-
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const [{ data: NewsData, loading, error }, newsAPI] = useAxios('');
 
     useEffect(() => {
@@ -44,40 +39,23 @@ const NewsView: React.FC = (props) => {
 
     }, [formData]);
 
-
-
-
-
-
-    const reloadPage = () => {
-        window.location.reload();
-    };
-
-    const goBack = () => {
-        window.history.back();
-    };
-
-
     return (
         <LayOut>
 
             <div className='NewsPage'>
                 <Card>
-                    <LoadModal checkLoad={isLoading} status={"add"} detail={""} />
                     <Card.Header className="d-flex space-between">
                         <h4 className="mb-0 py-1">
                             {`ข่าว ${formData?.title}`}
                         </h4>
                         <div>
-                            {/* <Button variant="success mx-2" onClick={handleSubmit}>
-                ยืนยัน
-              </Button>
-              <Button variant="primary mx-2" onClick={reloadPage}>
-                ล้าง
-              </Button>
-              <Button variant="danger mx-2" onClick={goBack}>
-                กลับ
-              </Button> */}
+                            <Link href={`/news/edit/${id}`} className="btn btn-warning mx-2" >
+                                แก้ไข
+                            </Link>
+
+                            <Link href={'/news'} className="btn btn-danger mx-2" >
+                                กลับรายการข่าว
+                            </Link>
                         </div>
                     </Card.Header>
                     <Card.Body className="overflow-x-hidden">
@@ -89,7 +67,8 @@ const NewsView: React.FC = (props) => {
                             </Col>
                             <Col md={4}>
                                 <Form.Label >
-                                    {`วันเริ่ม ${formData?.startDate ? moment(formData.startDate).locale('th').format('HH:mm D MMMM YY') : ''} วันสิ้นสุด ${formData?.endDate ? moment(formData.endDate).locale('th').format('HH:mm D MMMM YY') : ''}`}
+                                    {formData?.startDate ? `วันเริ่ม : ${ReFormatDate(formData.startDate, "TH")}` : 'วันเริ่ม : - '}{formData?.endDate ? ` สิ้นสุด : ${ReFormatDate(formData.endDate, "TH")}` : 'สิ้นสุด : -'}
+
                                 </Form.Label>
                             </Col>
                             <Col md={12}>
@@ -100,15 +79,17 @@ const NewsView: React.FC = (props) => {
                                 >
                                     <Form.Control as="textarea" placeholder="Leave a comment here"
                                         style={{ height: '100px' }}
+                                        readOnly
                                         defaultValue={formData?.subTitle || ""} />
                                 </FloatingLabel>
                             </Col>
                             <Col md={12}>
-                                <FloatingLabel controlId="floatingTextarea2" label="เนื้อหา">
+                                <FloatingLabel controlId="floatingTextarea2" label="เนื้อหา" className="mb-3">
                                     <Form.Control
                                         as="textarea"
                                         placeholder="Leave a comment here"
                                         style={{ height: '200px' }}
+                                        readOnly
                                         defaultValue={formData?.detail || ""}
                                     />
                                 </FloatingLabel>
@@ -140,15 +121,13 @@ const NewsView: React.FC = (props) => {
                         </Row>
                     </Card.Body>
                     <Card.Footer className="text-end">
-                        {/* <Button variant="success mx-2" onClick={handleSubmit}>
-              ยืนยัน
-            </Button>
-            <Button variant="primary mx-2" onClick={reloadPage}>
-              ล้าง
-            </Button>
-            <Button variant="danger mx-2" onClick={goBack}>
-              กลับ
-            </Button> */}
+                        <Link href={`/news/edit/${id}`} className="btn btn-warning mx-2" >
+                            แก้ไข
+                        </Link>
+
+                        <Link href={'/news'} className="btn btn-danger mx-2" >
+                            กลับรายการข่าว
+                        </Link>
                     </Card.Footer>
                 </Card>
             </div>

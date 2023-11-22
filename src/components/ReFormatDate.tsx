@@ -1,5 +1,6 @@
+import { monthArray } from "@/data/date";
 
-export function ReFormatDate(dateString: Date) {
+export function ReFormatDate(dateString: Date, language: string) {
   // Parse the date string into a JavaScript Date object
   const date = new Date(dateString);
 
@@ -8,26 +9,23 @@ export function ReFormatDate(dateString: Date) {
     return "Invalid Date";
   }
 
-  const thaiMonths = [
-    "มกราคม",
-    "กุมภาพันธ์",
-    "มีนาคม",
-    "เมษายน",
-    "พฤษภาคม",
-    "มิถุนายน",
-    "กรกฎาคม",
-    "สิงหาคม",
-    "กันยายน",
-    "ตุลาคม",
-    "พฤศจิกายน",
-    "ธันวาคม",
-  ];
-
   const day = date.getDate();
   const monthIndex = date.getMonth();
   const year = date.getFullYear();
 
-  const thaiDate = `${day} ${thaiMonths[monthIndex]} ${year}`;
+  // Format in English
+  const englishDate = `${day} ${monthArray[monthIndex].EN} ${year}`;
 
-  return thaiDate;
+  // Format in Thai (Buddhist calendar year)
+  const thaiYear = year + 543;
+  const thaiDate = `${day} ${monthArray[monthIndex].TH} ${thaiYear}`;
+
+  let dateShow = '';
+  if (language === "TH") {
+    dateShow = thaiDate;
+  } else { // Assuming default language is English
+    dateShow = englishDate;
+  }
+
+  return dateShow;
 }
