@@ -8,7 +8,7 @@ import axios from 'axios';
 import LoadModal from '@/components/modal/LoadModal';
 
 const UpdateHeadPage: React.FC = (props) => {
-    const [{ data: headPageData, loading, error }, refetch] = useAxios('/api/About');
+    const [{ data: headPageData, loading, error }, aboutApi] = useAxios('/api/About');
     const [formData, setFormData] = useState<About | null>(null);
     const [imgOne, setImgOne] = useState<File | null>(null);
     const [imgTwo, setImgTwo] = useState<File | null>(null);
@@ -47,6 +47,7 @@ const UpdateHeadPage: React.FC = (props) => {
             reader.readAsDataURL(file);
         }
     };
+    
     const deleteImage = async (imageId: string) => {
         try {
             await axios.delete(`https://upload-image.me-prompt-technology.com/?name=${imageId}`);
@@ -88,7 +89,7 @@ const UpdateHeadPage: React.FC = (props) => {
         ]);
 
         try {
-            const response = await refetch({
+            const response = await aboutApi({
                 url: `/api/About/${formData?.id}`,
                 method: "PUT",
                 data: {
@@ -117,7 +118,7 @@ const UpdateHeadPage: React.FC = (props) => {
 
     return (
         <LayOut>
-            <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} />
+            <LoadModal checkLoad={isLoading || loading} status={"update"} detail={""} />
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">
@@ -163,7 +164,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                 </FloatingLabel>
                             </Col>
                             <Col md={12}>
-                                <FloatingLabel controlId="detail" label="ระบุหัวข้อข่าว" className="mb-3" >
+                                <FloatingLabel controlId="detail" label="ระบุเนื้อหา" className="mb-3" >
                                     <Form.Control
                                         isValid={inputForm && formData?.detail !== ""}
                                         isInvalid={inputForm && formData?.detail === ""}
@@ -201,7 +202,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne, setImgOnePreview)}
                                     />
                                 </FloatingLabel>
-                                <div className='ratio ratio-16x9 bg-dark'>
+                                <div className='ratio img-preview ratio-16x9 bg-dark'>
                                     <img
                                         src={imgOnePreview ? `data:image/jpeg;base64,${imgOnePreview}` : formData?.img ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.img}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                                         alt="Image Two Preview"
@@ -218,7 +219,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgTwo, setImgTwoPreview)}
                                     />
                                 </FloatingLabel>
-                                <div className='ratio ratio-16x9 bg-dark'>
+                                <div className='ratio img-preview ratio-16x9 bg-dark'>
                                     <img
                                         src={imgTwoPreview ? `data:image/jpeg;base64,${imgTwoPreview}` : formData?.logo ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.logo}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                                         alt="Image Two Preview"
@@ -235,7 +236,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgThree, setImgThreePreview)}
                                     />
                                 </FloatingLabel>
-                                <div className='ratio ratio-16x9 bg-dark'>
+                                <div className='ratio img-preview ratio-16x9 bg-dark'>
                                     <img
                                         src={imgThreePreview ? `data:image/jpeg;base64,${imgThreePreview}` : formData?.personChart ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.personChart}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                                         alt="Image Two Preview"

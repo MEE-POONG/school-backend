@@ -10,9 +10,9 @@ export default async function handler(
   const { method } = req;
 
   switch (method) {
-    // case "GET":
-    //   await handleGET(req, res);
-    //   break;
+    case "GET":
+      await handleGET(req, res);
+      break;
     case "PUT":
       await handlePUT(req, res);
       break;
@@ -22,6 +22,28 @@ export default async function handler(
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
+  }
+}
+async function handleGET(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const { id } = req.query;
+
+    if (!id || typeof id !== 'string') {
+      res.status(400).json({ message: "Invalid or missing ID" });
+      return;
+    }
+    const newsInfo = await prisma.news.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!newsInfo) {
+      res.status(404).json({ message: "News item not found" });
+      return;
+    }
+    res.status(200).json(newsInfo);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching news information" });
   }
 }
 

@@ -76,6 +76,7 @@ model News {
   subTitle   String? // หัวข้อย่่อ 
   detail     String? // รายละเอียด
   img        String? // รูปกิจกรรม
+  type       String?
   promoteImg String? // รูปกิจกรรม
   startDate  DateTime?
   endDate    DateTime?
@@ -83,18 +84,14 @@ model News {
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
   gallery    Gallery[]
-  NewsType   NewsType? @relation(fields: [newsTypeId], references: [id])
-  newsTypeId String?   @db.ObjectId
 }
 
 model NewsType {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   nameTH     String
-  nameEN     String
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
-  News       News[]
 }
 
 model CourseGroup {

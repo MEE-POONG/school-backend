@@ -204,7 +204,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne, setImgOnePreview)}
                                     />
                                 </FloatingLabel>
-                                <div className='ratio ratio-16x9 bg-dark'>
+                                <div className='ratio img-preview ratio-16x9 bg-dark'>
                                     <img
                                         src={imgOnePreview ? `data:image/jpeg;base64,${imgOnePreview}` : formData?.imgOne ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgOne}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                                         alt="Image Two Preview"
@@ -220,7 +220,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgTwo, setImgTwoPreview)}
                                     />
                                 </FloatingLabel>
-                                <div className='ratio ratio-16x9 bg-dark'>
+                                <div className='ratio img-preview ratio-16x9 bg-dark'>
                                     <img
                                         src={imgTwoPreview ? `data:image/jpeg;base64,${imgTwoPreview}` : formData?.imgTwo ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgTwo}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                                         alt="Image Two Preview"
@@ -236,7 +236,7 @@ const UpdateHeadPage: React.FC = (props) => {
                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgThree, setImgThreePreview)}
                                     />
                                 </FloatingLabel>
-                                <div className='ratio ratio-16x9 bg-dark'>
+                                <div className='ratio img-preview ratio-16x9 bg-dark'>
                                     <img
                                         src={imgThreePreview ? `data:image/jpeg;base64,${imgThreePreview}` : formData?.imgThree ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.imgThree}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                                         alt="Image Two Preview"

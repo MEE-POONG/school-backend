@@ -6,25 +6,30 @@ import Button from 'react-bootstrap/Button';
 
 interface LoadModalProps {
     checkLoad: boolean;
-    title: string;
+    status: string;
     detail: string;
 }
 
-const LoadModal: React.FC<LoadModalProps> = ({ checkLoad, title, detail }) => {
-    const router = useRouter();
-
-    let variant;
+const LoadModal: React.FC<LoadModalProps> = ({ checkLoad, status, detail }) => {
 
     const [show, setShow] = useState(false);
+    const statusText = [
+        { title: "กำลังเพิ่มข้อมูล", color: "info", check: "add" },
+        { title: "กำลังอัพเดทข้อมูล", color: "warning", check: "update" },
+        { title: "กำลังลบข้อมูล", color: "danger", check: "delete" }
+    ];
+
+    const currentStatus = statusText.find(item => item.check === status);
 
     useEffect(() => {
         setShow(checkLoad);
     }, [checkLoad]);
+
     return (
         <>
             <Modal show={show} centered>
-                <Alert variant={variant} className='m-0 text-center' dismissible>
-                    <Alert.Heading className='m-0'>{title}</Alert.Heading>
+                <Alert variant={currentStatus?.color || 'primary'} className='m-0 text-center' >
+                    <Alert.Heading className='m-0'>{currentStatus?.title}</Alert.Heading>
                     <p className='m-0'>{detail}</p>
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Loading...</span>
