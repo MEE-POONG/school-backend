@@ -18,8 +18,8 @@ const TheSEO: React.FC<TheSEOProps> = ({ show, onToggleShow }) => {
         <Head>
             <title>Phanomwan Backend</title>
             <meta
-                name="description"
-                content="T ACTIVE"
+                name="วิทยาลัยเทคโนโลยีพนมวันท์"
+                content="หลักสูตรเสาร์-อาทิตย์ ทำงานอยู่ก็เรียนได้ อยู่ที่ไหนก็เรียนได้"
             />
             <link rel="icon" href="/favicon.ico" />
         </Head>
