@@ -76,10 +76,10 @@ const NewsPage: React.FC = (props) => {
 
   const deleteNews = async (list: News): Promise<void> => {
     try {
-      if (!list?.img) {
+      if (list?.img) {
         await deleteImage(list?.img);
       }
-      if (!list?.promoteImg) {
+      if (list?.promoteImg) {
         await deleteImage(list?.promoteImg);
       }
 
