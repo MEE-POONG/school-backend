@@ -5,10 +5,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaTrashAlt } from 'react-icons/fa';
 interface DeleteModalProps {
-    data: any;
+    title: string;
     apiDelete: () => Promise<any>; // add this line
 }
-const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
+const DeleteMemberModal: React.FC<DeleteModalProps> = ({ title, apiDelete }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkDelete, setCheckDelete] = useState<string>("not");
 
@@ -55,9 +55,9 @@ const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
                 <FaTrashAlt />
                 <span className="h-tooltiptext">ลบ</span>
             </Button>
-            <Modal show={show} onHide={handleCloseAndReset}>
+            <Modal show={show} onHide={handleCloseAndReset} centered>
                 <Modal.Header  >
-                    <Modal.Title >ลบ {heading} </Modal.Title>
+                    <Modal.Title >ลบ {`${title}`} </Modal.Title>
                     <Button variant="close" onClick={handleCloseAndReset} />
                 </Modal.Header>
                 <Modal.Body>
@@ -70,7 +70,6 @@ const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
                         Close
                     </Button>
                     <Button variant="danger " className={checkDelete === 'not' || checkDelete === 'danger' ? "my-2" : "d-none"} onClick={handleDelete}>
-                        {/* <Button variant="primary" className={checkDelete === 'not' || checkDelete === 'danger' ? "my-2" : "d-none"} onClick={() => setCheckDelete("primary")}> */}
                         ยืนยันการลบ
                     </Button>
                 </Modal.Footer>

@@ -13,11 +13,10 @@ import {
 import { FaPager, FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
+import axios from 'axios';
 import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import LayOut from "@/components/RootPage/TheLayOut";
-import ViewDetail from "./[id]";
-import { ReFormatDate } from "@/control/ReFormatDate";
 import moment from "moment";
 import { News, NewsType } from "@prisma/client";
 import { useRouter } from "next/router";
@@ -67,20 +66,47 @@ const NewsPage: React.FC = (props) => {
     }));
   }, [newsData]);
 
-  const deleteNews = (id: string): Promise<any> => {
-    return executeNewsDelete({
-      url: "/api/News/" + id,
-      method: "DELETE",
-    }).then(() => {
-      if (params?.page === params?.totalPages) {
-        setFilteredData((selectID) =>
-          selectID.filter((newsArray) => newsArray.id !== id));
-      } else {
-        getNews();
-      }
-    });
+  const deleteImage = async (img: string | null) => {
+    try {
+      await axios.delete(`https://upload-image.me-prompt-technology.com/?name=${img}`);
+    } catch (error) {
+      console.error("Delete failed: ", error);
+    }
   };
 
+  const deleteNews = async (list: News): Promise<void> => {
+    try {
+      if (!list?.img) {
+        await deleteImage(list?.img);
+      }
+      if (!list?.promoteImg) {
+        await deleteImage(list?.promoteImg);
+      }
+
+      await executeNewsDelete({
+        url: `/api/News/${list.id}`,
+        method: "DELETE",
+      });
+
+      if (params?.page === params?.totalPages) {
+        setFilteredData((selectID) =>
+          selectID.filter((newsArray) => newsArray.id !== list.id));
+        console.log(1, filteredData?.length);
+
+        if (filteredData?.length <= 1) {
+          console.log(2, filteredData?.length);
+          window.location.reload();
+        }
+
+      } else {
+        console.log("104", filteredData?.length);
+
+        getNews();
+      }
+    } catch (error) {
+      console.error('Error deleting news:', error);
+    }
+  };
   const handleChangePage = (page: number) => {
     setParams((prevParams) => ({
       ...prevParams,
@@ -194,8 +220,8 @@ const NewsPage: React.FC = (props) => {
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
                       <DeleteModal
-                        data={list}
-                        apiDelete={() => deleteNews(list?.id)}
+                        title={`ข่าว ${list?.title}`}
+                        apiDelete={() => deleteNews(list)}
                       />
                     </td>
                   </tr>

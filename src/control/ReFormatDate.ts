@@ -1,6 +1,6 @@
 import { monthArray } from "@/data/date";
 
-export function ReFormatDate(dateString: Date, language: string) {
+export function ReFormatDate(dateString: any, language: string) {
   // Parse the date string into a JavaScript Date object
   const date = new Date(dateString);
 
