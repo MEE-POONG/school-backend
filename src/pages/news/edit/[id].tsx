@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
+import { News, NewsType, News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
 import useAxios from "axios-hooks";
 import axios from 'axios';
 import LayOut from "@/components/RootPage/TheLayOut";
@@ -7,17 +7,15 @@ import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "r
 import LoadModal from "@/components/modal/LoadModal";
 import moment from "moment";
 import { useRouter } from "next/router";
-// import { News } from "@prisma/client";
-
-interface NewsType extends PrismaNewsType {
-}
-interface News extends PrismaNews {
-  NewsType: NewsType;
-}
+import { ReFormatDate } from "@/control/ReFormatDate";
+import { DateDefaultValue } from "@/control/DateDefaultValue";
 
 const NewsEdit: React.FC = (props) => {
   const router = useRouter();
+  const { id } = router.query;
+
   const dateDefault = moment().format('YYYY-MM-DDTHH:mm');
+
   const [formData, setFormData] = useState<News | null>();
   const [imgOne, setImgOne] = useState<File | null>(null);
   const [imgTwo, setImgTwo] = useState<File | null>(null);
@@ -25,23 +23,54 @@ const NewsEdit: React.FC = (props) => {
   const [imgOnePreview, setImgOnePreview] = useState<string | null>(null);
   const [imgTwoPreview, setImgTwoPreview] = useState<string | null>(null);
 
-  const [type, setType] = useState<NewsType[]>([]);
+  const [newsType, setNewsType] = useState<NewsType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputForm, setInputForm] = useState<boolean>(false);
 
-  const [{ data: headPageData, loading, error }, newsAPI] = useAxios('/api/News');
+  const [{ data: headPageData, loading, error }, newsAPI] = useAxios({
+    url: `/api/News`,
+    method: "GET",
+  });
 
-  const [{ data: newsType, loading: loadingType, error: errorType }, getNewsType] = useAxios({
+  const [{ data: newsTypeShow, loading: loadingType, error: errorType }, getNewsType] = useAxios({
     url: `/api/NewsType`,
     method: "GET",
   });
 
   useEffect(() => {
-    setType(newsType?.data);
-    handleInputChange("newsTypeId", newsType?.data[0]?.id);
-  }, [newsType]);
+    (async () => {
+      try {
+        if (id) {
+          const response = await newsAPI({
+            url: `/api/News/${id}`,
+            method: "GET",
+          });
+          if (response?.status === 200) {
+            setFormData(response?.data);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    })();
+  }, [id]);
+
+  useEffect(() => {
+    setNewsType(newsTypeShow?.data);
+  }, [newsTypeShow]);
+
+  useEffect(() => {
+    console.log("show ",formData?.startDate);
+
+    // console.log("ss 63 ", formData?.startDate ? ReFormatDate(formData?.startDate, "TH") : dateDefault);
+    // console.log("ss 63 ", formData?.startDate ? DateDefaultValue(formData?.startDate) : dateDefault);
+
+  }, [formData]);
+
+
 
   const handleInputChange = (title: string, value: any) => {
+    console.log("select : ",value);
     setFormData((prev: any) => ({
       ...prev,
       [title]: value
@@ -97,8 +126,8 @@ const NewsEdit: React.FC = (props) => {
     if (!formData?.title) missingFields.push("Title");
     if (!formData?.subTitle) missingFields.push("Subtitle");
     if (!formData?.detail) missingFields.push("Detail");
-    if (!formData?.newsTypeId) missingFields.push("News Type");
-    if (!imgOne) missingFields.push("รูปปก");
+    if (!formData?.type) missingFields.push("News Type");
+    if (!imgOne && !formData?.img) missingFields.push("รูปปก");
 
     if (missingFields.length > 0) {
       setIsLoading(false);
@@ -112,8 +141,8 @@ const NewsEdit: React.FC = (props) => {
 
     try {
       const response = await newsAPI({
-        url: `/api/News`,
-        method: "POST",
+        url: `/api/News/${formData?.id}`,
+        method: "PUT",
         data: {
           id: formData?.id,
           title: formData?.title,
@@ -123,20 +152,23 @@ const NewsEdit: React.FC = (props) => {
           endDate: formData?.endDate,
           img: imageIDs[0] !== null ? imageIDs[0] : formData?.img,
           promoteImg: imageIDs[1] !== null ? imageIDs[1] : formData?.promoteImg,
-          newsTypeId: formData?.newsTypeId,
+          type: formData?.type,
         }
       });
-      console.log(response);
 
-      if (response?.status === 201) {
+      if (response?.status === 200) {
+        console.log(response);
         setIsLoading(false);
-        router.push(`/news/edit/${response?.data?.id}`);
+        localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
+        router.push(`/news/${response?.data?.id}`);
       } else {
         setIsLoading(false);
         alert("Failed to add information.");
       }
     } catch (error) {
       setIsLoading(false);
+      console.log(error);
+
       alert("An error occurred during submission.");
     }
 
@@ -150,7 +182,7 @@ const NewsEdit: React.FC = (props) => {
           <LoadModal checkLoad={isLoading} status={"add"} detail={""} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              เพิ่มข่าว / กิจกรรม
+              แก้ไขข่าว / กิจกรรม
             </h4>
             <div>
               <Button variant="success mx-2" onClick={handleSubmit}>
@@ -167,12 +199,14 @@ const NewsEdit: React.FC = (props) => {
           <Card.Body className="overflow-x-hidden">
             <Row>
               <Col md={2}>
+
                 <FloatingLabel controlId="floatingSelect" label="เลือกประเภทข่าวสาร" className="mb-3">
                   <Form.Select aria-label="Floating label select example"
-                    onChange={(e) => handleInputChange("newsTypeId", e.target.value)}
+                    value={formData?.type || ''}
+                    onChange={(e) => handleInputChange("type", e.target.value)}
                   >
-                    {type?.map((list, index) => (
-                      <option key={index} value={list?.id}>{list?.nameTH}</option>
+                    {newsType?.map((list, index) => (
+                      <option key={index} value={list?.nameTH}>{list?.nameTH}</option>
                     ))}
 
                   </Form.Select>
@@ -180,7 +214,7 @@ const NewsEdit: React.FC = (props) => {
                 <FloatingLabel controlId="startDate" label="วันเริ่มกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={dateDefault}
+                    // defaultValue={formData?.startDate ? DateDefaultValue(formData?.startDate) : ""}
                     onChange={(e) => handleInputChange("startDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />
@@ -188,7 +222,7 @@ const NewsEdit: React.FC = (props) => {
                 <FloatingLabel controlId="endDate" label="วันสิ้นสุดกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={dateDefault}
+                    defaultValue={formData?.endDate ? DateDefaultValue(formData?.endDate) : ""}
                     onChange={(e) => handleInputChange("endDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />
@@ -241,7 +275,7 @@ const NewsEdit: React.FC = (props) => {
                 </FloatingLabel>
                 <div className='ratio img-preview ratio-16x9 bg-dark'>
                   <Image
-                    src={imgOnePreview ? `data:image/jpeg;base64,${imgOnePreview}` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                    src={imgOnePreview ? `data:image/jpeg;base64,${imgOnePreview}` : formData?.img ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.img}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                     alt="Image Two Preview"
                     className="w-100 object-fit-contain"
                     loading="lazy"
@@ -258,7 +292,7 @@ const NewsEdit: React.FC = (props) => {
                 </FloatingLabel>
                 <div className='ratio img-preview ratio-21x9 bg-dark'>
                   <Image
-                    src={imgTwoPreview ? `data:image/jpeg;base64,${imgTwoPreview}` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                    src={imgTwoPreview ? `data:image/jpeg;base64,${imgTwoPreview}` : formData?.promoteImg ? `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/${formData.promoteImg}/500` : `https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
                     alt="Image Two Preview"
                     className="w-100 object-fit-contain"
                     loading="lazy"

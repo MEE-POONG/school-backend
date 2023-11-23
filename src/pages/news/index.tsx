@@ -17,7 +17,7 @@ import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import LayOut from "@/components/RootPage/TheLayOut";
 import ViewDetail from "./[id]";
-import { ReFormatDate } from "@/components/ReFormatDate";
+import { ReFormatDate } from "@/control/ReFormatDate";
 import moment from "moment";
 import { News, NewsType } from "@prisma/client";
 import { useRouter } from "next/router";

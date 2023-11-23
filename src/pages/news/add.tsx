@@ -7,9 +7,6 @@ import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "r
 import LoadModal from "@/components/modal/LoadModal";
 import moment from "moment";
 import { useRouter } from "next/router";
-// import { News } from "@prisma/client";
-
-
 
 const NewsAdd: React.FC = (props) => {
   const router = useRouter();
@@ -176,7 +173,7 @@ const NewsAdd: React.FC = (props) => {
                 <FloatingLabel controlId="startDate" label="วันเริ่มกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    // defaultValue={dateDefault}
+                    defaultValue={dateDefault}
                     onChange={(e) => handleInputChange("startDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />
@@ -184,7 +181,7 @@ const NewsAdd: React.FC = (props) => {
                 <FloatingLabel controlId="endDate" label="วันสิ้นสุดกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    // defaultValue={dateDefault}
+                    defaultValue={dateDefault}
                     onChange={(e) => handleInputChange("endDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />

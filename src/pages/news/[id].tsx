@@ -5,7 +5,7 @@ import axios from 'axios';
 import LayOut from "@/components/RootPage/TheLayOut";
 import { Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
 import { useRouter } from "next/router";
-import { ReFormatDate } from "@/components/ReFormatDate";
+import { ReFormatDate } from "@/control/ReFormatDate";
 import Link from "next/link";
 // import { News } from "@prisma/client";
 
@@ -29,15 +29,10 @@ const NewsView: React.FC = (props) => {
                 setFormData(response.data);
             }).catch((error) => {
                 console.error('Error fetching news:', error);
-                // Handle error appropriately
             });
         }
     }, [id]);
 
-    useEffect(() => {
-        console.log("formData : ", formData);
-
-    }, [formData]);
 
     return (
         <LayOut>

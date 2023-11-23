@@ -123,7 +123,7 @@ const UpdateHeadPage: React.FC = (props) => {
                 <Card>
                     <Card.Header className="d-flex space-between">
                         <h4 className="mb-0 py-1">
-                            แก้ไขข้อมูล Header
+                            แก้ไขข้อมูล เกี่ยวกับเรา
                         </h4>
                     </Card.Header>
                     <Card.Body className="overflow-hidden">
