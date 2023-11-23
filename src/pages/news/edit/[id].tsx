@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { News, NewsType, News as PrismaNews, NewsType as PrismaNewsType } from '@prisma/client';
+import { News, NewsType } from '@prisma/client';
 import useAxios from "axios-hooks";
 import axios from 'axios';
 import LayOut from "@/components/RootPage/TheLayOut";
 import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
 import LoadModal from "@/components/modal/LoadModal";
-import moment from "moment";
 import { useRouter } from "next/router";
-import { ReFormatDate } from "@/control/ReFormatDate";
-import { DateDefaultValue } from "@/control/DateDefaultValue";
 
 const NewsEdit: React.FC = (props) => {
   const router = useRouter();
   const { id } = router.query;
-
-  const dateDefault = moment().format('YYYY-MM-DDTHH:mm');
 
   const [formData, setFormData] = useState<News | null>();
   const [imgOne, setImgOne] = useState<File | null>(null);
