@@ -59,18 +59,7 @@ const NewsEdit: React.FC = (props) => {
     setNewsType(newsTypeShow?.data);
   }, [newsTypeShow]);
 
-  useEffect(() => {
-    console.log("show ",formData?.startDate);
-
-    // console.log("ss 63 ", formData?.startDate ? ReFormatDate(formData?.startDate, "TH") : dateDefault);
-    // console.log("ss 63 ", formData?.startDate ? DateDefaultValue(formData?.startDate) : dateDefault);
-
-  }, [formData]);
-
-
-
   const handleInputChange = (title: string, value: any) => {
-    console.log("select : ",value);
     setFormData((prev: any) => ({
       ...prev,
       [title]: value
@@ -158,6 +147,7 @@ const NewsEdit: React.FC = (props) => {
 
       if (response?.status === 200) {
         console.log(response);
+        console.log(response?.data);
         setIsLoading(false);
         localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
         router.push(`/news/${response?.data?.id}`);
@@ -214,7 +204,7 @@ const NewsEdit: React.FC = (props) => {
                 <FloatingLabel controlId="startDate" label="วันเริ่มกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    // defaultValue={formData?.startDate ? DateDefaultValue(formData?.startDate) : ""}
+                    defaultValue={formData?.startDate ? formData?.startDate : ""}
                     onChange={(e) => handleInputChange("startDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />
@@ -222,7 +212,7 @@ const NewsEdit: React.FC = (props) => {
                 <FloatingLabel controlId="endDate" label="วันสิ้นสุดกิจกรรม" className="mb-3" >
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={formData?.endDate ? DateDefaultValue(formData?.endDate) : ""}
+                    defaultValue={formData?.endDate ? formData?.endDate : ""}
                     onChange={(e) => handleInputChange("endDate", e.target.value)}
                     placeholder="ระบุหัวข้อ"
                   />

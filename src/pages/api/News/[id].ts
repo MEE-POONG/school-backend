@@ -69,7 +69,7 @@ async function handlePUT(req: NextApiRequest, res: NextApiResponse) {
         endDate,
       },
     });
-    res.status(200).json({ success: true, data: updatedNews });
+    res.status(200).json(updatedNews);
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ success: false, message: 'An error occurred while updating the News', error: error.message });
