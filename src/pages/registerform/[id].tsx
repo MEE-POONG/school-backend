@@ -39,10 +39,14 @@ export default function ProfileDetailModal(props: { data: any }) {
             <div className="regisform">
               <div className="px-2 py-4 mt-3">
                 <div className="row">
-                  <div className="">
-                    <img className="logo-pmc" src="./images/Logo.png" alt="" />
-                    <span className="title">ข้อมูลของผู้สมัครเรียนต่อระดับปริญญาตรี</span>
-                  </div>
+                  <Row>
+                    <Col xs={10} >
+                      <img className="logo-pmc" src="./images/Logo.png" alt="" />
+                      <span className="title">ข้อมูลของผู้สมัครเรียนต่อระดับปริญญาตรี</span>
+                    </Col>
+                    <Col xs={2}>
+                    </Col>
+                  </Row>
                   <div className="col-sm my-auto mt-3">
                     <h6 className="border-bottom border-info">ส่วนที่ 1 ข้อมูลผู้สมัคร</h6>
                     <div className="">
