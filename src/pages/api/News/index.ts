@@ -24,7 +24,7 @@ export default async function handler(
 
 async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const newsInfo = await prisma.news.findFirst();
+    const newsInfo = await prisma.news.findMany();
     res.status(200).json(newsInfo);
   } catch (error) {
     res.status(500).json({ message: "Error fetching news information" });
