@@ -1,34 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { CourseGroup } from '@prisma/client';
+import { CourseGroup as PrismaCourseGroup, CourseList as PrismaCourseList } from '@prisma/client';
 import useAxios from "axios-hooks";
 import axios from 'axios';
 import LayOut from "@/components/RootPage/TheLayOut";
-import { Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
+import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row, Table } from "react-bootstrap";
 import { useRouter } from "next/router";
-import { ReFormatDate } from "@/control/ReFormatDate";
+import DeleteModal from "@/components/modal/DeleteModal";
 import Link from "next/link";
-// import { Course } from "@prisma/client";
+import { FaPager, FaPen } from "react-icons/fa";
+import CourseList from "@/container/Course/list";
 
+interface CourseList extends PrismaCourseList {
+}
+interface CourseGroup extends PrismaCourseGroup {
+}
+
+interface Params {
+    page: number;
+    pageSize: number;
+    search: string;
+    totalPages: number;
+}
 
 const CourseView: React.FC = (props) => {
     const router = useRouter();
+    const [params, setParams] = useState<Params>({
+        page: 1,
+        pageSize: 10,
+        search: "",
+        totalPages: 1,
+    });
+
     const { id } = router.query;
     const [formData, setFormData] = useState<CourseGroup | null>();
-    const [{ data: CourseData, loading, error }, courseAPI] = useAxios('');
 
+    const [{ data, loading, error }, courseGroupAPI] = useAxios('');
     useEffect(() => {
-        const storedCourseItem = localStorage.getItem('currentCourseItem');
-        if (storedCourseItem) {
-            setFormData(JSON.parse(storedCourseItem));
-            console.log("34 : ", JSON.parse(storedCourseItem));
-
-            localStorage.removeItem('currentCourseItem'); // Clear the stored item
-        } else if (id) {
-            courseAPI({ url: `/api/CourseGroup/${id}` }).then((response) => {
-                console.log(response);
+        // setFormData(data);
+        if (id) {
+            courseGroupAPI({ url: `/api/CourseGroup/${id}` }).then((response) => {
                 setFormData(response.data);
             }).catch((error) => {
-                console.error('Error fetching course:', error);
+                console.error('Error fetching news:', error);
             });
         }
     }, [id]);
@@ -91,6 +104,7 @@ const CourseView: React.FC = (props) => {
                             </Col>
                         </Row>
                     </Card.Body>
+                    <CourseList />
                     <Card.Footer className="text-end">
                         <Link href={`/course/edit/${id}`} className="btn btn-warning mx-2" >
                             แก้ไข

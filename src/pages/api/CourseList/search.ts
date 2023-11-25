@@ -7,7 +7,7 @@ interface QueryParams {
   page?: string;
   pageSize?: string;
   search?: string;
-  type?: string;
+  group?: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -25,39 +25,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { page = '1', pageSize = '10', search } = req.query as QueryParams;
+    const { page = '1', pageSize = '20', search, group } = req.query as QueryParams;
 
     const pageNum = parseInt(page, 10) || 1;
-    const pageSizeNum = parseInt(pageSize, 10) || 10;
+    const pageSizeNum = parseInt(pageSize, 10) || 20;
 
     const skip = (pageNum - 1) * pageSizeNum;
     const take = pageSizeNum;
 
-    const andConditions: Prisma.CourseGroupWhereInput[] = [];
+    const andConditions: Prisma.CourseListWhereInput[] = [];
 
     if (search && search.length >= 3) {
-      andConditions.push({ nameTH: { contains: search, mode: 'insensitive' as Prisma.QueryMode } });
-
+      andConditions.push({ FieldStudy: { contains: search, mode: 'insensitive' } });
     }
 
-    const whereClause: Prisma.CourseGroupWhereInput = {
+    if (group) {
+      andConditions.push({ courseGroupId: group });
+    }
+
+    const whereClause: Prisma.CourseListWhereInput = {
       AND: andConditions
     };
 
-    const courseGroupItems = await prisma.courseGroup.findMany({
+    const courseListItems = await prisma.courseList.findMany({
       where: whereClause,
       skip,
       take,
+      include: {
+        CourseGroup: true // Include CourseGroup data if needed
+      }
     });
 
-    const totalCourseGroupCount = await prisma.courseGroup.count({ where: whereClause });
-    const totalPages = Math.ceil(totalCourseGroupCount / pageSizeNum);
+    const totalCourseListCount = await prisma.courseList.count({ where: whereClause });
+    const totalPages = Math.ceil(totalCourseListCount / pageSizeNum);
 
     res.status(200).json({
       success: true,
-      data: courseGroupItems,
+      data: courseListItems,
       pagination: {
-        total: totalCourseGroupCount,
+        total: totalCourseListCount,
         totalPages,
         page: pageNum,
         pageSize: pageSizeNum

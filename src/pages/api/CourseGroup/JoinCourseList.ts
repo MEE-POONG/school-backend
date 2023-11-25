@@ -6,8 +6,7 @@ const prisma = new PrismaClient();
 interface QueryParams {
   page?: string;
   pageSize?: string;
-  search?: string;
-  type?: string;
+  id?: string; // Changed from 'search' to 'id'
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -25,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 async function handleGET(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { page = '1', pageSize = '10', search } = req.query as QueryParams;
+    const { page = '1', pageSize = '10', id } = req.query as QueryParams;
 
     const pageNum = parseInt(page, 10) || 1;
     const pageSizeNum = parseInt(pageSize, 10) || 10;
@@ -33,21 +32,19 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
     const skip = (pageNum - 1) * pageSizeNum;
     const take = pageSizeNum;
 
-    const andConditions: Prisma.CourseGroupWhereInput[] = [];
+    let whereClause: Prisma.CourseGroupWhereInput = {};
 
-    if (search && search.length >= 3) {
-      andConditions.push({ nameTH: { contains: search, mode: 'insensitive' as Prisma.QueryMode } });
-
+    if (id) {
+      whereClause = { id }; // Filter by ID
     }
 
-    const whereClause: Prisma.CourseGroupWhereInput = {
-      AND: andConditions
-    };
-
-    const courseGroupItems = await prisma.courseGroup.findMany({
+    const courseGroupItems = await prisma.courseGroup.findFirst({
       where: whereClause,
       skip,
       take,
+      include: {
+        CourseList: true, // Include related CourseList
+      },
     });
 
     const totalCourseGroupCount = await prisma.courseGroup.count({ where: whereClause });
@@ -64,6 +61,6 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
       }
     });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching course list information" });
+    res.status(500).json({ message: "Error fetching course group information" });
   }
 }

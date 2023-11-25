@@ -17,7 +17,6 @@ import axios from 'axios';
 import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import LayOut from "@/components/RootPage/TheLayOut";
-import moment from "moment";
 import { useRouter } from "next/router";
 import { CourseGroup } from "@prisma/client";
 
@@ -50,11 +49,7 @@ const CoursePage: React.FC = (props) => {
     method: "GET",
   });
 
-  const [{ loading: deleteNewsLoading, error: deleteNewsError }, executeCourseGroupDelete,] = useAxios({}, { manual: true });
-
-  // useEffect(() => {
-  //   setType(newsType?.data);
-  // }, [newsType]);
+  const [{ loading: deleteCourseLoading, error: deleteCourseError }, executeCourseGroupDelete,] = useAxios({}, { manual: true });
 
   useEffect(() => {
     setFilteredData(data?.data);
@@ -89,7 +84,7 @@ const CoursePage: React.FC = (props) => {
 
       if (params?.page === params?.totalPages) {
         setFilteredData((selectID) =>
-          selectID.filter((newsArray) => newsArray.id !== list.id));
+          selectID.filter((Array) => Array.id !== list.id));
         console.log(1, filteredData?.length);
 
         if (filteredData?.length <= 1) {

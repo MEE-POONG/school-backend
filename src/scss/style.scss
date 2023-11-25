@@ -183,6 +183,16 @@
 .overflow-hidden {
     overflow: hidden;
 }
-.img-preview{
+.img-preview {
     height: 300px;
+}
+.on-off {
+    border: 3px solid #1f306a;
+    &:hover,
+    &.active,
+    :active {
+        color: var(--primary) !important;
+        background: var(--bg-active) !important;
+        border-color: var(--primary) !important;
+    }
 }

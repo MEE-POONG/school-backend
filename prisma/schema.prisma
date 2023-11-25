@@ -108,12 +108,12 @@ model CourseGroup {
 model CourseList {
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
   FieldStudy      String?
+  regular         Boolean      @default(false)
   First           String?
   Second          String?
-  Sum             String?
+  associate       Boolean      @default(false)
   associateFirst  String?
   associateSecond String?
-  associateSum    String?
   createdAt       DateTime?    @default(now())
   updatedAt       DateTime?    @updatedAt
   deleted_at      DateTime?    @map("deleted_at")
