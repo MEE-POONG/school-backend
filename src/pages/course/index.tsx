@@ -148,7 +148,6 @@ const CoursePage: React.FC = (props) => {
               </InputGroup.Text>
               <Form.Control aria-label="Text input with dropdown button" onChange={e => handleChangeSearch(e.target.value)} />
             </InputGroup>
-
             <Link href="/course/add" className="ms-2 btn icon icofn-primary">
               เพิ่มหลักสูตร
             </Link>

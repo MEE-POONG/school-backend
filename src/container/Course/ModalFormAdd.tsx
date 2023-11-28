@@ -8,8 +8,10 @@ import { Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-
-const ModalFormAdd: React.FC = () => {
+interface ModalFormAddProps {
+    onAddSuccess: () => void;
+}
+const ModalFormAdd: React.FC<ModalFormAddProps> = ({ onAddSuccess }) => {
     const router = useRouter();
     const { id } = router.query;
     const [show, setShow] = useState(false);
@@ -23,6 +25,7 @@ const ModalFormAdd: React.FC = () => {
     const [inputForm, setInputForm] = useState<boolean>(false);
 
     const [{ data, loading, error }, CourseListAPI] = useAxios('/api/CourseList');
+
 
     useEffect(() => {
         if (id) {
@@ -78,9 +81,11 @@ const ModalFormAdd: React.FC = () => {
             });
 
             if (response?.status === 201) {
-                setIsLoading(false);
-                console.log(80);
-
+                handleClose();
+                setTimeout(() => {
+                    setIsLoading(false);
+                    onAddSuccess();
+                }, 1000);
             } else {
                 setIsLoading(false);
                 alert("Failed to add information.");

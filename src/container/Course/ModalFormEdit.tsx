@@ -7,9 +7,13 @@ import { useState } from 'react';
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { FaPen } from 'react-icons/fa';
 
-
-const ModalFormAdd: React.FC = () => {
+interface ModalFormEditProps {
+    selectID: CourseList;
+    onEditSuccess: () => void;
+}
+const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }) => {
     const router = useRouter();
     const { id } = router.query;
     const [show, setShow] = useState(false);
@@ -25,10 +29,12 @@ const ModalFormAdd: React.FC = () => {
     const [{ data, loading, error }, CourseListAPI] = useAxios('/api/CourseList');
 
     useEffect(() => {
-        if (id) {
-            handleInputChange("courseGroupId", id);
-        }
-    }, [id]);
+        setFormData(selectID);
+    }, [selectID]);
+    useEffect(() => {
+        console.log(formData);
+
+    }, [formData]);
 
     const handleInputChange = (title: string, value: any) => {
         setFormData((prev: any) => ({
@@ -54,17 +60,17 @@ const ModalFormAdd: React.FC = () => {
         if (formData?.regular && !formData?.Second) missingFields.push("Second");
         if (formData?.associate && !formData?.associateFirst) missingFields.push("First");
         if (formData?.associate && !formData?.associateSecond) missingFields.push("Second");
-        console.log(formData);
         if (missingFields.length > 0) {
             setIsLoading(false);
             alert(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
             return; // Stop the submission
         }
+console.log(68,formData);
 
         try {
             const response = await CourseListAPI({
-                url: `/api/CourseList`,
-                method: "POST",
+                url: `/api/CourseList${formData?.id}`,
+                method: "PUT",
                 data: {
                     FieldStudy: formData?.FieldStudy,
                     regular: formData?.regular,
@@ -77,10 +83,12 @@ const ModalFormAdd: React.FC = () => {
                 }
             });
 
-            if (response?.status === 201) {
-                setIsLoading(false);
-                console.log(80);
-
+            if (response?.status === 200) {
+                handleClose();
+                setTimeout(() => {
+                    setIsLoading(false);
+                    onEditSuccess();
+                }, 1000);
             } else {
                 setIsLoading(false);
                 alert("Failed to add information.");
@@ -97,12 +105,12 @@ const ModalFormAdd: React.FC = () => {
     return (
         <>
             <LoadModal checkLoad={isLoading || loading} status={"add"} detail={`กำลังเพิ่มสาขา ${formData?.FieldStudy}`} />
-            <Button variant="primary" onClick={handleShow}>
-                เพิ่มสาขา
+            <Button bsPrefix='btn info icon' onClick={handleShow}>
+                <FaPen />
             </Button>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>เพิ่มสาขาวิชา</Modal.Title>
+                    <Modal.Title>แก้ไขสาขาวิชา</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <FloatingLabel controlId="FieldStudy" label="ชื่อสาขา" className="mb-3" >
@@ -195,4 +203,4 @@ const ModalFormAdd: React.FC = () => {
     );
 }
 
-export default ModalFormAdd;
+export default ModalFormEdit;

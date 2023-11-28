@@ -2,11 +2,12 @@ import { CourseList } from '@prisma/client';
 import useAxios from 'axios-hooks';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Table } from "react-bootstrap";
-import { FaPager } from 'react-icons/fa';
+import { Button, Card, Form, InputGroup, Table } from "react-bootstrap";
+import { FaPager, FaSearch } from 'react-icons/fa';
 import DeleteModal from "@/components/modal/DeleteModal";
 import PageSelect from '@/components/PageSelect';
 import ModalFormAdd from './ModalFormAdd';
+import ModalFormEdit from './ModalFormEdit';
 
 interface Params {
     page: number;
@@ -21,7 +22,7 @@ const ListViews: React.FC = () => {
     const { id } = router.query;
     const [params, setParams] = useState<Params>({
         page: 1,
-        pageSize: 20,
+        pageSize: 100,
         search: "",
         group: "",
         totalPages: 1
@@ -32,6 +33,24 @@ const ListViews: React.FC = () => {
         method: "GET",
     });
     const [{ loading: deleteLoading, error: deleteError }, courseListDeleteAPI] = useAxios({});
+    const [checkAdd, setCheckAdd] = useState(false);
+    const [checkEdit, setCheckEdit] = useState(false);
+
+    useEffect(() => {
+        if (checkAdd || checkEdit) {
+            courseListAPI({
+                url: `/api/CourseList/search?page=${params?.page}&pageSize=${params?.pageSize}&search=${params?.search}&group=${params?.group}`,
+                method: "GET",
+            }).then(response => {
+                setCheckAdd(false);
+            }).catch(error => {
+                alert("An error occurred during submission.");
+            });
+            setCheckAdd(false);
+        }
+    }, [checkAdd, checkEdit]);
+
+
     useEffect(() => {
         if (id) {
             setParams((prevParams) => ({
@@ -79,19 +98,12 @@ const ListViews: React.FC = () => {
         }
     };
 
-    const handleChangePage = (page: number) => {
-        setParams((prevParams) => ({
-            ...prevParams,
-            page: page,
-        }));
+    const onAddSuccess = () => {
+        setCheckAdd(true); // This will trigger the useEffect to reload data
     };
 
-    const handleChangePageSize = (size: number) => {
-        setParams((prevParams) => ({
-            ...prevParams,
-            page: 1,
-            pageSize: size,
-        }));
+    const onEditSuccess = () => {
+        setCheckEdit(true); // This will trigger the useEffect to reload data
     };
 
     const handleChangeSearch = (search: string) => {
@@ -103,22 +115,19 @@ const ListViews: React.FC = () => {
 
     return (
         <>
-            <Card.Header className="overflow-x-hidden">
-            </Card.Header >
             <Card.Header className="d-flex space-between">
                 <h4 className="mb-0 py-1">สาขาประจำคณะ</h4>
-                {/* <InputGroup className="w-auto">
+                <InputGroup className="w-auto">
                     <InputGroup.Text id="basic-addon1">
                         <FaSearch />
                     </InputGroup.Text>
                     <Form.Control aria-label="Text input with dropdown button" onChange={e => handleChangeSearch(e.target.value)} />
-                </InputGroup> */}
-
-                <ModalFormAdd />
+                </InputGroup>
+                <ModalFormAdd onAddSuccess={onAddSuccess} />
             </Card.Header>
-            <Card.Body className="overflow-x-hidden">
-                <Table striped bordered hover className="scroll">
-                    <thead>
+            <Card.Body className="overflow-x-hidden p-0">
+                <Table striped bordered hover className="">
+                    <thead className='align-middle'>
                         <tr>
                             <th className="w-r-3">No</th>
                             <th className="">สาขา</th>
@@ -131,7 +140,7 @@ const ListViews: React.FC = () => {
                             <th className="">จัดการ</th>
                         </tr>
                     </thead>
-                    <tbody className="text-center">
+                    <tbody className="text-center align-middle">
                         {filteredData?.map((list, index) => (
                             <tr key={list?.id}>
                                 <td className="w-r-3">{index + 1}</td>
@@ -161,6 +170,7 @@ const ListViews: React.FC = () => {
                                         <FaPen />
                                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                                     </Link> */}
+                                    <ModalFormEdit selectID={list} onEditSuccess={onEditSuccess} />
                                     <DeleteModal
                                         title={`ข่าว ${list?.FieldStudy}`}
                                         apiDelete={() => deleteList(list)}
@@ -171,9 +181,6 @@ const ListViews: React.FC = () => {
                     </tbody>
                 </Table>
             </Card.Body>
-            <Card.Footer>
-                <PageSelect page={params?.page} totalPages={params?.totalPages} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
-            </Card.Footer>
         </>
 
     );

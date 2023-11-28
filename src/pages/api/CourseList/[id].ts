@@ -50,13 +50,6 @@ async function handleGET(req: NextApiRequest, res: NextApiResponse) {
 async function handlePUT(req: NextApiRequest, res: NextApiResponse) {
   try {
     const id = req.query.id as string;
-    const { FieldStudy,
-      First,
-      Second,
-      Sum,
-      associateFirst,
-      associateSecond,
-      associateSum, } = req.body;
 
     if (!id) {
       res.status(400).json({ success: false, message: 'Invalid or missing ID' });
@@ -65,15 +58,7 @@ async function handlePUT(req: NextApiRequest, res: NextApiResponse) {
 
     const updatedCourseList = await prisma.courseList.update({
       where: { id },
-      data: {
-        FieldStudy,
-        First,
-        Second,
-        Sum,
-        associateFirst,
-        associateSecond,
-        associateSum,
-      },
+      data: req.body
     });
     res.status(200).json(updatedCourseList);
   } catch (error: any) {

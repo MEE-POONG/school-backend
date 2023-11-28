@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import DeleteModal from "@/components/modal/DeleteModal";
 import Link from "next/link";
 import { FaPager, FaPen } from "react-icons/fa";
-import CourseList from "@/container/Course/list";
+import CourseList from "@/container/Course/ListViews";
 
 interface CourseList extends PrismaCourseList {
 }
