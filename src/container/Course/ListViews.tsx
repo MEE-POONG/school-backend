@@ -37,16 +37,17 @@ const ListViews: React.FC = () => {
     const [checkEdit, setCheckEdit] = useState(false);
 
     useEffect(() => {
+
         if (checkAdd || checkEdit) {
             courseListAPI({
                 url: `/api/CourseList/search?page=${params?.page}&pageSize=${params?.pageSize}&search=${params?.search}&group=${params?.group}`,
                 method: "GET",
             }).then(response => {
-                setCheckAdd(false);
             }).catch(error => {
                 alert("An error occurred during submission.");
             });
             setCheckAdd(false);
+            setCheckEdit(false);
         }
     }, [checkAdd, checkEdit]);
 
@@ -61,7 +62,6 @@ const ListViews: React.FC = () => {
     }, [id]);
 
     useEffect(() => {
-        console.log(data?.data);
         setFilteredData(data?.data);
         setParams((prevParams) => ({
             ...prevParams,
@@ -82,15 +82,12 @@ const ListViews: React.FC = () => {
             if (params?.page === params?.totalPages) {
                 setFilteredData((selectID) =>
                     selectID.filter((Array) => Array.id !== list.id));
-                console.log(1, filteredData?.length);
 
                 if (filteredData?.length <= 1) {
-                    console.log(2, filteredData?.length);
                     window.location.reload();
                 }
 
             } else {
-                console.log("104", filteredData?.length);
                 // getCourseList();
             }
         } catch (error) {
@@ -160,16 +157,6 @@ const ListViews: React.FC = () => {
                                 <td className="w-t-125">{list?.associateFirst}</td>
                                 <td className="w-t-125">{list?.associateSecond}</td>
                                 <td className="">
-                                    <Button
-                                        // onClick={() => handleReadMore(list)} 
-                                        bsPrefix="mx-1 btn success icon">
-                                        <FaPager />
-                                        <span className="h-tooltiptext">ดูข้อมูล</span>
-                                    </Button>
-                                    {/* <Link href={`/news/edit/${list?.id}`} className="mx-1 btn info icon" >
-                                        <FaPen />
-                                        <span className="h-tooltiptext">แก้ไขข้อมูล</span>
-                                    </Link> */}
                                     <ModalFormEdit selectID={list} onEditSuccess={onEditSuccess} />
                                     <DeleteModal
                                         title={`ข่าว ${list?.FieldStudy}`}

@@ -45,7 +45,6 @@ const RegisterFormPage: React.FC = (props) => {
   >([]);
 
   useEffect(() => {
-    console.log(registerFormData);
     
     setFilteredregisterFormsData(registerFormData?.data ?? []);
   }, [registerFormData]);
@@ -163,7 +162,7 @@ const RegisterFormPage: React.FC = (props) => {
                     <td>
                       <ProfileDetailModal data={registerForm} />
                       <DeleteModal
-                        data={registerForm}
+                        title={`ลบข้อมูลของ ${registerForm.nameTh} ${registerForm.lastnameTh}`}
                         apiDelete={() => deleteregisterForm(registerForm.id)}
                       />
                     </td>

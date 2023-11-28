@@ -122,8 +122,6 @@ const CourseEdit: React.FC = (props) => {
       });
 
       if (response?.status === 200) {
-        console.log(response);
-        console.log(response?.data);
         setIsLoading(false);
         localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
         router.push(`/course/${response?.data?.id}`);
@@ -133,7 +131,6 @@ const CourseEdit: React.FC = (props) => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
 
       alert("An error occurred during submission.");
     }

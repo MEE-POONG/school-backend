@@ -91,15 +91,12 @@ const NewsPage: React.FC = (props) => {
       if (params?.page === params?.totalPages) {
         setFilteredData((selectID) =>
           selectID.filter((newsArray) => newsArray.id !== list.id));
-        console.log(1, filteredData?.length);
 
         if (filteredData?.length <= 1) {
-          console.log(2, filteredData?.length);
           window.location.reload();
         }
 
       } else {
-        console.log("104", filteredData?.length);
 
         getNews();
       }

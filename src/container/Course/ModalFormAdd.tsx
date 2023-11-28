@@ -57,7 +57,6 @@ const ModalFormAdd: React.FC<ModalFormAddProps> = ({ onAddSuccess }) => {
         if (formData?.regular && !formData?.Second) missingFields.push("Second");
         if (formData?.associate && !formData?.associateFirst) missingFields.push("First");
         if (formData?.associate && !formData?.associateSecond) missingFields.push("Second");
-        console.log(formData);
         if (missingFields.length > 0) {
             setIsLoading(false);
             alert(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
@@ -89,12 +88,10 @@ const ModalFormAdd: React.FC<ModalFormAddProps> = ({ onAddSuccess }) => {
             } else {
                 setIsLoading(false);
                 alert("Failed to add information.");
-                console.log(85);
             }
         } catch (error) {
             setIsLoading(false);
             alert("An error occurred during submission.");
-            console.log(90);
         }
 
     };

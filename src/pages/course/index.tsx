@@ -58,10 +58,6 @@ const CoursePage: React.FC = (props) => {
       totalPages: data?.pagination.totalPages,
     }));
   }, [data]);
-  useEffect(() => {
-    console.log(filteredData);
-  }, [filteredData]);
-
 
   const deleteImage = async (img: string | null) => {
     try {
@@ -85,15 +81,12 @@ const CoursePage: React.FC = (props) => {
       if (params?.page === params?.totalPages) {
         setFilteredData((selectID) =>
           selectID.filter((Array) => Array.id !== list.id));
-        console.log(1, filteredData?.length);
 
         if (filteredData?.length <= 1) {
-          console.log(2, filteredData?.length);
           window.location.reload();
         }
 
       } else {
-        console.log("104", filteredData?.length);
         getCourseGroup();
       }
     } catch (error) {

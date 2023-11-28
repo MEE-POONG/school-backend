@@ -20,12 +20,10 @@ const NewsView: React.FC = (props) => {
         const storedNewsItem = localStorage.getItem('currentNewsItem');
         if (storedNewsItem) {
             setFormData(JSON.parse(storedNewsItem));
-            console.log("34 : ", JSON.parse(storedNewsItem));
 
             localStorage.removeItem('currentNewsItem'); // Clear the stored item
         } else if (id) {
             newsAPI({ url: `/api/News/${id}` }).then((response) => {
-                console.log(response);
                 setFormData(response.data);
             }).catch((error) => {
                 console.error('Error fetching news:', error);

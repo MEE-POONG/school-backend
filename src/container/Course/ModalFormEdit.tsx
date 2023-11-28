@@ -31,10 +31,6 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
     useEffect(() => {
         setFormData(selectID);
     }, [selectID]);
-    useEffect(() => {
-        console.log(formData);
-
-    }, [formData]);
 
     const handleInputChange = (title: string, value: any) => {
         setFormData((prev: any) => ({
@@ -65,11 +61,9 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
             alert(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
             return; // Stop the submission
         }
-console.log(68,formData);
-
         try {
             const response = await CourseListAPI({
-                url: `/api/CourseList${formData?.id}`,
+                url: `/api/CourseList/${formData?.id}`,
                 method: "PUT",
                 data: {
                     FieldStudy: formData?.FieldStudy,
@@ -92,12 +86,10 @@ console.log(68,formData);
             } else {
                 setIsLoading(false);
                 alert("Failed to add information.");
-                console.log(85);
             }
         } catch (error) {
             setIsLoading(false);
             alert("An error occurred during submission.");
-            console.log(90);
         }
 
     };

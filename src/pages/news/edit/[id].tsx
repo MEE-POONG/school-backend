@@ -141,8 +141,6 @@ const NewsEdit: React.FC = (props) => {
       });
 
       if (response?.status === 200) {
-        console.log(response);
-        console.log(response?.data);
         setIsLoading(false);
         localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
         router.push(`/news/${response?.data?.id}`);
@@ -152,7 +150,6 @@ const NewsEdit: React.FC = (props) => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
 
       alert("An error occurred during submission.");
     }

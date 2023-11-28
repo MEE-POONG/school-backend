@@ -79,8 +79,6 @@ const CourseGroupEdit: React.FC = (props) => {
     e.preventDefault();
     setIsLoading(true);
     setInputForm(true);
-    console.log(formData);
-    console.log(imgOne);
 
     let missingFields = [];
     if (!formData?.nameTH) missingFields.push("ชื่อสาขาภาษาไทย");
@@ -107,11 +105,8 @@ const CourseGroupEdit: React.FC = (props) => {
           img: imageIDs[0] !== null ? imageIDs[0] : formData?.img,
         }
       });
-console.log(response);
 
       if (response?.status === 201) {
-        console.log(response);
-        console.log(response?.data);
         setIsLoading(false);
         localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
         router.push(`/course/${response?.data?.id}`);
@@ -121,7 +116,6 @@ console.log(response);
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
 
       alert("An error occurred during submission.");
     }
