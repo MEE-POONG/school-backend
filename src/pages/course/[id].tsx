@@ -69,7 +69,7 @@ const CourseView: React.FC = (props) => {
                     <Card.Body className="overflow-x-hidden">
                         <Row>
                             <Col md={6}>
-                                <FloatingLabel controlId="nameTH" label="ระบุหัวข้อข่าว" className="mb-3" >
+                                <FloatingLabel controlId="nameTH" label="ชื่อคณะภาษาไทย" className="mb-3" >
                                     <Form.Control
                                         // isValid={inputForm && formData?.nameTH !== ""}
                                         // isInvalid={inputForm && !formData?.nameTH}
@@ -80,7 +80,7 @@ const CourseView: React.FC = (props) => {
                                         readOnly
                                     />
                                 </FloatingLabel>
-                                <FloatingLabel controlId="nameEN" label="ระบุหัวข้อข่าว" className="mb-3" >
+                                <FloatingLabel controlId="nameEN" label="ชื่อคณะภาษาอังกฤษ" className="mb-3" >
                                     <Form.Control
                                         // isValid={inputForm && formData?.nameEN !== ""}
                                         // isInvalid={inputForm && !formData?.nameEN}

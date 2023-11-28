@@ -182,9 +182,6 @@ const CoursePage: React.FC = (props) => {
                         {list?.nameEN}
                         <br />
                       </div>
-                      <Link href={`/course/list`} >
-                        สาขาในหลักสูตร
-                      </Link>
                     </td>
                     <td className="">
                       <Button onClick={() => handleReadMore(list?.id, list)} bsPrefix="mx-1 btn success icon">

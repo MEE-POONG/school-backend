@@ -23,7 +23,7 @@ const HomePage: React.FC = (props) => {
               <p><AiFillEdit /> <Link href="/about">เกี่ยวกับเรา {"(แก้ไขเท่านั้น)"}</Link></p>
               <p><AiFillEdit /> <Link href="/contact">ติดต่อเรา {"(แก้ไขเท่านั้น)"}</Link></p>
               <p><AiFillEdit /> <Link href="/news">หน้าข่าว</Link></p>
-              <p><AiFillEdit /> <Link href="/news">หลักสูตร</Link></p>
+              <p><AiFillEdit /> <Link href="/course">หลักสูตร</Link></p>
               <p><AiFillEdit /> <Link href="/admin">หน้าแอดมิน</Link></p>
               <p><AiOutlineFileSearch /> <Link href="/registerform">ตรวจสอบรายชื่อผู้สมัครผ่านเว็บไซต์</Link></p>
             </div>

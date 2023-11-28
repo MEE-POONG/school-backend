@@ -6,6 +6,7 @@ import { Button, Card, Table } from "react-bootstrap";
 import { FaPager } from 'react-icons/fa';
 import DeleteModal from "@/components/modal/DeleteModal";
 import PageSelect from '@/components/PageSelect';
+import ModalFormAdd from './ModalFormAdd';
 
 interface Params {
     page: number;
@@ -17,6 +18,7 @@ interface Params {
 
 const ListViews: React.FC = () => {
     const router = useRouter();
+    const { id } = router.query;
     const [params, setParams] = useState<Params>({
         page: 1,
         pageSize: 20,
@@ -24,7 +26,6 @@ const ListViews: React.FC = () => {
         group: "",
         totalPages: 1
     });
-    const { id } = router.query;
     const [filteredData, setFilteredData] = useState<CourseList[]>([]);
     const [{ data, loading, error }, courseListAPI] = useAxios({
         url: `/api/CourseList/search?page=${params?.page}&pageSize=${params?.pageSize}&search=${params?.search}&group=${params?.group}`,
@@ -102,6 +103,19 @@ const ListViews: React.FC = () => {
 
     return (
         <>
+            <Card.Header className="overflow-x-hidden">
+            </Card.Header >
+            <Card.Header className="d-flex space-between">
+                <h4 className="mb-0 py-1">สาขาประจำคณะ</h4>
+                {/* <InputGroup className="w-auto">
+                    <InputGroup.Text id="basic-addon1">
+                        <FaSearch />
+                    </InputGroup.Text>
+                    <Form.Control aria-label="Text input with dropdown button" onChange={e => handleChangeSearch(e.target.value)} />
+                </InputGroup> */}
+
+                <ModalFormAdd />
+            </Card.Header>
             <Card.Body className="overflow-x-hidden">
                 <Table striped bordered hover className="scroll">
                     <thead>
