@@ -48,7 +48,7 @@ export default function ProfileDetailModal(props: { data: any }) {
                     </Col>
                   </Row>
                   <div className="col-sm my-auto mt-3">
-                    <h6 className="border-bottom border-info">ส่วนที่ 1 ข้อมูลผู้สมัคร</h6>
+                    <h6 className="border-bottom ">ส่วนที่ 1 ข้อมูลผู้สมัคร</h6>
                     <div className="">
                       <div className="detail">
                         ชื่อ:&nbsp;&nbsp;{props?.data?.prefix} {props?.data?.nameTh} {props?.data?.lastnameTh}
@@ -68,14 +68,14 @@ export default function ProfileDetailModal(props: { data: any }) {
                   </div>
 
                   <div >
-                    <h6 className="mt-4 border-bottom border-info">ส่วนที่ 2 ประวัติการศึกษา</h6>
+                    <h6 className="mt-4 border-bottom ">ส่วนที่ 2 ประวัติการศึกษา</h6>
                     <div className="detail">สถาบันการศึกษา: {props?.data?.oldSchool}</div>
                     <div className="detail"> สำเร็จการศึกษาระดับ: {props?.data?.degree}</div>
                     <div className="detail"> เกรดเฉลี่ย: {props?.data?.gpa}</div>
                   </div>
 
                   <div>
-                    <h6 className="mt-4 border-bottom border-info">ส่วนที่ 3 หลักสูตรที่สมัคร</h6>
+                    <h6 className="mt-4 border-bottom ">ส่วนที่ 3 หลักสูตรที่สมัคร</h6>
                     <div className="detail">หลักสูตร: {props?.data?.program}</div>
                     <div className="detail">คณะ: {props?.data?.faculty}</div>
                     <div className="detail"> สาขา: {props?.data?.major}</div>
