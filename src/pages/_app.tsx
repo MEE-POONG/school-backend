@@ -8,16 +8,12 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Simulate checking login state
-    // Replace with actual login state management logic
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    // If not logged in and not on the login page, redirect to login page
     if (!isLoggedIn && router.pathname !== "/login") {
       router.push("/login");
     }
 
-    // If logged in and on the login page, redirect to welcome page
     if (isLoggedIn && router.pathname === "/login") {
       router.push("/welcome");
     }
