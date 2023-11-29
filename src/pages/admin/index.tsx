@@ -24,7 +24,7 @@ interface Params {
   searchKey: string;
   totalPages: number;
 }
-const RegisterFormPage: React.FC = () => {
+const RegisterFormPage: React.FC = (props) => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -157,7 +157,7 @@ const RegisterFormPage: React.FC = () => {
                         <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Link>
                       <DeleteModal
-                        data={Admin}
+                        title={`ลบข้อมูลของ ${Admin.username}`}
                         apiDelete={() => deleteAdmin(Admin.id)}
                       />
                     </td>

@@ -72,7 +72,7 @@ const UpdateContact: React.FC = (props) => {
 
     return (
         <LayOut>
-            <LoadModal checkLoad={isLoading || loading} title={"กำลังอัพเดท"} detail={""} />
+            <LoadModal checkLoad={isLoading || loading} status={"update"} detail={""} />
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">
