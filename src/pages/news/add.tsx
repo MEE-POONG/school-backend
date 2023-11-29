@@ -226,7 +226,7 @@ const NewsAdd: React.FC = (props) => {
             <Row>
               <Col md={5}>
                 <FormLabel>รูปปก</FormLabel>
-                <FloatingLabel controlId="img" label="รูปภาพเกี่ยวกัวเรา" className="mb-3">
+                <FloatingLabel controlId="img" label="รูปปกข่าว" className="mb-3">
                   <Form.Control
                     type="file"
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne, setImgOnePreview)}
@@ -242,7 +242,7 @@ const NewsAdd: React.FC = (props) => {
                 </div>
               </Col>
               <Col md={7}>
-                <FormLabel>รูปโปรโมท</FormLabel>
+                <FormLabel>รูปโปรโมท <span className="text-danger">ความยาว 21 : 9</span></FormLabel>
                 <FloatingLabel controlId="imgTwo" label="โลโก้" className="mb-3">
                   <Form.Control
                     type="file"
