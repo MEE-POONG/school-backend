@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import type { AppProps } from 'next/app'
+import type { AppProps } from 'next/app'; // Import AppProps
 import { useRouter } from "next/router";
-import '../scss/globals.scss'
+import '../scss/globals.scss';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -30,5 +30,5 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Component {...pageProps} />
     </React.Fragment>
-  )
+  );
 }
