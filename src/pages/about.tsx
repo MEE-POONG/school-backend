@@ -107,8 +107,8 @@ const UpdateHeadPage: React.FC = (props) => {
             });
             if (response?.data?.success) {
                 setFormData(response?.data?.data);
-                setIsLoading(false);
                 setShowSuccessModal(true);
+                setIsLoading(false);
             }
         } catch (error) {
             console.error('Failed to submit form data:', error);

@@ -8,6 +8,7 @@ import LoadModal from "@/components/modal/LoadModal";
 import moment from "moment";
 import { useRouter } from "next/router";
 import ModalSuccess from '@/components/modal/ModalSuccess';
+import Link from "next/link";
 
 const NewsAdd: React.FC = (props) => {
   const router = useRouter();
@@ -77,10 +78,6 @@ const NewsAdd: React.FC = (props) => {
 
   const reloadPage = () => {
     window.location.reload();
-  };
-
-  const goBack = () => {
-    window.history.back();
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -157,9 +154,9 @@ const NewsAdd: React.FC = (props) => {
               <Button variant="primary mx-2" onClick={reloadPage}>
                 ล้าง
               </Button>
-              <Button variant="danger mx-2" onClick={goBack}>
-                กลับ
-              </Button>
+              <Link href={'/news'} className="btn btn-danger mx-2" >
+                กลับรายการข่าว
+              </Link>
             </div>
           </Card.Header>
           <Card.Body className="overflow-x-hidden">
@@ -272,9 +269,9 @@ const NewsAdd: React.FC = (props) => {
             <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button>
-            <Button variant="danger mx-2" onClick={goBack}>
-              กลับ
-            </Button>
+            <Link href={'/news'} className="btn btn-danger mx-2" >
+              กลับรายการข่าว
+            </Link>
           </Card.Footer>
         </Card>
       </div>

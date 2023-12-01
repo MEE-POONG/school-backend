@@ -122,7 +122,6 @@ const NewsView: React.FC = (props) => {
                         <Link href={`/news/edit/${id}`} className="btn btn-warning mx-2" >
                             แก้ไข
                         </Link>
-
                         <Link href={'/news'} className="btn btn-danger mx-2" >
                             กลับรายการข่าว
                         </Link>
