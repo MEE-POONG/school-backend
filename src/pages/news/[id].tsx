@@ -55,6 +55,11 @@ const NewsView: React.FC = (props) => {
                         <Row>
                             <Col md={4}>
                                 <Form.Label >
+                                    {`หัวข้อ : ${formData?.title}`}
+                                </Form.Label>
+                            </Col>
+                            <Col md={4}>
+                                <Form.Label >
                                     {`ประเภท : ${formData?.type}`}
                                 </Form.Label>
                             </Col>

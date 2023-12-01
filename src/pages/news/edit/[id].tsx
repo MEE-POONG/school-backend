@@ -112,6 +112,7 @@ const NewsEdit: React.FC = (props) => {
     if (!formData?.detail) missingFields.push("Detail");
     if (!formData?.type) missingFields.push("News Type");
     if (!imgOne && !formData?.img) missingFields.push("รูปปก");
+    console.log(formData?.title);
 
     if (missingFields.length > 0) {
       setIsLoading(false);
