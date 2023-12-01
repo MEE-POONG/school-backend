@@ -8,7 +8,7 @@ interface FooterProps { }
 const TheFooter: React.FC = () => {
 
   return (
-      <footer className="pt-4">
+      <footer className="pt-4 mt-auto">
         <div className="bg-white rounded-top p-3">
           <div className="row">
             <div className="col-12 col-sm-6 text-center text-sm-start">
