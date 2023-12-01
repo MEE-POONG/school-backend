@@ -13,7 +13,6 @@ import {
 import { FaPen, FaSearch, FaUserNinja } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
-import PageSelect from "@/components/PageSelect";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { AdminUser } from "@prisma/client";
 
@@ -107,22 +106,6 @@ const RegisterFormPage: React.FC = (props) => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">รายชื่อแอดมิน</h4>
-
-            {/* ค้นหาข้อมูล */}
-            <InputGroup className="w-auto" bsPrefix="input-icon">
-              <InputGroup.Text id="basic-addon1">
-                <FaSearch />
-              </InputGroup.Text>
-              <Form.Control
-                onChange={e => handleChangesearchKey(e.target.value)}
-                placeholder="ค้นหาผู้ใช้"
-                aria-label="Fullname"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-
-            {/* <Add /> */}
-
             <Link href="/admin/add" className="ms-2 btn icon icofn-primary">
               เพิ่มผู้ใช้งาน
             </Link>
@@ -133,9 +116,9 @@ const RegisterFormPage: React.FC = (props) => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="w-t-150">No</th>
-                  <th className="w-t-150">ชื่อผู้ใช้</th>
-                  <th className="w-t-150">รหัสผ่าน</th>
+                  <th className="">No</th>
+                  <th className="">ชื่อผู้ใช้</th>
+                  <th className="">รหัสผ่าน</th>
 
                   <th>จัดการ</th>
                 </tr>
@@ -144,10 +127,10 @@ const RegisterFormPage: React.FC = (props) => {
               <tbody className="text-center">
                 {filteredAdminsData.map((Admin, index) => (
                   <tr key={Admin.id}>
-                    <td className="w-t-150">{index + 1}</td>
-                    <td className="w-t-150">{Admin.username}</td>
-                    <td className="w-t-150">{Admin.password}</td>
-                    <td className="w-t-150">
+                    <td className="">{index + 1}</td>
+                    <td className="">{Admin.username}</td>
+                    <td className="">{Admin.password}</td>
+                    <td className="">
                         
                       <Link
                         href={`/admin/edit/${Admin.id}`}
@@ -167,12 +150,6 @@ const RegisterFormPage: React.FC = (props) => {
             </Table>
           </Card.Body>
           <Card.Footer>
-            <PageSelect
-              page={params.page}
-              totalPages={AdminData?.pagination?.total}
-              onChangePage={handleChangePage}
-              onChangePageSize={handleChangePageSize}
-            />
           </Card.Footer>
         </Card>
       </div>

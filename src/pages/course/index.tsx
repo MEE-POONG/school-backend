@@ -36,13 +36,7 @@ const CoursePage: React.FC = (props) => {
     totalPages: 1,
   });
 
-  // const [type, setType] = useState<NewsType[]>([]);
   const [filteredData, setFilteredData] = useState<CourseGroup[]>([]);
-
-  // const [{ data: newsType, loading: loadingType, error: errorType }, getNewsType] = useAxios({
-  //   url: `/api/CourseGroupType`,
-  //   method: "GET",
-  // });
 
   const [{ data, loading, error }, getCourseGroup] = useAxios({
     url: `/api/CourseGroup/search?page=${params?.page}&pageSize=${params?.pageSize}&search=${params?.search}`,
@@ -77,14 +71,13 @@ const CoursePage: React.FC = (props) => {
         url: `/api/CourseGroup/${list.id}`,
         method: "DELETE",
       });
-
-      if (params?.page === params?.totalPages) {
+      
+      if (filteredData?.length <= 1) {
+        window.location.reload();
+      } else if (params?.page === params?.totalPages) {
         setFilteredData((selectID) =>
           selectID.filter((Array) => Array.id !== list.id));
 
-        if (filteredData?.length <= 1) {
-          window.location.reload();
-        }
 
       } else {
         getCourseGroup();

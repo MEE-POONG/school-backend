@@ -136,7 +136,7 @@ const CourseGroupEdit: React.FC = (props) => {
         <Card>
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              แก้ไขข่าว / กิจกรรม
+             เพิ่มคณะ
             </h4>
             <div>
               <Button variant="success mx-2" onClick={handleSubmit}>
@@ -153,7 +153,7 @@ const CourseGroupEdit: React.FC = (props) => {
           <Card.Body className="overflow-x-hidden">
             <Row>
               <Col md={6}>
-                <FloatingLabel controlId="nameTH" label="ระบุหัวข้อข่าว" className="mb-3" >
+                <FloatingLabel controlId="nameTH" label="ชื่อคณะภาษาไทย" className="mb-3" >
                   <Form.Control
                     isValid={inputForm && formData?.nameTH !== ""}
                     isInvalid={inputForm && !formData?.nameTH}
@@ -163,7 +163,7 @@ const CourseGroupEdit: React.FC = (props) => {
                     placeholder="ระบุหัวข้อ"
                   />
                 </FloatingLabel>
-                <FloatingLabel controlId="nameEN" label="ระบุหัวข้อข่าว" className="mb-3" >
+                <FloatingLabel controlId="nameEN" label="ชื่อคณะภาษาอังกฤษ" className="mb-3" >
                   <Form.Control
                     isValid={inputForm && formData?.nameEN !== ""}
                     isInvalid={inputForm && !formData?.nameEN}
@@ -175,7 +175,7 @@ const CourseGroupEdit: React.FC = (props) => {
                 </FloatingLabel>
               </Col>
               <Col md={6}>
-                <FloatingLabel controlId="img" label="รูปภาพเกี่ยวกัวเรา" className="mb-3">
+                <FloatingLabel controlId="img" label="ปกคณะ" className="mb-3">
                   <Form.Control
                     type="file"
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne, setImgOnePreview)}

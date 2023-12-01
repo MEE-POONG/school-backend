@@ -159,7 +159,7 @@ const ListViews: React.FC = () => {
                                 <td className="">
                                     <ModalFormEdit selectID={list} onEditSuccess={onEditSuccess} />
                                     <DeleteModal
-                                        title={`ข่าว ${list?.FieldStudy}`}
+                                        title={`สขา${list?.FieldStudy}`}
                                         apiDelete={() => deleteList(list)}
                                     />
                                 </td>

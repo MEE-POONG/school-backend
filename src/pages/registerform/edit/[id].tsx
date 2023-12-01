@@ -5,21 +5,18 @@ import LayOut from "@/components/RootPage/TheLayOut"; import {
   Button,
   Card,
   Col,
-  Dropdown,
   FloatingLabel,
   Form,
-  Image,
   Row,
 } from "react-bootstrap";
 import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import Link from "next/link";
-import { RegisterForm } from "@prisma/client";
 
 
 
 
-const RegisterFormEditPage: React.FC = () => {
+const RegisterFormEditPage: React.FC = (props) => {
   const router = useRouter();
   const { id } = router.query;
   const [
@@ -197,12 +194,6 @@ const RegisterFormEditPage: React.FC = () => {
         <meta name="description" content="T ACTIVE" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-
-
-
-
-
       <div className="RegisterForm-page">
         <Card>
           <EditModal
@@ -210,17 +201,11 @@ const RegisterFormEditPage: React.FC = () => {
             setCheckAlertShow={setAlertForm}
             checkBody={checkBody}
             pathBack={"/registerform"}
-
-            
           />
 
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">แก้ไขข้อมูล</h4>
           </Card.Header>
-
-
-
-
           <Card.Body>
             <Row>
 
@@ -489,8 +474,6 @@ const RegisterFormEditPage: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-
-
               <Col md={4}>
                 <FloatingLabel
                   controlId="regMajor"
@@ -507,31 +490,6 @@ const RegisterFormEditPage: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-
-              {/* <Col md={4}>
-                <FloatingLabel
-                  controlId="regImg"
-                  label="Img / รูปภาพผู้สมัคร"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    isValid={inputForm && regImg !== null}
-                    isInvalid={inputForm && regImg === null}
-                    type="file"
-                   // defaultValue={regImg}
-                    onChange={handleFileUpload}
-                    placeholder="regImg"
-                  />
-                </FloatingLabel>
-              </Col> */}
-
-
-
-
-
-
-
-
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">

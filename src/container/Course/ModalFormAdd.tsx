@@ -133,6 +133,7 @@ const ModalFormAdd: React.FC<ModalFormAddProps> = ({ onAddSuccess }) => {
                                     onChange={(e) => handleInputChange("First", e.target.value)}
                                     placeholder="ชื่อสาขา"
                                     disabled={!formData?.regular}
+                                    min={0}
                                 />
                             </FloatingLabel>
                         </Col>
@@ -146,6 +147,8 @@ const ModalFormAdd: React.FC<ModalFormAddProps> = ({ onAddSuccess }) => {
                                     onChange={(e) => handleInputChange("Second", e.target.value)}
                                     placeholder="ชื่อสาขา"
                                     disabled={!formData?.regular}
+                                    min={0}
+
                                 />
                             </FloatingLabel>
                         </Col>
@@ -165,6 +168,7 @@ const ModalFormAdd: React.FC<ModalFormAddProps> = ({ onAddSuccess }) => {
                                     defaultValue={formData?.associateFirst || ""}
                                     onChange={(e) => handleInputChange("associateFirst", e.target.value)}
                                     placeholder="ชื่อสาขา"
+                                    min={0}
                                     disabled={!formData?.associate}
                                 />
                             </FloatingLabel>
@@ -178,6 +182,7 @@ const ModalFormAdd: React.FC<ModalFormAddProps> = ({ onAddSuccess }) => {
                                     defaultValue={formData?.associateSecond || ""}
                                     onChange={(e) => handleInputChange("associateSecond", e.target.value)}
                                     placeholder="ชื่อสาขา"
+                                    min={0}
                                     disabled={!formData?.associate}
                                 />
                             </FloatingLabel>

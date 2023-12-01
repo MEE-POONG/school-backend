@@ -130,6 +130,7 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                     defaultValue={formData?.First || ""}
                                     onChange={(e) => handleInputChange("First", e.target.value)}
                                     placeholder="ชื่อสาขา"
+                                    min={0}
                                     disabled={!formData?.regular}
                                 />
                             </FloatingLabel>
@@ -143,6 +144,7 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                     defaultValue={formData?.Second || ""}
                                     onChange={(e) => handleInputChange("Second", e.target.value)}
                                     placeholder="ชื่อสาขา"
+                                    min={0}
                                     disabled={!formData?.regular}
                                 />
                             </FloatingLabel>
@@ -163,6 +165,7 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                     defaultValue={formData?.associateFirst || ""}
                                     onChange={(e) => handleInputChange("associateFirst", e.target.value)}
                                     placeholder="ชื่อสาขา"
+                                    min={0}
                                     disabled={!formData?.associate}
                                 />
                             </FloatingLabel>
@@ -176,6 +179,7 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                     defaultValue={formData?.associateSecond || ""}
                                     onChange={(e) => handleInputChange("associateSecond", e.target.value)}
                                     placeholder="ชื่อสาขา"
+                                    min={0}
                                     disabled={!formData?.associate}
                                 />
                             </FloatingLabel>

@@ -148,7 +148,7 @@ const CourseEdit: React.FC = (props) => {
         <Card>
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              แก้ไขข่าว / กิจกรรม
+              แก้ไขคณะ
             </h4>
             <div>
               <Button variant="success mx-2" onClick={handleSubmit}>
@@ -187,7 +187,7 @@ const CourseEdit: React.FC = (props) => {
                 </FloatingLabel>
               </Col>
               <Col md={6}>
-                <FloatingLabel controlId="img" label="รูปภาพเกี่ยวกัวเรา" className="mb-3">
+                <FloatingLabel controlId="img" label="รูปปกคณะ" className="mb-3">
                   <Form.Control
                     type="file"
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(event, setImgOne, setImgOnePreview)}
