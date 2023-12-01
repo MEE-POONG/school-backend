@@ -7,9 +7,11 @@ import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "r
 import LoadModal from "@/components/modal/LoadModal";
 import moment from "moment";
 import { useRouter } from "next/router";
+import ModalSuccess from '@/components/modal/ModalSuccess';
 
 const NewsAdd: React.FC = (props) => {
   const router = useRouter();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const dateDefault = moment().format('YYYY-MM-DDTHH:mm');
   const [formData, setFormData] = useState<News | null>();
   const [imgOne, setImgOne] = useState<File | null>(null);
@@ -122,8 +124,11 @@ const NewsAdd: React.FC = (props) => {
 
       if (response?.status === 201) {
         setIsLoading(false);
-        localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
-        router.push(`/news/${response?.data?.id}`);
+        setShowSuccessModal(true);
+        setTimeout(() => {
+          localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
+          router.push(`/news/${response?.data?.id}`);
+        }, 1000);
       } else {
         setIsLoading(false);
         alert("Failed to add information.");
@@ -137,10 +142,10 @@ const NewsAdd: React.FC = (props) => {
 
   return (
     <LayOut>
-
+      <ModalSuccess checkSuccess={showSuccessModal} />
+      <LoadModal checkLoad={isLoading} status={"add"} detail={""} />
       <div className='NewsSchool-page'>
         <Card>
-          <LoadModal checkLoad={isLoading} status={"add"} detail={""} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               เพิ่มข่าว / กิจกรรม

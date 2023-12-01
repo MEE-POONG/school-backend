@@ -6,14 +6,15 @@ import { Button, Card, Col, FloatingLabel, Form, FormLabel, Row } from 'react-bo
 import LayOut from '@/components/RootPage/TheLayOut';
 import axios from 'axios';
 import LoadModal from '@/components/modal/LoadModal';
+import ModalSuccess from '@/components/modal/ModalSuccess';
 
 const UpdateHeadPage: React.FC = (props) => {
     const [{ data: headPageData, loading, error }, aboutApi] = useAxios('/api/About');
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [formData, setFormData] = useState<About | null>(null);
     const [imgOne, setImgOne] = useState<File | null>(null);
     const [imgTwo, setImgTwo] = useState<File | null>(null);
     const [imgThree, setImgThree] = useState<File | null>(null);
-
     const [imgOnePreview, setImgOnePreview] = useState<string | null>(null);
     const [imgTwoPreview, setImgTwoPreview] = useState<string | null>(null);
     const [imgThreePreview, setImgThreePreview] = useState<string | null>(null);
@@ -107,6 +108,7 @@ const UpdateHeadPage: React.FC = (props) => {
             if (response?.data?.success) {
                 setFormData(response?.data?.data);
                 setIsLoading(false);
+                setShowSuccessModal(true);
             }
         } catch (error) {
             console.error('Failed to submit form data:', error);
@@ -118,6 +120,7 @@ const UpdateHeadPage: React.FC = (props) => {
 
     return (
         <LayOut>
+            <ModalSuccess checkSuccess={showSuccessModal} />
             <LoadModal checkLoad={isLoading || loading} status={"update"} detail={""} />
             <div className='herdpage-page'>
                 <Card>

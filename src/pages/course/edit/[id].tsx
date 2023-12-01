@@ -6,16 +6,15 @@ import LayOut from "@/components/RootPage/TheLayOut";
 import { Button, Card, Col, FloatingLabel, Form, FormLabel, Image, Row } from "react-bootstrap";
 import LoadModal from "@/components/modal/LoadModal";
 import { useRouter } from "next/router";
+import ModalSuccess from '@/components/modal/ModalSuccess';
 
 const CourseEdit: React.FC = (props) => {
   const router = useRouter();
   const { id } = router.query;
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formData, setFormData] = useState<CourseGroup | null>();
   const [imgOne, setImgOne] = useState<File | null>(null);
-
   const [imgOnePreview, setImgOnePreview] = useState<string | null>(null);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputForm, setInputForm] = useState<boolean>(false);
 
@@ -123,8 +122,12 @@ const CourseEdit: React.FC = (props) => {
 
       if (response?.status === 200) {
         setIsLoading(false);
-        localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
-        router.push(`/course/${response?.data?.id}`);
+        setShowSuccessModal(true);
+        setTimeout(() => {
+          localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
+          router.push(`/course/${response?.data?.id}`);
+        }, 1000);
+
       } else {
         setIsLoading(false);
         alert("Failed to add information.");
@@ -139,10 +142,10 @@ const CourseEdit: React.FC = (props) => {
 
   return (
     <LayOut>
-
+      <ModalSuccess checkSuccess={showSuccessModal} />
+      <LoadModal checkLoad={isLoading} status={"add"} detail={""} />
       <div className='NewsSchool-page'>
         <Card>
-          <LoadModal checkLoad={isLoading} status={"add"} detail={""} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               แก้ไขข่าว / กิจกรรม

@@ -143,15 +143,16 @@ const NewsEdit: React.FC = (props) => {
 
       if (response?.status === 200) {
         setIsLoading(false);
-        localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
-        router.push(`/news/${response?.data?.id}`);
+        setTimeout(() => {
+          localStorage.setItem('currentNewsItem', JSON.stringify(response?.data));
+          router.push(`/news/${response?.data?.id}`);
+        }, 1000);
       } else {
         setIsLoading(false);
         alert("Failed to add information.");
       }
     } catch (error) {
       setIsLoading(false);
-
       alert("An error occurred during submission.");
     }
 

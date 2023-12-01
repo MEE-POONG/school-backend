@@ -6,9 +6,11 @@ import { Button, Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import LayOut from '@/components/RootPage/TheLayOut';
 import axios from 'axios';
 import LoadModal from '@/components/modal/LoadModal';
+import ModalSuccess from '@/components/modal/ModalSuccess';
 
 const UpdateHeadPage: React.FC = (props) => {
     const [{ data: headPageData, loading, error }, refetch] = useAxios('/api/HeadPage');
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [formData, setFormData] = useState<HeadPage | null>(null);
     const [imgOne, setImgOne] = useState<File | null>(null);
     const [imgTwo, setImgTwo] = useState<File | null>(null);
@@ -105,6 +107,7 @@ const UpdateHeadPage: React.FC = (props) => {
             if (response?.data?.success) {
                 setFormData(response?.data?.data);
                 setIsLoading(false);
+                setShowSuccessModal(true);
             }
         } catch (error) {
             console.error('Failed to submit form data:', error);
@@ -116,7 +119,8 @@ const UpdateHeadPage: React.FC = (props) => {
 
     return (
         <LayOut>
-            <LoadModal checkLoad={isLoading || loading} status={""} detail={"กำลังอัพเดท"} />
+            <ModalSuccess checkSuccess={showSuccessModal} />
+            <LoadModal checkLoad={isLoading || loading} status={"update"} detail={"กำลังอัพเดท"} />
             <div className='herdpage-page'>
                 <Card>
                     <Card.Header className="d-flex space-between">

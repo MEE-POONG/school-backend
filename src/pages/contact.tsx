@@ -6,12 +6,12 @@ import LayOut from '@/components/RootPage/TheLayOut';
 import axios from 'axios';
 import LoadModal from '@/components/modal/LoadModal';
 import { ContactUS } from '@prisma/client';
+import ModalSuccess from '@/components/modal/ModalSuccess';
 
 const UpdateContact: React.FC = (props) => {
     const [{ data: contactData, loading, error }, refetch] = useAxios('/api/ContactUS');
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [formData, setFormData] = useState<ContactUS | null>(null);
-
-
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [inputForm, setInputForm] = useState<boolean>(false);
 
@@ -61,6 +61,7 @@ const UpdateContact: React.FC = (props) => {
             if (response?.data?.success) {
                 setFormData(response?.data?.data);
                 setIsLoading(false);
+                setShowSuccessModal(true);
             }
         } catch (error) {
             console.error('Failed to submit form data:', error);
@@ -72,6 +73,7 @@ const UpdateContact: React.FC = (props) => {
 
     return (
         <LayOut>
+            <ModalSuccess checkSuccess={showSuccessModal} />
             <LoadModal checkLoad={isLoading || loading} status={"update"} detail={""} />
             <div className='herdpage-page'>
                 <Card>
