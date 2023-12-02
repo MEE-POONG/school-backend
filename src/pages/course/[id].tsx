@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import DeleteModal from "@/components/modal/DeleteModal";
 import Link from "next/link";
 import { FaPager, FaPen } from "react-icons/fa";
-import CourseList from "@/container/Course/ListViews";
+import CourseListView from "@/container/Course/ListViews";
 
 interface CourseList extends PrismaCourseList {
 }
@@ -104,7 +104,7 @@ const CourseView: React.FC = (props) => {
                             </Col>
                         </Row>
                     </Card.Body>
-                    <CourseList />
+                    <CourseListView />
                     <Card.Footer className="text-end">
                         <Link href={`/course/edit/${id}`} className="btn btn-warning mx-2" >
                             แก้ไข

@@ -17,7 +17,7 @@ interface Params {
     totalPages: number;
 }
 
-const ListViews: React.FC = () => {
+const CourseListView: React.FC = () => {
     const router = useRouter();
     const { id } = router.query;
     const [params, setParams] = useState<Params>({
@@ -173,4 +173,4 @@ const ListViews: React.FC = () => {
     );
 };
 
-export default ListViews;
+export default CourseListView;
