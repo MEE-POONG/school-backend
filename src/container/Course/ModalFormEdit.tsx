@@ -126,11 +126,10 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                 <Form.Control
                                     isValid={inputForm && formData?.regular && formData?.First !== ""}
                                     isInvalid={inputForm && formData?.regular && !formData?.First}
-                                    type="number"
+                                    type="text"
                                     defaultValue={formData?.First || ""}
                                     onChange={(e) => handleInputChange("First", e.target.value)}
                                     placeholder="ชื่อสาขา"
-                                    min={0}
                                     disabled={!formData?.regular}
                                 />
                             </FloatingLabel>
@@ -140,11 +139,10 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                 <Form.Control
                                     isValid={inputForm && formData?.regular && formData?.Second !== ""}
                                     isInvalid={inputForm && formData?.regular && !formData?.Second}
-                                    type="number"
+                                    type="text"
                                     defaultValue={formData?.Second || ""}
                                     onChange={(e) => handleInputChange("Second", e.target.value)}
                                     placeholder="ชื่อสาขา"
-                                    min={0}
                                     disabled={!formData?.regular}
                                 />
                             </FloatingLabel>
@@ -161,11 +159,10 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                 <Form.Control
                                     isValid={inputForm && formData?.associate && formData?.associateFirst !== ""}
                                     isInvalid={inputForm && formData?.associate && !formData?.associateFirst}
-                                    type="number"
+                                    type="text"
                                     defaultValue={formData?.associateFirst || ""}
                                     onChange={(e) => handleInputChange("associateFirst", e.target.value)}
                                     placeholder="ชื่อสาขา"
-                                    min={0}
                                     disabled={!formData?.associate}
                                 />
                             </FloatingLabel>
@@ -175,11 +172,10 @@ const ModalFormEdit: React.FC<ModalFormEditProps> = ({ selectID, onEditSuccess }
                                 <Form.Control
                                     isValid={inputForm && formData?.associate && formData?.associateSecond !== ""}
                                     isInvalid={inputForm && formData?.associate && !formData?.associateSecond}
-                                    type="number"
+                                    type="text"
                                     defaultValue={formData?.associateSecond || ""}
                                     onChange={(e) => handleInputChange("associateSecond", e.target.value)}
                                     placeholder="ชื่อสาขา"
-                                    min={0}
                                     disabled={!formData?.associate}
                                 />
                             </FloatingLabel>
